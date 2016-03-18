@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/museumListItem">
+    android:layout_height="150dp"
+    android:background="@color/colorPrimary">
+
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/imageView"
+        android:src="@drawable/British_Museum"
+        android:layout_marginStart="0dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -10,38 +20,32 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="<Museum Name>"
         android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_marginLeft="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="<two or three line short description, two or three line short description, two or three line short description, two or three line short description, two or three line short description,"
+        android:text="502 N Frances \nMadison, WI, 53703"
         android:id="@+id/textView2"
         android:layout_below="@+id/textView"
-        android:layout_alignParentStart="true" />
+        android:layout_marginTop="@id/imageView"
+        android:layout_marginLeft="110dp"
+        android:layout_alignBottom="@+id/imageView" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="502 N Frances st.
-        Madison, WI, 53703
-        Museum of Arts and Science."
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Hours:\nMON-FRI:\n8:00AM-5:00PM"
         android:id="@+id/textView3"
-        android:layout_above="@+id/textView4"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Hours:
-    MON-FRI 8:00AM - 5:00PM
-    SAT-SUN 8:00AM - 3:00PM"
-        android:id="@+id/textView4"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="50dp" />
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignTop="@+id/textView2"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@id/imageView"
+        android:layout_toEndOf="@+id/textView2"
+        android:layout_marginLeft="10dp"
+         />
 </RelativeLayout>
