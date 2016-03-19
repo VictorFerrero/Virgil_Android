@@ -32,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        BackendTaskRunner api = new BackendTaskRunner();
+        api.execute("getAllMuseums");
+
         return true;
     }
 

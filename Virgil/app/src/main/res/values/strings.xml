@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Virgil</string>
     <string name="action_settings">Settings</string>
+    <string name="server_url">http://52.24.10.104/Virgil_Backend/index.php/</string>
+    <string name="get_museum_path">getEntireMuseum/</string>
+    <string name="get_all_museums_path">getAllMuseums/</string>
 </resources>

@@ -9,15 +9,12 @@ import java.util.ArrayList;
 public class Museum {
 
     private int id;
-    private float latitude, longitude;
     private String name, address;
     private ArrayList<Gallery> galleries;
     private ArrayList<Content> content;
 
-    public Museum(int id, float latitude, float longitude, String name, String address) {
+    public Museum(int id, String name, String address) {
         this.id = id;
-        this.latitude = latitude;
-        this.longitude = longitude;
         this.name = name;
         this.address = address;
         this.galleries = new ArrayList<>();
@@ -26,14 +23,6 @@ public class Museum {
 
     public int getId() {
         return this.id;
-    }
-
-    public float getLatitude() {
-        return this.latitude;
-    }
-
-    public float getLongitude() {
-        return this.longitude;
     }
 
     public String getName() {

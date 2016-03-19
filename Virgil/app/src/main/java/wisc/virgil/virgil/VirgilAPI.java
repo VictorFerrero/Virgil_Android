@@ -1,41 +1,26 @@
 package wisc.virgil.virgil;
 
-import android.os.AsyncTask;
+import java.util.ArrayList;
 
 /**
  * Created by TylerPhelps on 3/19/16.
  */
-public class VirgilAPI extends AsyncTask<Void, Void, Void> {
+public class VirgilAPI {
 
-    @Override
-    protected void onPreExecute() {
-        /*
-         *    do things before doInBackground() code runs
-         *    such as preparing and showing a Dialog or ProgressBar
-        */
+    final String GET_MUSEUM = "getMuseum";
+    final String GET_ALL_MUSEUMS = "getAllMuseums";
+
+    public Museum getMuseum(int id) {
+        BackendTaskRunner runner = new BackendTaskRunner();
+        runner.execute(GET_MUSEUM + id);
+
+        return runner.getMuseum();
     }
 
-    @Override
-    protected void onProgressUpdate(Void... values) {
-        /*
-         *    updating data
-         *    such a Dialog or ProgressBar
-        */
+    public ArrayList<Museum> getAllMuseums() {
+        BackendTaskRunner runner = new BackendTaskRunner();
+        runner.execute(GET_ALL_MUSEUMS);
 
-    }
-
-    @Override
-    protected Void doInBackground(Void... params) {
-        //do your work here
         return null;
-    }
-
-    @Override
-    protected void onPostExecute(Void result) {
-        /*
-         *    do something with data here
-         *    display it or send to mainactivity
-         *    close any dialogs/ProgressBars/etc...
-        */
     }
 }
