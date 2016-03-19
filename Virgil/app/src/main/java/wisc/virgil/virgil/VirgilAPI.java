@@ -7,12 +7,12 @@ import java.util.ArrayList;
  */
 public class VirgilAPI {
 
-    final String GET_MUSEUM = "getMuseum";
-    final String GET_ALL_MUSEUMS = "getAllMuseums";
+    private final String GET_MUSEUM = "getMuseum";
+    private final String GET_ALL_MUSEUMS = "getAllMuseums";
 
     public Museum getMuseum(int id) {
         BackendTaskRunner runner = new BackendTaskRunner();
-        runner.execute(GET_MUSEUM + id);
+        runner.execute(GET_MUSEUM, Integer.toString(id));
 
         return runner.getMuseum();
     }
@@ -21,6 +21,6 @@ public class VirgilAPI {
         BackendTaskRunner runner = new BackendTaskRunner();
         runner.execute(GET_ALL_MUSEUMS);
 
-        return null;
+        return runner.getMuseumList();
     }
 }
