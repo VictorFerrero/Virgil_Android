@@ -2,13 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="150dp"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimaryDark">
 
 
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:id="@+id/imageView_MLI"
+        android:id="@+id/imageView_MLID"
         android:src="@drawable/British_Museum"
         android:layout_marginStart="0dp"
         android:layout_centerVertical="true"
@@ -19,8 +19,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="<Museum Name>"
-        android:id="@+id/textView_MLI"
-        android:layout_marginTop="@id/imageView_MLI"
+        android:id="@+id/textView_MLID"
+        android:layout_marginTop="@id/imageView_MLID"
         android:layout_marginLeft="10dp"/>
 
     <TextView
@@ -28,23 +28,23 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="502 N Frances \nMadison, WI, 53703"
-        android:id="@+id/textView2_MLI"
-        android:layout_below="@+id/textView_MLI"
-        android:layout_marginTop="@id/imageView_MLI"
+        android:id="@+id/textView2_MLID"
+        android:layout_below="@+id/textView_MLID"
+        android:layout_marginTop="@id/imageView_MLID"
         android:layout_marginLeft="110dp"
-        android:layout_alignBottom="@+id/imageView_MLI" />
+        android:layout_alignBottom="@+id/imageView_MLID" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Hours:\nMON-FRI:\n8:00AM-5:00PM"
-        android:id="@+id/textView3_MLI"
-        android:layout_alignBottom="@+id/textView2_MLI"
-        android:layout_alignTop="@+id/textView2_MLI"
+        android:id="@+id/textView3_MLID"
+        android:layout_alignBottom="@+id/textView2_MLID"
+        android:layout_alignTop="@+id/textView2_MLID"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="@id/imageView_MLI"
-        android:layout_toEndOf="@+id/textView2_MLI"
+        android:layout_marginTop="@id/imageView_MLID"
+        android:layout_toEndOf="@+id/textView2_MLID"
         android:layout_marginLeft="10dp"
-         />
+        />
 </RelativeLayout>
