@@ -29,7 +29,7 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
 
     @Override
     protected void onPreExecute() {
-
+        this.museumList = new ArrayList<>();
     }
 
     @Override
@@ -122,8 +122,6 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
         catch (Exception e) {
             Log.d("Error", "Couldn't parse this list.");
         }
-
-        this.museumList = null;
     }
 
     private void parseMuseum(String input) {
@@ -160,7 +158,7 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
                 String galleryId = exhibit.getString("galleryId");
                 String exhibitName = exhibit.getString("name");
 
-                Exhibit newExhibit = new Exhibit(Integer.parseInt(id), Integer.parseInt(galleryId), this.museum.getId(), exhibitName);
+                Exhibit newExhibit = new Exhibit(Integer.parseInt(exhibitId), Integer.parseInt(galleryId), this.museum.getId(), exhibitName);
                 sortExhibits(newExhibit);
 
                 Log.d("API", "Added exhibit: " + newExhibit.getName() + " to Gallery:" + newExhibit.getGallerytId());
@@ -183,6 +181,8 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
                 sortContent(newContent);
                 Log.d("API", "Added Content: " + newContent.getId() + " to " + newContent.getPathToContent());
             }
+
+            Log.d("Runner", "Museum Name: "+this.museum.getName());
 
         }
         catch (Exception e) {
@@ -225,6 +225,11 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
     }
 
     public ArrayList<Museum> getMuseumList() {
-        return this.museumList;
+        if (this.museumList != null) {
+            Log.d("API", museumList.size() + " museums in the list.");
+            return this.museumList;
+        }
+        else return new ArrayList<Museum>();
+
     }
 }
