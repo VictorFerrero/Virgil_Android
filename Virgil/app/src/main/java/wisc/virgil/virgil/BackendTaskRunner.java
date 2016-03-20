@@ -5,12 +5,12 @@ import android.util.Log;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import org.json.JSONObject;
 import org.json.JSONArray;
-import java.util.Iterator;
 
 /**
  * Created by TylerPhelps on 3/19/16.
@@ -23,13 +23,19 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
     private final String GET_MUSEUM = "getMuseum";
     private final String GET_ALL_MUSEUMS = "getAllMuseums";
 
-    private Museum museum;
+    //private Museum museum;
     private String jsonString;
-    private ArrayList<Museum> museumList;
+    //private ArrayList<Museum> museumList;
+
+    private VirgilAPI myParent = null;
+
+    public BackendTaskRunner (VirgilAPI parent) {
+        this.myParent = parent;
+    }
 
     @Override
     protected void onPreExecute() {
-        this.museumList = new ArrayList<>();
+        this.myParent.museumList = new ArrayList<>();
     }
 
     @Override
@@ -97,7 +103,7 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
 
     private void parseMuseumList(String input) {
 
-        this.museumList = new ArrayList<>();
+        this.myParent.museumList = new ArrayList<>();
 
         String[] splitInput = input.split("\\[");
         input = splitInput[1];
@@ -116,7 +122,7 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
                 String address = obj.getString("address");
 
                 Museum newMuseum = new Museum(Integer.parseInt(id), name, address);
-                this.museumList.add(newMuseum);
+                this.myParent.museumList.add(newMuseum);
             }
         }
         catch (Exception e) {
@@ -135,7 +141,7 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
             String name = obj.getString("museumName");
             String address = obj.getString("address");
 
-            this.museum = new Museum(Integer.parseInt(id), name, address);
+            this.myParent.museum = new Museum(Integer.parseInt(id), name, address);
 
 
             JSONArray galleries = (JSONArray) jsonObject.get("galleries");
@@ -145,8 +151,8 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
                 String galleryId = gallery.getString("id");
                 String galleryName = gallery.getString("name");
 
-                Gallery newGallery = new Gallery(Integer.parseInt(galleryId), this.museum.getId(), galleryName);
-                this.museum.addGallery(newGallery);
+                Gallery newGallery = new Gallery(Integer.parseInt(galleryId), this.myParent.museum.getId(), galleryName);
+                this.myParent.museum.addGallery(newGallery);
                 Log.d("API", "Added Gallery:" + newGallery.getName());
             }
 
@@ -158,7 +164,7 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
                 String galleryId = exhibit.getString("galleryId");
                 String exhibitName = exhibit.getString("name");
 
-                Exhibit newExhibit = new Exhibit(Integer.parseInt(exhibitId), Integer.parseInt(galleryId), this.museum.getId(), exhibitName);
+                Exhibit newExhibit = new Exhibit(Integer.parseInt(exhibitId), Integer.parseInt(galleryId), this.myParent.museum.getId(), exhibitName);
                 sortExhibits(newExhibit);
 
                 Log.d("API", "Added exhibit: " + newExhibit.getName() + " to Gallery:" + newExhibit.getGallerytId());
@@ -182,7 +188,7 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
                 Log.d("API", "Added Content: " + newContent.getId() + " to " + newContent.getPathToContent());
             }
 
-            Log.d("Runner", "Museum Name: "+this.museum.getName());
+            Log.d("Runner", "Museum Name: "+this.myParent.museum.getName());
 
         }
         catch (Exception e) {
@@ -192,10 +198,10 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
 
     private void sortContent(Content content) {
         if (content.getGallerytId() == 0) {
-            this.museum.addContent(content);
+            this.myParent.museum.addContent(content);
         }
         else {
-            for (Gallery gallery : this.museum.getGalleries()) {
+            for (Gallery gallery : this.myParent.museum.getGalleries()) {
                 if (gallery.getId() == content.getGallerytId()) {
                     if (content.getExhibitId() == 0) {
                         gallery.addContent(content);
@@ -213,23 +219,10 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
     }
 
     private void sortExhibits(Exhibit exhibit) {
-        for (Gallery gallery : this.museum.getGalleries()) {
+        for (Gallery gallery : this.myParent.museum.getGalleries()) {
             if (gallery.getId() == exhibit.getGallerytId()) {
                 gallery.addExhibit(exhibit);
             }
         }
-    }
-
-    public Museum getMuseum() {
-        return this.museum;
-    }
-
-    public ArrayList<Museum> getMuseumList() {
-        if (this.museumList != null) {
-            Log.d("API", museumList.size() + " museums in the list.");
-            return this.museumList;
-        }
-        else return new ArrayList<Museum>();
-
     }
 }

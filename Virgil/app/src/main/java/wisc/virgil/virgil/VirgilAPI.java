@@ -2,6 +2,7 @@ package wisc.virgil.virgil;
 
 import java.util.ArrayList;
 import android.util.Log;
+import android.os.AsyncTask;
 
 /**
  * Created by TylerPhelps on 3/19/16.
@@ -10,26 +11,34 @@ public class VirgilAPI {
 
     private final String GET_MUSEUM = "getMuseum";
     private final String GET_ALL_MUSEUMS = "getAllMuseums";
-    private Museum returnMuseum;
-    private ArrayList<Museum> returnList;
 
-    public Museum getMuseum(int id) {
-        BackendTaskRunner runner = new BackendTaskRunner();
+    public Museum museum;
+    public ArrayList<Museum> museumList;
+
+    public VirgilAPI() {
+        this.museum = null;
+        this.museumList = null;
+    }
+
+    public void fetchMuseum(int id) {
+        BackendTaskRunner runner = new BackendTaskRunner(this);
         runner.execute(GET_MUSEUM, Integer.toString(id));
-
-        return returnMuseum;
     }
 
-    public Museum getMuseum(Museum museum) {
-        return getMuseum(museum.getId());
+    public void fetchMuseum(Museum museum) {
+        fetchMuseum(museum.getId());
     }
 
-    public ArrayList<Museum> getAllMuseums() {
-        returnList = new ArrayList<>();
-
-        BackendTaskRunner runner = new BackendTaskRunner();
+    public void fetchAllMuseums() {
+        BackendTaskRunner runner = new BackendTaskRunner(this);
         runner.execute(GET_ALL_MUSEUMS);
+    }
 
-        return returnList;
+    public ArrayList<Museum> getMuseumList() {
+        return this.museumList;
+    }
+
+    public Museum getMuseum() {
+        return this.museum;
     }
 }
