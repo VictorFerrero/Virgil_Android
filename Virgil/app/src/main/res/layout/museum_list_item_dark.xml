@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:background="@color/colorPrimaryDark">
+
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/iv_museumListImageDark"
+        android:src="@drawable/British_Museum"
+        android:layout_marginStart="0dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="<Museum Name>"
+        android:id="@+id/tv_museumNameDark"
+        android:layout_marginTop="@id/iv_museumListImageDark"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="502 N Frances \nMadison, WI, 53703"
+        android:id="@+id/tv_museumAddressDark"
+        android:layout_below="@+id/tv_museumNameDark"
+        android:layout_marginTop="@id/iv_museumListImageDark"
+        android:layout_marginLeft="110dp"
+        android:layout_alignBottom="@+id/iv_museumListImageDark" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Hours:\nMON-FRI:\n8:00AM-5:00PM"
+        android:id="@+id/tv_museumListHoursDark"
+        android:layout_alignBottom="@+id/tv_museumAddressDark"
+        android:layout_alignTop="@+id/tv_museumAddressDark"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@id/iv_museumListImageDark"
+        android:layout_toEndOf="@+id/tv_museumAddressDark"
+        android:layout_marginLeft="10dp"
+        />
+</RelativeLayout>
