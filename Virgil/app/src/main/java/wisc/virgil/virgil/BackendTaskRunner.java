@@ -5,7 +5,6 @@ import android.util.Log;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.ref.WeakReference;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -23,9 +22,7 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
     private final String GET_MUSEUM = "getMuseum";
     private final String GET_ALL_MUSEUMS = "getAllMuseums";
 
-    //private Museum museum;
     private String jsonString;
-    //private ArrayList<Museum> museumList;
 
     private VirgilAPI myParent = null;
 
@@ -193,6 +190,7 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
         }
         catch (Exception e) {
             Log.d("Error", "Couldn't parse this museum.");
+            this.myParent.museum = new Museum(0, "", "");
         }
     }
 
