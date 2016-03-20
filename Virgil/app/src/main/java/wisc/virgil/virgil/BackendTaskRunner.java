@@ -8,7 +8,9 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-
+import org.json.JSONObject;
+import org.json.JSONArray;
+import java.util.Iterator;
 
 /**
  * Created by TylerPhelps on 3/19/16.
@@ -94,15 +96,98 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
     }
 
     private void parseMuseumList(String input) {
-        //TODO parse list of museums
-        //temporary line of code
+
+        this.museumList = new ArrayList<>();
+
+        String[] splitInput = input.split("\\[");
+        input = splitInput[1];
+        splitInput = input.split("\\]");
+        input = splitInput[0];
+        input = "[" + input + "]";
+
+        try {
+            JSONArray jsonarray = new JSONArray(input);
+
+            for(int i = 0; i < jsonarray.length(); i++){
+                JSONObject obj = jsonarray.getJSONObject(i);
+
+                String id = obj.getString("id");
+                String name = obj.getString("museumName");
+                String address = obj.getString("address");
+
+                Museum newMuseum = new Museum(Integer.parseInt(id), name, address);
+                this.museumList.add(newMuseum);
+            }
+        }
+        catch (Exception e) {
+            Log.d("Error", "Couldn't parse this list.");
+        }
+
         this.museumList = null;
     }
 
     private void parseMuseum(String input) {
-        //TODO parse full museum
-        //temporary line of code
-        this.museum = new Museum(0, "name", "address");
+
+        try {
+            JSONObject jsonObject = new JSONObject(input);
+
+            JSONArray museum = (JSONArray) jsonObject.get("museum");
+            JSONObject obj = museum.getJSONObject(0);
+            String id = obj.getString("id");
+            String name = obj.getString("museumName");
+            String address = obj.getString("address");
+
+            this.museum = new Museum(Integer.parseInt(id), name, address);
+
+
+            JSONArray galleries = (JSONArray) jsonObject.get("galleries");
+            for(int i = 0; i < galleries.length(); i++){
+                JSONObject gallery = galleries.getJSONObject(i);
+
+                String galleryId = gallery.getString("id");
+                String galleryName = gallery.getString("name");
+
+                Gallery newGallery = new Gallery(Integer.parseInt(galleryId), this.museum.getId(), galleryName);
+                this.museum.addGallery(newGallery);
+                Log.d("API", "Added Gallery:" + newGallery.getName());
+            }
+
+            JSONArray exhibits = (JSONArray) jsonObject.get("exhibits");
+            for(int i = 0; i < exhibits.length(); i++){
+                JSONObject exhibit = exhibits.getJSONObject(i);
+
+                String exhibitId = exhibit.getString("id");
+                String galleryId = exhibit.getString("galleryId");
+                String exhibitName = exhibit.getString("name");
+
+                Exhibit newExhibit = new Exhibit(Integer.parseInt(id), Integer.parseInt(galleryId), this.museum.getId(), exhibitName);
+                sortExhibits(newExhibit);
+
+                Log.d("API", "Added exhibit: " + newExhibit.getName() + " to Gallery:" + newExhibit.getGallerytId());
+            }
+
+            JSONArray contents = (JSONArray) jsonObject.get("content");
+            for(int i = 0; i < contents.length(); i++){
+                JSONObject content = contents.getJSONObject(i);
+
+                String contentId = content.getString("id");
+                String contentGalleryId = content.getString("galleryId");
+                String contentExhibitId = content.getString("exhibitId");
+                String contentMuseumId = content.getString("museumId");
+                String description = content.getString("description");
+                String pathToContent = content.getString("pathToContent");
+
+                Content newContent = new Content(Integer.parseInt(contentId), Integer.parseInt(contentGalleryId),
+                        Integer.parseInt(contentExhibitId), Integer.parseInt(contentMuseumId), description, pathToContent);
+
+                sortContent(newContent);
+                Log.d("API", "Added Content: " + newContent.getId() + " to " + newContent.getPathToContent());
+            }
+
+        }
+        catch (Exception e) {
+            Log.d("Error", "Couldn't parse this museum.");
+        }
     }
 
     private void sortContent(Content content) {
@@ -123,6 +208,14 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private void sortExhibits(Exhibit exhibit) {
+        for (Gallery gallery : this.museum.getGalleries()) {
+            if (gallery.getId() == exhibit.getGallerytId()) {
+                gallery.addExhibit(exhibit);
             }
         }
     }

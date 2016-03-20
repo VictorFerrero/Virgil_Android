@@ -17,6 +17,13 @@ public class VirgilAPI {
         return runner.getMuseum();
     }
 
+    public Museum getMuseum(Museum museum) {
+        BackendTaskRunner runner = new BackendTaskRunner();
+        runner.execute(GET_MUSEUM, Integer.toString(museum.getId()));
+
+        return runner.getMuseum();
+    }
+
     public ArrayList<Museum> getAllMuseums() {
         BackendTaskRunner runner = new BackendTaskRunner();
         runner.execute(GET_ALL_MUSEUMS);
