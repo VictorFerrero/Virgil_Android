@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="150dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary">
 
 
@@ -46,4 +47,5 @@
         android:layout_toEndOf="@+id/tv_museumAddress"
         android:layout_marginLeft="10dp"
          />
+
 </RelativeLayout>

@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 /**
  *  This is the Splash screen for the Virgil app.
- *  @Summer Wilken
+ *  @author Summer Wilken
  */
 public class Splash extends Activity {
 
@@ -25,7 +25,7 @@ public class Splash extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = new Intent(this, MuseumSelectActivity.class);
+        Intent intent = new Intent(this, MuseumExhibition.class);
         startActivity(intent);
         finish();
     }

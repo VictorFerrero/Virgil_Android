@@ -7,7 +7,23 @@
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
+        android:icon="@drawable/ic_add_white_24dp"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_search"
+        android:orderInCategory="100"
+        android:title="@string/action_search"
+        android:icon="@drawable/ic_search_white_24dp"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_favorites"
+        android:orderInCategory="100"
+        android:title="@string/action_favorites"
+        android:icon="@drawable/ic_favorite_white_24dp"
+        app:showAsAction="never" />
+
     <item
         android:id="@+id/action_home"
         android:orderInCategory="100"
@@ -20,19 +36,5 @@
         android:orderInCategory="100"
         android:title="@string/action_beacon"
         android:icon="@drawable/ic_bluetooth_searching_white_24dp"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/action_favorites"
-        android:orderInCategory="100"
-        android:title="@string/action_beacon"
-        android:icon="@drawable/ic_favorite_white_24dp"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/action_search"
-        android:orderInCategory="100"
-        android:title="@string/action_search"
-        android:icon="@drawable/ic_search_white_24dp"
         app:showAsAction="never" />
 </menu>
