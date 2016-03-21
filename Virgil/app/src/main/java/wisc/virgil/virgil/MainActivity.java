@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         //call instance of the api
         api = new VirgilAPI();
-        api.fetchMuseum(4);
+        api.fetchMuseum(1);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

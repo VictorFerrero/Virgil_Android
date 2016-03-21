@@ -182,7 +182,7 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
                         Integer.parseInt(contentExhibitId), Integer.parseInt(contentMuseumId), description, pathToContent);
 
                 sortContent(newContent);
-                Log.d("API", "Added Content: " + newContent.getId() + " to " + newContent.getPathToContent());
+                Log.d("API", "Added Content: " + newContent.getDescription());
             }
 
             Log.d("Runner", "Museum Name: "+this.myParent.museum.getName());
