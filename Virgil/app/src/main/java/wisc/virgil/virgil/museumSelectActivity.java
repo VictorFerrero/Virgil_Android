@@ -3,7 +3,7 @@ package wisc.virgil.virgil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class museumSelectActivity extends AppCompatActivity {
+public class MuseumSelectActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

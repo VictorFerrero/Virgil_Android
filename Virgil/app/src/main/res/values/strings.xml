@@ -4,4 +4,12 @@
     <string name="server_url">http://52.24.10.104/Virgil_Backend/index.php/</string>
     <string name="get_museum_path">getEntireMuseum/</string>
     <string name="get_all_museums_path">getAllMuseums/</string>
+    <string name="action_home">home</string>
+    <string name="action_beacon">beacon</string>
+    <string name="action_search">search</string>
+    <string name="splash">splash screen</string>
+    <string name="museum_name">museum name</string>
+    <string name="dummy_address">502 N Frances \\nMadison, WI, 53703</string>
+    <string name="dummy_hours">Hours:\\nMON-FRI:\\n8:00AM-5:00PM</string>
+    <string name="museum_select">Museums</string>
 </resources>
