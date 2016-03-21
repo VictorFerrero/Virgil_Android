@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import java.io.InputStream;
 import java.net.URL;
 import android.util.Log;
+import android.content.Context;
 
 /**
  * Created by TylerPhelps on 3/18/16.
@@ -12,6 +13,7 @@ public class Content {
 
     private final String IP_ADDRESS = "http://52.24.10.104/";
     private final String RESOURCE_PATH = "var/www/html/Virgil_Backend/images/";
+    private final String DEFAULT_IMAGE = "drawable/museumListItem.jpg";
 
     private int id, galleryId, exhibitId, museumId;
     private String description, pathToContent;
@@ -46,7 +48,7 @@ public class Content {
             this.image = Drawable.createFromStream(URLcontent, null);
         }
         catch (Exception e) {
-            //can set a default image here
+            this.image = Drawable.createFromPath(DEFAULT_IMAGE);
             Log.d("Content", "Could not get image for content");
         }
     }

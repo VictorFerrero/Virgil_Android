@@ -29,12 +29,12 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (api.getMuseum() == null) {
+                if (api.museumStatus() == api.PENDING_STATUS) {
                     Snackbar.make(view, "Museum not loaded yet", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
                 else {
-                    if (api.getMuseum().getName().isEmpty()) {
+                    if (api.museumStatus() == api.ERROR_STATUS) {
                         Snackbar.make(view, "Bad Museum ID", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                     }

@@ -11,6 +11,9 @@ public class VirgilAPI {
 
     private final String GET_MUSEUM = "getMuseum";
     private final String GET_ALL_MUSEUMS = "getAllMuseums";
+    public final int PENDING_STATUS = 0;
+    public final int ERROR_STATUS = -1;
+    public final int FINISHED_STATUS = 1;
 
     public Museum museum;
     public ArrayList<Museum> museumList;
@@ -40,5 +43,24 @@ public class VirgilAPI {
 
     public Museum getMuseum() {
         return this.museum;
+    }
+
+    public int museumStatus() {
+        if (this.museum != null) {
+            if (this.museum.getName().isEmpty()) {
+                return this.ERROR_STATUS;
+            }
+            else return this.FINISHED_STATUS;
+        }
+        else return this.PENDING_STATUS;
+    }
+
+    public int museumListStatus() {
+        if (this.museumList != null) {
+            return this.FINISHED_STATUS;
+        }
+        else {
+            return this.PENDING_STATUS;
+        }
     }
 }
