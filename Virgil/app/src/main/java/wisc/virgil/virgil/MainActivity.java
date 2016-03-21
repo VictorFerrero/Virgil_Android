@@ -11,10 +11,17 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    VirgilAPI api;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //call instance of the api
+        api = new VirgilAPI();
+        api.fetchMuseum(1);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -22,8 +29,21 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if (api.getMuseum() == null) {
+                    Snackbar.make(view, "Museum not loaded yet", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+                else {
+                    if (api.getMuseum().getName().isEmpty()) {
+                        Snackbar.make(view, "Bad Museum ID", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+                    else {
+                        Snackbar.make(view, "Museum name: "+api.getMuseum().getName(), Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+                }
+
             }
         });
     }
