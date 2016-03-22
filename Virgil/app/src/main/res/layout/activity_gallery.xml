@@ -16,13 +16,13 @@
             android:id="@+id/ct_exhibition"
             android:layout_width="match_parent"
             app:titleEnabled="false"
-            android:layout_height="250dp"
+            android:layout_height="425dp"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
-                android:id="@+id/iv_exhibitions"
+                android:id="@+id/iv_gallery"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/british_museum"
@@ -30,8 +30,13 @@
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tv_gallery"
+                />
             <android.support.v7.widget.Toolbar
-                android:id="@+id/tb_exhibition"
+                android:id="@+id/tb_gallery"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:gravity="top"
@@ -41,7 +46,7 @@
                 app:titleMarginTop="15dp" />
 
             <android.support.design.widget.TabLayout
-                android:id="@+id/tbl_exhibition"
+                android:id="@+id/tbl_gallery"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="bottom"
@@ -52,7 +57,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/vp_exhibition"
+        android:id="@+id/vp_gallery"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />

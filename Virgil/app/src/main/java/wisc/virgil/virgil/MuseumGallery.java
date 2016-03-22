@@ -1,14 +1,11 @@
 package wisc.virgil.virgil;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.support.v7.widget.Toolbar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -16,20 +13,20 @@ import butterknife.ButterKnife;
 /**
  * Created by Summer on 3/21/2016.
  */
-public class MuseumExhibition extends AppCompatActivity {
+public class MuseumGallery extends AppCompatActivity {
 
     @Bind(R.id.tb_exhibition) Toolbar toolbar;
     @Bind(R.id.tbl_exhibition) TabLayout tabs;
     @Bind(R.id.vp_exhibition) ViewPager pager;
 
     MainPagerAdapter adapter;
-    CharSequence Titles[] = {"TAB 1","TAB 2"};
+    CharSequence Titles[] = {"TAB 1","TAB 2", "TAB 3", "TAB 4", "TAB 5"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_exhibition);
+        setContentView(R.layout.activity_gallery);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         setUpTabs();
@@ -43,8 +40,11 @@ public class MuseumExhibition extends AppCompatActivity {
     }
 
     private void setupTabIcons() {
-        tabs.getTabAt(0).setIcon(R.mipmap.ic_launcher_main);
-        tabs.getTabAt(1).setIcon(R.mipmap.ic_launcher_main);
+        tabs.getTabAt(0).setIcon(R.drawable.ic_virgil);
+        tabs.getTabAt(1).setIcon(R.drawable.ic_virgil);
+        tabs.getTabAt(2).setIcon(R.drawable.ic_virgil);
+        tabs.getTabAt(3).setIcon(R.drawable.ic_virgil);
+        tabs.getTabAt(4).setIcon(R.drawable.ic_virgil);
     }
 
     @Override
@@ -69,4 +69,3 @@ public class MuseumExhibition extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
-

@@ -20,8 +20,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/museum_name"
         android:id="@+id/tv_museumNameDark"
-        android:layout_marginTop="@id/iv_museumListImageDark"
-        android:layout_marginLeft="10dp"/>
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/iv_museumListImageDark" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -30,9 +30,7 @@
         android:text="@string/dummy_address"
         android:id="@+id/tv_museumAddressDark"
         android:layout_below="@+id/tv_museumNameDark"
-        android:layout_marginTop="@id/iv_museumListImageDark"
-        android:layout_marginLeft="110dp"
-        android:layout_alignBottom="@+id/iv_museumListImageDark" />
+        android:layout_toEndOf="@+id/iv_museumListImageDark" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -40,11 +38,6 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/dummy_hours"
         android:id="@+id/tv_museumListHoursDark"
-        android:layout_alignBottom="@+id/tv_museumAddressDark"
-        android:layout_alignTop="@+id/tv_museumAddressDark"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="@id/iv_museumListImageDark"
-        android:layout_toEndOf="@+id/tv_museumAddressDark"
-        android:layout_marginLeft="10dp"
-        />
+        android:layout_alignBottom="@+id/iv_museumListImageDark"
+        android:layout_toEndOf="@+id/iv_museumListImageDark" />
 </RelativeLayout>
