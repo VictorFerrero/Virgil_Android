@@ -13,7 +13,7 @@ public class Content {
 
     private final String IP_ADDRESS = "http://52.24.10.104/";
     private final String RESOURCE_PATH = "var/www/html/Virgil_Backend/images/";
-    private final String DEFAULT_IMAGE = "drawable/museumListItem.jpg";
+    private final String DEFAULT_IMAGE = "drawable/museum_list_item.jpg";
 
     private int id, galleryId, exhibitId, museumId;
     private String description, pathToContent;
