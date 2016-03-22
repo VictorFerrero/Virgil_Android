@@ -1,4 +1,4 @@
-package wisc.virgil.virgil;
+package wisc.virgil;
 
 import android.graphics.drawable.Drawable;
 import java.io.InputStream;
