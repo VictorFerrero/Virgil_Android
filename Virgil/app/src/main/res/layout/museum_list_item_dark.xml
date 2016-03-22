@@ -9,7 +9,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/iv_museumListImageDark"
-        android:src="@drawable/British_Museum"
+        android:src="@drawable/british_museum"
         android:layout_marginStart="0dp"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true" />
