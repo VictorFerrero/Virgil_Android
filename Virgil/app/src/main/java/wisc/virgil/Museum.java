@@ -1,4 +1,4 @@
-package wisc.virgil.virgil;
+package wisc.virgil;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;

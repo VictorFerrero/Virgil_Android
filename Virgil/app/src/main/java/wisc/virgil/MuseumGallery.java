@@ -1,4 +1,4 @@
-package wisc.virgil.virgil;
+package wisc.virgil;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;

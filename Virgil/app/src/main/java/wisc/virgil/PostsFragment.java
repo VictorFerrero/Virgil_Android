@@ -1,4 +1,4 @@
-package wisc.virgil.virgil;
+package wisc.virgil;
 
 import android.content.Context;
 import android.os.Bundle;

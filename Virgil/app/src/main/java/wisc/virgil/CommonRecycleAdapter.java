@@ -1,4 +1,4 @@
-package wisc.virgil.virgil;
+package wisc.virgil;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

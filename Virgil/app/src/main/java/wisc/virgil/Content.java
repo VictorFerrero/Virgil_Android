@@ -1,4 +1,4 @@
-package wisc.virgil.virgil;
+package wisc.virgil;
 
 /**
  * Created by TylerPhelps on 3/18/16.
