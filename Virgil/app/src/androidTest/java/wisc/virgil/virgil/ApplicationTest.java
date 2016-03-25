@@ -1,4 +1,4 @@
-package wisc.virgil;
+package wisc.virgil.virgil;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
