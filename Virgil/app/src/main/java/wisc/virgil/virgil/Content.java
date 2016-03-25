@@ -1,12 +1,22 @@
 package wisc.virgil.virgil;
 
+import android.graphics.drawable.Drawable;
+import java.io.InputStream;
+import java.net.URL;
+import android.util.Log;
+
 /**
  * Created by TylerPhelps on 3/18/16.
  */
 public class Content {
 
+    private final String IP_ADDRESS = "http://52.24.10.104/";
+    private final String RESOURCE_PATH = "var/www/html/Virgil_Backend/images/";
+    private final String DEFAULT_IMAGE = "drawable/museum_list_item.jpg";
+
     private int id, galleryId, exhibitId, museumId;
     private String description, pathToContent;
+    private Drawable image;
 
     public Content(int id, int galleryId, int exhibitId,
                    int museumId, String description, String pathToContent) {
@@ -15,7 +25,10 @@ public class Content {
         this.exhibitId = exhibitId;
         this.museumId = museumId;
         this.description = description;
-        this.pathToContent = pathToContent;
+        this.pathToContent = IP_ADDRESS + RESOURCE_PATH + this.museumId + pathToContent;
+        this.image = null;
+
+        loadContentImage();
     }
 
     public int getId() { return this.id; }
@@ -28,6 +41,21 @@ public class Content {
 
     public String getDescription() { return this.description; }
 
+    private void loadContentImage() {
+        try {
+            InputStream URLcontent = (InputStream) new URL(pathToContent).getContent();
+            this.image = Drawable.createFromStream(URLcontent, null);
+        }
+        catch (Exception e) {
+            this.image = Drawable.createFromPath(DEFAULT_IMAGE);
+            Log.d("Content", "Could not get image for content");
+        }
+    }
+
     public String getPathToContent() { return this.pathToContent; }
+
+    public Drawable getImage() {
+        return this.image;
+    }
 
 }
