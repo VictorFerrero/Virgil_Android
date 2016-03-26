@@ -25,7 +25,7 @@
                 android:id="@+id/iv_gallery"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/british_museum"
+                android:src="@drawable/museum_list_image"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax" />
