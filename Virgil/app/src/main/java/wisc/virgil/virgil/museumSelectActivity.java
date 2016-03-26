@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class museumSelectActivity extends AppCompatActivity {
 
-    //VirgilAPI api;
+    VirgilAPI api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +29,9 @@ public class museumSelectActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.tb_museum_select);
         setSupportActionBar(myToolbar);
 
-        //api = new VirgilAPI();
+        api = new VirgilAPI();
 
-        //api.fetchAllMuseums();
+        api.fetchAllMuseums();
 
         showListView();
     }
@@ -44,9 +44,9 @@ public class museumSelectActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.lv_museum_select);
         listView.setAdapter(adapter);
 
-        //while(api.museumStatus() != api.FINISHED_STATUS) {
-        //    ;;
-        //}
+        while(api.museumListStatus() != api.FINISHED_STATUS) {
+            ;;
+        }
 
         //Add fake museums to arraylist
         Museum museum1 = new Museum(0, "Nope", "Yep");
@@ -58,6 +58,8 @@ public class museumSelectActivity extends AppCompatActivity {
         adapter.add(museum3);
         adapter.add(museum4);
 
+        adapter.addAll(api.getMuseumList());
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                             @Override
                                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -65,8 +67,6 @@ public class museumSelectActivity extends AppCompatActivity {
                                             }
                                         }
         );
-
-        //adapter.addAll(api.getMuseumList());
     }
 
     public void switchToGallery(int position) {
