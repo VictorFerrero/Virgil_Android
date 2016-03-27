@@ -45,18 +45,7 @@ public class museumSelectActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         while(api.museumListStatus() != api.FINISHED_STATUS) {
-            ;;
         }
-
-        //Add fake museums to arraylist
-        Museum museum1 = new Museum(0, "Nope", "Yep");
-        Museum museum2 = new Museum(1, "Nope", "Nope");
-        Museum museum3 = new Museum(2, "Yep", "Yep");
-        Museum museum4 = new Museum(3, "Yep", "Nope");
-        adapter.add(museum1);
-        adapter.add(museum2);
-        adapter.add(museum3);
-        adapter.add(museum4);
 
         adapter.addAll(api.getMuseumList());
 

@@ -17,10 +17,12 @@ public class VirgilAPI {
 
     public Museum museum;
     public ArrayList<Museum> museumList;
+    public boolean listFinished;
 
     public VirgilAPI() {
         this.museum = null;
         this.museumList = null;
+        this.listFinished = false;
     }
 
     public void fetchMuseum(int id) {
@@ -38,6 +40,7 @@ public class VirgilAPI {
     }
 
     public ArrayList<Museum> getMuseumList() {
+        Log.d("API", "getting " + this.museumList.size() + " museums.");
         return this.museumList;
     }
 
@@ -56,11 +59,14 @@ public class VirgilAPI {
     }
 
     public int museumListStatus() {
-        if (this.museumList != null) {
+        if (this.listFinished) {
             return this.FINISHED_STATUS;
         }
-        else {
+        else if (this.museumList != null) {
             return this.PENDING_STATUS;
+        }
+        else {
+            return this.ERROR_STATUS;
         }
     }
 }

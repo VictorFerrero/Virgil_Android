@@ -101,6 +101,7 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
     private void parseMuseumList(String input) {
 
         this.myParent.museumList = new ArrayList<>();
+        this.myParent.listFinished = false;
 
         String[] splitInput = input.split("\\[");
         input = splitInput[1];
@@ -121,6 +122,8 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
                 Museum newMuseum = new Museum(Integer.parseInt(id), name, address);
                 this.myParent.museumList.add(newMuseum);
             }
+            Log.d("API", "List parsed. " + myParent.museumList.size() + " museums.");
+            this.myParent.listFinished = true;
         }
         catch (Exception e) {
             Log.d("Error", "Couldn't parse this list.");
