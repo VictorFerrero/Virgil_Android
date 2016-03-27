@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -59,6 +60,15 @@ public class museumSelectActivity extends AppCompatActivity {
     }
 
     public void switchToGallery(int position) {
+        Log.d("API", "Position: " + position);
+        api.fetchMuseum(api.getMuseumList().get(position));
+
+        while(api.museumStatus() != api.FINISHED_STATUS) {
+            if (api.museumStatus() == api.ERROR_STATUS) break;
+        }
+
+        Log.d("API", "Museum Selected: " + api.getMuseum().getName());
+
         Intent intent = new Intent(this, MuseumGallery.class);
         intent.putExtra("POSITION", position);
         startActivity(intent);
