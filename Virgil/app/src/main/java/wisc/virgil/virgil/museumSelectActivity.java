@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -65,6 +66,9 @@ public class museumSelectActivity extends AppCompatActivity {
 
     public void switchToGallery(int position) {
 
+        //Get the selected museum's id...
+        int id = api.getMuseumList().get(position).getId();
+
         //EXTRA FETCH FOR TESTING PURPOSES
         Log.d("API", "Position: " + position);
         api.fetchMuseum(api.getMuseumList().get(position).getId());
@@ -76,8 +80,7 @@ public class museumSelectActivity extends AppCompatActivity {
         Log.d("API", "Museum Selected: " + api.getMuseum().getName());
         //END OF EXTRA FETCH AND TEST
 
-        //Get the selected museum's id and pass it to the new starting gallery view
-        int id = api.getMuseumList().get(position).getId();
+        //...and pass it to the new starting gallery view
         Intent intent = new Intent(this, MuseumGallery.class);
         intent.putExtra("ID", id);
         startActivity(intent);

@@ -27,14 +27,11 @@ public class Splash extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash);
-    }
+        //setContentView(R.layout.splash);
 
-    public void switchToList(View view) {
-
+        //Switch to museum list
         Intent intent = new Intent(this, museumSelectActivity.class);
         startActivity(intent);
         finish();
-
     }
 }
