@@ -1,5 +1,6 @@
 package wisc.virgil.virgil;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -11,8 +12,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Summer on 3/21/2016.
- */
+ *  Written by   : Munish Kapoor
+ *  Original Code:
+ *  http://manishkpr.webheavens.com/android-material-design-tabs-collapsible-example/
+ **/
 public class MuseumGallery extends AppCompatActivity {
 
     @Bind(R.id.tb_gallery) Toolbar toolbar;
@@ -20,7 +23,8 @@ public class MuseumGallery extends AppCompatActivity {
     @Bind(R.id.vp_gallery) ViewPager pager;
 
     MainPagerAdapter adapter;
-    CharSequence Titles[] = {"TAB 1","TAB 2", "TAB 3", "TAB 4", "TAB 5"};
+    CharSequence Titles[] = {"Gallery 1","Gallery 2", "Gallery 3", "Gallery 4", "Gallery 5",
+            "Gallery 6", "Gallery 7"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,16 +40,8 @@ public class MuseumGallery extends AppCompatActivity {
         adapter =  new MainPagerAdapter(this.getSupportFragmentManager(),Titles,Titles.length);
         pager.setAdapter(adapter);
         tabs.setupWithViewPager(pager);
-        setupTabIcons();
     }
 
-    private void setupTabIcons() {
-        tabs.getTabAt(0).setIcon(R.drawable.ic_virgil);
-        tabs.getTabAt(1).setIcon(R.drawable.ic_virgil);
-        tabs.getTabAt(2).setIcon(R.drawable.ic_virgil);
-        tabs.getTabAt(3).setIcon(R.drawable.ic_virgil);
-        tabs.getTabAt(4).setIcon(R.drawable.ic_virgil);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -61,11 +57,19 @@ public class MuseumGallery extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_beacon) {
+            return true;
+        } else if (id == R.id.action_map) {
+            return true;
+        } else if (id == R.id.action_favorites) {
+            return true;
+        } else if (id == R.id.action_search) {
+            Intent intent = new Intent(this, museumSelectActivity.class);
+            startActivity(intent);
+            finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

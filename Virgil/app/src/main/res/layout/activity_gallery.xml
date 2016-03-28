@@ -16,7 +16,7 @@
             android:id="@+id/ct_exhibition"
             android:layout_width="match_parent"
             app:titleEnabled="false"
-            android:layout_height="425dp"
+            android:layout_height="450dp"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -50,7 +50,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="bottom"
-                app:tabIndicatorColor="@color/colorAccent" />
+                app:tabBackground="@color/colorPrimary"
+                app:tabIndicatorColor="@color/colorAccent"
+                app:tabMode="scrollable"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 

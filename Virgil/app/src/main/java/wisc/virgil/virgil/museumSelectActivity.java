@@ -93,6 +93,16 @@ public class museumSelectActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_beacon) {
+            return true;
+        } else if (id == R.id.action_map) {
+            return true;
+        } else if (id == R.id.action_favorites) {
+            return true;
+        } else if (id == R.id.action_search) {
+            Intent intent = new Intent(this, MuseumGallery.class);
+            startActivity(intent);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

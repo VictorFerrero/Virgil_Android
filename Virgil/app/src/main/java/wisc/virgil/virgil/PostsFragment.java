@@ -14,6 +14,11 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ *  Written by   : Munish Kapoor
+ *  Original Code:
+ *  http://manishkpr.webheavens.com/android-material-design-tabs-collapsible-example/
+ **/
 
 public class PostsFragment extends Fragment {
 
