@@ -44,7 +44,7 @@ public class PostsFragment extends Fragment {
     private List<String> createItemList() {
         List<String> itemList = new ArrayList<>();
         for(int i=0;i<30;i++) {
-            itemList.add("Item "+i);
+            itemList.add("Item " + i);
         }
         return itemList;
     }

@@ -30,8 +30,8 @@ public class museumSelectActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.tb_museum_select);
         setSupportActionBar(myToolbar);
 
+        //Setup API and fetch museum list
         api = new VirgilAPI();
-
         api.fetchAllMuseums();
 
         showListView();
@@ -42,14 +42,18 @@ public class museumSelectActivity extends AppCompatActivity {
 
         MuseumSelectAdapter adapter = new MuseumSelectAdapter(this, museums);
 
+        //Set listview adapter
         ListView listView = (ListView) findViewById(R.id.lv_museum_select);
         listView.setAdapter(adapter);
 
+        //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
         while(api.museumListStatus() != api.FINISHED_STATUS) {
         }
 
+        //Add all list items to adapter
         adapter.addAll(api.getMuseumList());
 
+        //Make museums clickable and switch to their respective galleries
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                             @Override
                                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -60,17 +64,22 @@ public class museumSelectActivity extends AppCompatActivity {
     }
 
     public void switchToGallery(int position) {
+
+        //EXTRA FETCH FOR TESTING PURPOSES
         Log.d("API", "Position: " + position);
-        api.fetchMuseum(api.getMuseumList().get(position));
+        api.fetchMuseum(api.getMuseumList().get(position).getId());
 
         while(api.museumStatus() != api.FINISHED_STATUS) {
             if (api.museumStatus() == api.ERROR_STATUS) break;
         }
 
         Log.d("API", "Museum Selected: " + api.getMuseum().getName());
+        //END OF EXTRA FETCH AND TEST
 
+        //Get the selected museum's id and pass it to the new starting gallery view
+        int id = api.getMuseumList().get(position).getId();
         Intent intent = new Intent(this, MuseumGallery.class);
-        intent.putExtra("POSITION", position);
+        intent.putExtra("ID", id);
         startActivity(intent);
         finish();
     }
