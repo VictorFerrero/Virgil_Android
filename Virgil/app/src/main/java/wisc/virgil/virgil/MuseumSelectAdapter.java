@@ -1,10 +1,12 @@
 package wisc.virgil.virgil;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,8 +23,8 @@ public class MuseumSelectAdapter extends ArrayAdapter<Museum> {
     private static class ViewHolder {
         TextView name;
         TextView address;
-        //no images yet
-        //no hours yet
+        ImageView image;
+        TextView hours;
     }
 
     @Override
@@ -38,8 +40,8 @@ public class MuseumSelectAdapter extends ArrayAdapter<Museum> {
             convertView = inflater.inflate(R.layout.museum_list_item, parent, false);
             viewHolder.name = (TextView) convertView.findViewById(R.id.tv_museumName);
             viewHolder.address = (TextView) convertView.findViewById(R.id.tv_museumAddress);
-            //no images yet
-            //no hours yet
+            viewHolder.image = (ImageView) convertView.findViewById(R.id.iv_museumListImage);
+            viewHolder.hours = (TextView) convertView.findViewById(R.id.tv_museumListHours);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -48,6 +50,15 @@ public class MuseumSelectAdapter extends ArrayAdapter<Museum> {
         //Fill in view holder
         viewHolder.name.setText(museum.getName());
         viewHolder.address.setText(museum.getAddress());
+        if(museum.getContent().isEmpty() || museum.getContent().get(0).getImage() == null) {
+            if(museum.getId() == 1) {
+                viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.bucky_museum));
+            } else {
+                viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.camp_randall_museum));
+            }
+        } else {
+            viewHolder.image.setImageDrawable(museum.getContent().get(0).getImage());
+        }
 
         return convertView;
     }

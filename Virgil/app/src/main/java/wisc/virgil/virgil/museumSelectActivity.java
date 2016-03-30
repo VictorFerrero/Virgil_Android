@@ -39,7 +39,7 @@ public class museumSelectActivity extends AppCompatActivity {
     }
 
     private void showListView() {
-        ArrayList<Museum> museums = new ArrayList<Museum>();
+        ArrayList<Museum> museums = new ArrayList<>();
 
         MuseumSelectAdapter adapter = new MuseumSelectAdapter(this, museums);
 
@@ -105,6 +105,16 @@ public class museumSelectActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_beacon) {
+            return true;
+        } else if (id == R.id.action_map) {
+            return true;
+        } else if (id == R.id.action_favorites) {
+            return true;
+        } else if (id == R.id.action_search) {
+            Intent intent = new Intent(this, museumSelectActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

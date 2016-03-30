@@ -49,11 +49,19 @@ public class MuseumGallery extends AppCompatActivity {
         }
 
         //Fill Titles for tabs with gallery names
-        List<String> nameList = new ArrayList<String>();
+        List<String> nameList = new ArrayList<>();
         for(int i = 0; i < api.getMuseum().getGalleries().size(); i++) {
             nameList.add(api.getMuseum().getGalleries().get(i).getName());
         }
+
+        //Fake galleries to show scrollable tabs
+        nameList.add("Gallery 2");
+        nameList.add("Gallery 3");
+        nameList.add("Gallery 4");
+
         Titles = nameList.toArray(new CharSequence[nameList.size()]);
+
+        setTitle(api.getMuseum().getName());
 
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
@@ -128,6 +136,16 @@ public class MuseumGallery extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_beacon) {
+            return true;
+        } else if (id == R.id.action_map) {
+            return true;
+        } else if (id == R.id.action_favorites) {
+            return true;
+        } else if (id == R.id.action_search) {
+            Intent intent = new Intent(this, museumSelectActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

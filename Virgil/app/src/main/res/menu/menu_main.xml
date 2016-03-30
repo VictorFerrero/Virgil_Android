@@ -37,4 +37,11 @@
         android:title="@string/action_beacon"
         android:icon="@drawable/ic_bluetooth_searching_white_24dp"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_map"
+        android:orderInCategory="100"
+        android:title="@string/Map"
+        android:icon="@drawable/ic_home_white_24dp"
+        app:showAsAction="never" />
 </menu>
