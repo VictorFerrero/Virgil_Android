@@ -18,4 +18,5 @@
     <string name="ask_virgil">Ask Virgil</string>
     <string name="get_beacon_info">See a beacon? Tap this beacon.</string>
     <string name="MuseumImage">Museum Image</string>
+    <string name="exhibit_content">Exhibit Content</string>
 </resources>
