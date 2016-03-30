@@ -28,7 +28,6 @@
 
         <activity android:name=".museumSelectActivity"
             android:label="@string/museum_select"
-            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
 
         </activity>
@@ -42,5 +41,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".Beacon"
+            android:screenOrientation="portrait">
+        </activity>
+
+
     </application>
 </manifest>

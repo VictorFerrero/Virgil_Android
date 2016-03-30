@@ -13,7 +13,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/ct_exhibition"
+            android:id="@+id/ct_gallery"
             android:layout_width="match_parent"
             app:titleEnabled="false"
             android:layout_height="450dp"
@@ -33,8 +33,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/tv_gallery"
-                />
+                android:id="@+id/tv_gallery" />
+
             <android.support.v7.widget.Toolbar
                 android:id="@+id/tb_gallery"
                 android:layout_width="match_parent"

@@ -57,10 +57,13 @@ public class MuseumGallery extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+
         if (id == R.id.action_settings) {
             return true;
         } else if (id == R.id.action_beacon) {
-            return true;
+            Intent intent = new Intent(this, Beacon.class);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.action_map) {
             return true;
         } else if (id == R.id.action_favorites) {

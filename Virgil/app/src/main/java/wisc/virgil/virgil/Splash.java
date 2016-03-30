@@ -26,7 +26,7 @@ public class Splash extends Activity {
 
         super.onCreate(savedInstanceState);
 
-        Intent intent = new Intent(this, MuseumGallery.class);
+        Intent intent = new Intent(this, museumSelectActivity.class);
         startActivity(intent);
         finish();
     }
