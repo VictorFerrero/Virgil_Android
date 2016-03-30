@@ -36,8 +36,9 @@
             android:textColor="@color/colorAccent"
             android:text="@string/get_beacon_info"
             android:fontFamily="sans-serif"
-            android:layout_above="@+id/btn_beacon"
-            android:layout_centerHorizontal="true" />
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="99dp" />
 
         <Button
             android:layout_height="wrap_content"
@@ -47,8 +48,9 @@
             android:stateListAnimator="@null"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:onClick="onTouch"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="134dp" />
     </RelativeLayout>
 
     <FrameLayout
