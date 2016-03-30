@@ -115,8 +115,7 @@ public class museumSelectActivity extends AppCompatActivity {
             Intent intent = new Intent(this, museumSelectActivity.class);
             startActivity(intent);
             finish();
-        }
-
+        } 
         return super.onOptionsItemSelected(item);
     }
 }

@@ -1,43 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:background="@color/colorPrimary">
-
+    android:layout_height="180dp"
+    android:background="@color/colorAccent"
+    android:elevation="2dp"
+    android:layout_marginTop="2dp">
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
         android:id="@+id/iv_museumListImage"
-        android:src="@drawable/ic_virgil"
-        android:layout_marginStart="0dp"
+        android:src="@drawable/virgil_blue_icon"
+        android:contentDescription="@string/MuseumImage"
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:elevation="4dp"
+        android:layout_margin="10dp"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/museum_name"
-        android:id="@+id/tv_museumName"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/iv_museumListImage" />
+    <RelativeLayout
+        android:id="@+id/rl_text"
+        android:layout_width="250dp"
+        android:layout_height="175dp"
+        android:padding="2dp"
+        android:layout_margin="2dp"
+        android:layout_toEndOf="@+id/iv_museumListImage"
+        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/iv_museumListImage">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/museum_name"
+            android:gravity="left"
+            android:textAlignment="gravity"
+            android:id="@+id/tv_museumName"
+            android:layout_marginLeft="4dp"
+            android:layout_above="@+id/tv_museumAddress"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="22dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/dummy_address"
-        android:id="@+id/tv_museumAddress"
-        android:layout_above="@+id/tv_museumListHours"
-        android:layout_toEndOf="@+id/iv_museumListImage" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/dummy_hours"
+            android:id="@+id/tv_museumListHours"
+            android:gravity="left"
+            android:textAlignment="gravity"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_below="@+id/tv_museumAddress"
+            android:layout_alignStart="@+id/tv_museumName"
+            android:layout_alignParentBottom="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/dummy_hours"
-        android:id="@+id/tv_museumListHours"
-        android:layout_alignBottom="@+id/iv_museumListImage"
-        android:layout_toEndOf="@+id/iv_museumListImage" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/dummy_address"
+            android:id="@+id/tv_museumAddress"
+            android:gravity="left"
+            android:textAlignment="gravity"
+            android:layout_marginLeft="4dp"
+            android:layout_centerVertical="true"
+            android:layout_alignStart="@+id/tv_museumName"
+            android:layout_alignEnd="@+id/tv_museumListHours" />
+    </RelativeLayout>
 </RelativeLayout>

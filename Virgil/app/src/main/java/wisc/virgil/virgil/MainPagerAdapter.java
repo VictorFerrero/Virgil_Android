@@ -4,9 +4,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-    /**
-     * Created by Munish on 10/15/15.
-     */
+/**
+ *  Written by   : Munish Kapoor
+ *  Original Code:
+ *  http://manishkpr.webheavens.com/android-material-design-tabs-collapsible-example/
+ **/
 
     public class MainPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -35,7 +37,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
                 PostsFragment tab1 = new PostsFragment();
                 return tab1;
             }
-            else             // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
+            else    // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
             {
                 PostsFragment tab2 = new PostsFragment();
                 return tab2;

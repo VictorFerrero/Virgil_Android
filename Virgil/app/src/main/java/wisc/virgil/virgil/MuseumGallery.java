@@ -18,8 +18,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Summer on 3/21/2016.
- */
+ *  Written by   : Munish Kapoor
+ *  Original Code:
+ *  http://manishkpr.webheavens.com/android-material-design-tabs-collapsible-example/
+ **/
 public class MuseumGallery extends AppCompatActivity {
 
     @Bind(R.id.tb_gallery) Toolbar toolbar;
@@ -27,10 +29,11 @@ public class MuseumGallery extends AppCompatActivity {
     @Bind(R.id.vp_gallery) ViewPager pager;
 
     MainPagerAdapter adapter;
-    CharSequence Titles[];
     int museumId;
 
     VirgilAPI api;
+    CharSequence Titles[] = {"Gallery 1","Gallery 2", "Gallery 3", "Gallery 4", "Gallery 5",
+            "Gallery 6", "Gallery 7"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +122,7 @@ public class MuseumGallery extends AppCompatActivity {
         finish();
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -133,11 +137,13 @@ public class MuseumGallery extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_settings) {
             return true;
         } else if (id == R.id.action_beacon) {
-            return true;
+            Intent intent = new Intent(this, Beacon.class);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.action_map) {
             return true;
         } else if (id == R.id.action_favorites) {
@@ -147,7 +153,6 @@ public class MuseumGallery extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
