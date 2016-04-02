@@ -100,20 +100,20 @@ public class DatabaseTaskRunner {
     {
         Log.d("DB", ("add " + id));
 
-        //myParent.fetchMuseum(id);
+        myParent.fetchMuseum(id);
         Log.d("DB", "fetched");
 
-        /*while (myParent.museumStatus() == myParent.FINISHED_STATUS) {
+        while (myParent.museumStatus() == myParent.PENDING_STATUS) {
             if (myParent.museumStatus() == myParent.ERROR_STATUS) {
                 closeDatabase();
                 return false;
             }
         }
 
-        Museum museum = myParent.getMuseum();*/
+        Museum museum = myParent.getMuseum();
         Random rand = new Random();
 
-        FavoriteMuseum newFav = new FavoriteMuseum(rand.nextLong(), id, "Museum", "Address", "/", true);
+        FavoriteMuseum newFav = new FavoriteMuseum(rand.nextLong(), id, museum.getName(), museum.getAddress(), "/", true);
 
         favMuseumDao.insert(newFav);
         Log.d("DB", "added successfully");
