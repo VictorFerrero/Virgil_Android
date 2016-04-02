@@ -113,10 +113,9 @@ public class DatabaseTaskRunner {
         Museum museum = myParent.getMuseum();*/
         Random rand = new Random();
 
-        FavoriteMuseum newFav = new FavoriteMuseum(rand.nextLong(), "ID", "Museum", "Address", "/", true);
+        FavoriteMuseum newFav = new FavoriteMuseum(rand.nextLong(), id, "Museum", "Address", "/", true);
 
         favMuseumDao.insert(newFav);
-        favoriteList.add(newFav);
         Log.d("DB", "added successfully");
 
         closeDatabase();
@@ -131,7 +130,8 @@ public class DatabaseTaskRunner {
     public boolean deleteFavorite(int id) {
 
         for (FavoriteMuseum favMuseum : favoriteList) {
-            if (favMuseum.getId() == id) {
+            if (favMuseum.getMuseumID() == id) {
+                Log.d("DB", "Deleting museum " + id);
                 favMuseumDao.delete(favMuseum);
                 closeDatabase();
                 return true;
