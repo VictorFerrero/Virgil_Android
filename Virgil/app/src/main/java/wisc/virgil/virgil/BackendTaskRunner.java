@@ -19,8 +19,11 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
     private final String PATH_OF_API = "http://52.24.10.104/Virgil_Backend/index.php/";
     private final String GET_MUSEUM_PATH = "getEntireMuseum/";
     private final String GET_ALL_MUSEUMS_PATH = "getAllMuseums/";
+    private final String GET_EVENTS_PATH = "events/getEventsForMuseum/";
     private final String GET_MUSEUM = "getMuseum";
     private final String GET_ALL_MUSEUMS = "getAllMuseums";
+    private final String GET_EVENTS = "getEventsForMuseum";
+    private final String DEFAULT_VAL = "-1";
 
     private String jsonString;
 
@@ -47,7 +50,8 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
     @Override
     protected Museum doInBackground(String... params) {
         String callType = params[0]; //getAll or getMuseum
-        String museumNumber = "0";
+        String museumNumber = DEFAULT_VAL;
+        String eventNumber = DEFAULT_VAL;
 
         if (callType.equals(GET_ALL_MUSEUMS)) {
             //get all museums
@@ -61,6 +65,15 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
             jsonString = getJSONString(GET_MUSEUM_PATH+museumNumber);
 
             parseMuseum(jsonString);
+            museumNumber = DEFAULT_VAL;
+        }
+        else if (callType.equals(GET_EVENTS)){
+            eventNumber = params[1];
+
+            jsonString = getJSONString(GET_EVENTS_PATH+eventNumber);
+
+            //parse event
+            eventNumber = DEFAULT_VAL;
         }
 
         Log.d("API", jsonString);
@@ -194,6 +207,42 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
         catch (Exception e) {
             Log.d("Error", "Couldn't parse this museum.");
             this.myParent.museum = new Museum(0, "", "");
+        }
+    }
+
+    private void parseEventList(String input) {
+        this.myParent.eventList = new ArrayList<>();
+        this.myParent.eventListFinished = false;
+
+        String[] splitInput = input.split("\\[");
+        input = splitInput[1];
+        splitInput = input.split("\\]");
+        input = splitInput[0];
+        input = "[" + input + "]";
+
+        try {
+            JSONArray jsonarray = new JSONArray(input);
+
+            for(int i = 0; i < jsonarray.length(); i++){
+                JSONObject obj = jsonarray.getJSONObject(i);
+
+                String id = obj.getString("id");
+                String galleryId = obj.getString("galleryid");
+                String exhibitId = obj.getString("exhibitId");
+                String museumId = obj.getString("museumId");
+                String description = obj.getString("description");
+                String startTime = obj.getString("startTime");
+                String endTime = obj.getString("endTime");
+
+                Event newEvent = new Event(Integer.parseInt(id), Integer.parseInt(galleryId),
+                        Integer.parseInt(exhibitId), Integer.parseInt(museumId), description, startTime, endTime);
+                this.myParent.eventList.add(newEvent);
+            }
+            Log.d("API", "List parsed. " + myParent.eventList.size() + " events.");
+            this.myParent.eventListFinished = true;
+        }
+        catch (Exception e) {
+            Log.d("Error", "Couldn't parse this list.");
         }
     }
 
