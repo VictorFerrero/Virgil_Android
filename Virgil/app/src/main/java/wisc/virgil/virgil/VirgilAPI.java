@@ -19,10 +19,17 @@ public class VirgilAPI {
     public ArrayList<Museum> museumList;
     public boolean listFinished;
 
+    public ArrayList<FavoriteMuseum> favoriteList;
+    public boolean dbTaskFinished, dbSuccess;
+
     public VirgilAPI() {
         this.museum = null;
         this.museumList = null;
         this.listFinished = false;
+
+        this.favoriteList = null;
+        this.dbTaskFinished = false;
+        this.dbSuccess = false;
     }
 
     public void fetchMuseum(int id) {
@@ -69,4 +76,24 @@ public class VirgilAPI {
             return this.ERROR_STATUS;
         }
     }
+
+    public void refreshFavorites() {
+        DatabaseTaskRunner runner = new DatabaseTaskRunner(this);
+        runner.execute("refresh");
+    }
+
+    public boolean getDBSuccess() {
+        return this.dbSuccess;
+    }
+
+    public void addFavorite() {
+        DatabaseTaskRunner runner = new DatabaseTaskRunner(this);
+        runner.execute("add");
+    }
+
+    public void deleteFavorite() {
+        DatabaseTaskRunner runner = new DatabaseTaskRunner(this);
+        runner.execute("delete");
+    }
+
 }
