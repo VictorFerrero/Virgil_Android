@@ -2,7 +2,7 @@ package wisc.virgil.virgil;
 
 import java.util.ArrayList;
 import android.util.Log;
-import android.os.AsyncTask;
+import java.util.List;
 
 /**
  * Created by TylerPhelps on 3/19/16.
@@ -19,7 +19,7 @@ public class VirgilAPI {
     public ArrayList<Museum> museumList;
     public boolean listFinished;
 
-    public ArrayList<FavoriteMuseum> favoriteList;
+    public List<FavoriteMuseum> favoriteList;
     public boolean dbTaskFinished, dbSuccess;
 
     public VirgilAPI() {
@@ -82,18 +82,29 @@ public class VirgilAPI {
         runner.execute("refresh");
     }
 
+    public List<FavoriteMuseum> getFavorites() {
+        return this.favoriteList;
+    }
+
     public boolean getDBSuccess() {
         return this.dbSuccess;
     }
 
-    public void addFavorite() {
+    public void addFavorite(int id) {
         DatabaseTaskRunner runner = new DatabaseTaskRunner(this);
-        runner.execute("add");
+        runner.execute("add", Integer.toString(id));
     }
 
-    public void deleteFavorite() {
+    public void deleteFavorite(int id) {
         DatabaseTaskRunner runner = new DatabaseTaskRunner(this);
-        runner.execute("delete");
+        runner.execute("delete", Integer.toString(id));
     }
 
+    public void addFavorite(Museum favMuseum) {
+        addFavorite(museum.getId());
+    }
+
+    public void deleteFavorite(Museum favMuseum) {
+        deleteFavorite(museum.getId());
+    }
 }

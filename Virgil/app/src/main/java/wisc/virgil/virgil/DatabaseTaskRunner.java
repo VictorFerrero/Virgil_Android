@@ -20,7 +20,6 @@ public class DatabaseTaskRunner extends AsyncTask<String, String, String> {
     DaoMaster daoMaster;
     DaoSession daoSession;
     FavoriteMuseumDao favMuseumDao;
-    List<FavoriteMuseum> favoritesFromDB;
 
     public DatabaseTaskRunner (VirgilAPI parent) {
         this.myParent = parent;
@@ -42,12 +41,12 @@ public class DatabaseTaskRunner extends AsyncTask<String, String, String> {
             closeReopenDatabase();
         }
 
-        favoritesFromDB = favMuseumDao.queryBuilder().where(
+        myParent.favoriteList = favMuseumDao.queryBuilder().where(
                 FavoriteMuseumDao.Properties.Display.eq(true)).list();
 
-        if (favoritesFromDB != null) {
+        if (myParent.favoriteList != null) {
 
-            for (FavoriteMuseum guest : favoritesFromDB)
+            for (FavoriteMuseum guest : myParent.favoriteList)
             {
                 if (guest == null)
                 {
@@ -58,13 +57,13 @@ public class DatabaseTaskRunner extends AsyncTask<String, String, String> {
         }
     }
 
-    private boolean addFavorite(int id)
+    private void addFavorite(int id)
     {
         myParent.fetchMuseum(id);
 
         while (myParent.museumStatus() == myParent.FINISHED_STATUS) {
             if (myParent.museumStatus() == myParent.ERROR_STATUS) {
-                return false;
+                myParent.dbSuccess = false;
             }
         }
 
@@ -74,27 +73,27 @@ public class DatabaseTaskRunner extends AsyncTask<String, String, String> {
         FavoriteMuseum newFav = new FavoriteMuseum(rand.nextLong(), "ID", museum.getName(), museum.getAddress(), "/", true);
 
         favMuseumDao.insert(newFav);
-        favoritesFromDB.add(newFav);
+        myParent.favoriteList.add(newFav);
 
-        return true;
+        myParent.dbSuccess = true;
     }
 
 
     public List<FavoriteMuseum> getFavorites() {
-        return this.favoritesFromDB;
+        return myParent.favoriteList;
     }
 
-    public boolean deleteFavorite(int id) {
+    public void deleteFavorite(int id) {
 
-        for (FavoriteMuseum favMuseum : favoritesFromDB) {
+        for (FavoriteMuseum favMuseum : myParent.favoriteList) {
             if (favMuseum.getId() == id) {
-                favoritesFromDB.remove(favMuseum);
+                myParent.favoriteList.remove(favMuseum);
                 favMuseumDao.delete(favMuseum);
-                return true;
+                myParent.dbSuccess = true;
             }
         }
 
-        return false;
+        myParent.dbSuccess = false;
     }
 
     private void closeDatabase()
