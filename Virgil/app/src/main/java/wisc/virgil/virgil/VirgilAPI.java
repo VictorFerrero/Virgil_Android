@@ -20,17 +20,11 @@ public class VirgilAPI {
     public ArrayList<Museum> museumList;
     public boolean listFinished;
 
-    public List<FavoriteMuseum> favoriteList;
-    public boolean dbTaskFinished, dbSuccess;
 
     public VirgilAPI() {
         this.museum = null;
         this.museumList = null;
         this.listFinished = false;
-
-        this.favoriteList = null;
-        this.dbTaskFinished = false;
-        this.dbSuccess = false;
     }
 
     public void fetchMuseum(int id) {
@@ -78,34 +72,26 @@ public class VirgilAPI {
         }
     }
 
-    public void refreshFavorites() {
-        DatabaseTaskRunner runner = new DatabaseTaskRunner(this);
-        runner.execute("refresh");
+    public List<FavoriteMuseum> getFavorites(Context context) {
+        DatabaseTaskRunner dbRunner = new DatabaseTaskRunner(context, this);
+        return dbRunner.getFavorites();
     }
 
-    public List<FavoriteMuseum> getFavorites() {
-        return this.favoriteList;
+    public boolean addFavorite(int id, Context context) {
+        DatabaseTaskRunner dbRunner = new DatabaseTaskRunner(context, this);
+        return dbRunner.addFavorite(id);
     }
 
-    public boolean getDBSuccess() {
-        return this.dbSuccess;
+    public boolean deleteFavorite(int id, Context context) {
+        DatabaseTaskRunner dbRunner = new DatabaseTaskRunner(context, this);
+        return dbRunner.deleteFavorite(id);
     }
 
-    public void addFavorite(int id) {
-        DatabaseTaskRunner runner = new DatabaseTaskRunner(this);
-        runner.execute("add", Integer.toString(id));
+    public void addFavorite(Museum favMuseum, Context context) {
+        addFavorite(museum.getId(), context);
     }
 
-    public void deleteFavorite(int id) {
-        DatabaseTaskRunner runner = new DatabaseTaskRunner(this);
-        runner.execute("delete", Integer.toString(id));
-    }
-
-    public void addFavorite(Museum favMuseum) {
-        addFavorite(museum.getId());
-    }
-
-    public void deleteFavorite(Museum favMuseum) {
-        deleteFavorite(museum.getId());
+    public void deleteFavorite(Museum favMuseum, Context context) {
+        deleteFavorite(museum.getId(), context);
     }
 }
