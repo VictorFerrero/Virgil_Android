@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
  *  Original Code:
  *  http://manishkpr.webheavens.com/android-material-design-tabs-collapsible-example/
  **/
-public class MuseumGallery extends AppCompatActivity {
+public class GalleryActivity extends AppCompatActivity {
 
     @Bind(R.id.tb_gallery) Toolbar toolbar;
     @Bind(R.id.tbl_gallery) TabLayout tabs;
@@ -32,8 +32,7 @@ public class MuseumGallery extends AppCompatActivity {
     int museumId;
 
     VirgilAPI api;
-    CharSequence Titles[] = {"Gallery 1","Gallery 2", "Gallery 3", "Gallery 4", "Gallery 5",
-            "Gallery 6", "Gallery 7"};
+    CharSequence Titles[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,27 +43,39 @@ public class MuseumGallery extends AppCompatActivity {
         api = new VirgilAPI();
         Intent intent = getIntent();
         museumId = intent.getIntExtra("ID", 0);
+
+        /* Future code for when api contains content/galleries/exhibits (crap search though)
+        if(!api.getFavorites(this).isEmpty()) {
+            for(int i = 0; i < api.getFavorites(this).size(); i++) {
+                if(api.getFavorites(this).get(i).getMuseumID() == museumId) {
+                    //Assign found museum so no fetch necessary (Offline Viewing)
+                }
+            }
+        }
+        End of future code */
+
         api.fetchMuseum(museumId);
 
         //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
         while(api.museumStatus() != api.FINISHED_STATUS) {
             if (api.museumStatus() == api.ERROR_STATUS) break;
         }
+        setTitle(api.getMuseum().getName());
 
         //Fill Titles for tabs with gallery names
         List<String> nameList = new ArrayList<>();
-        for(int i = 0; i < api.getMuseum().getGalleries().size(); i++) {
-            nameList.add(api.getMuseum().getGalleries().get(i).getName());
+        int count;
+        nameList.add("Description");
+        for(count = 1; count < api.getMuseum().getGalleries().size(); count++) {
+            nameList.add(api.getMuseum().getGalleries().get(count).getName());
         }
 
-        //Fake galleries to show scrollable tabs
-        nameList.add("Gallery 2");
-        nameList.add("Gallery 3");
-        nameList.add("Gallery 4");
+        //Extra galleries to show scrollable tabs
+        for(; count < 8; count++) {
+            nameList.add("Gallery " + count);
+        }
 
         Titles = nameList.toArray(new CharSequence[nameList.size()]);
-
-        setTitle(api.getMuseum().getName());
 
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
@@ -117,7 +128,7 @@ public class MuseumGallery extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Log.d("CDA", "onBackPressed Called");
-        Intent intent = new Intent(this, museumSelectActivity.class);
+        Intent intent = new Intent(this, MuseumSelectActivity.class);
         startActivity(intent);
         finish();
     }
@@ -141,15 +152,17 @@ public class MuseumGallery extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         } else if (id == R.id.action_beacon) {
-            Intent intent = new Intent(this, Beacon.class);
+            Intent intent = new Intent(this, BeaconActivity.class);
             startActivity(intent);
             finish();
         } else if (id == R.id.action_map) {
             return true;
         } else if (id == R.id.action_favorites) {
-            return true;
+            Intent intent = new Intent(this, FavoritesActivity.class);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.action_search) {
-            Intent intent = new Intent(this, museumSelectActivity.class);
+            Intent intent = new Intent(this, MuseumSelectActivity.class);
             startActivity(intent);
             finish();
         }

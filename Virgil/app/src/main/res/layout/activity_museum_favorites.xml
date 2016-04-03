@@ -10,7 +10,8 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:id="@+id/view">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/tb_museum_favorites"
@@ -32,7 +33,8 @@
     android:horizontalSpacing="15dp"
     android:verticalSpacing="15dp"
     android:gravity="center"
-    android:stretchMode="columnWidth">
+    android:stretchMode="columnWidth"
+    android:layout_below="@id/view">
 </GridView>
 
 </RelativeLayout>

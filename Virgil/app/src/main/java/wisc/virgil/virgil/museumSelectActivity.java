@@ -18,7 +18,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-public class museumSelectActivity extends AppCompatActivity {
+public class MuseumSelectActivity extends AppCompatActivity {
 
     VirgilAPI api;
 
@@ -69,19 +69,11 @@ public class museumSelectActivity extends AppCompatActivity {
         //Get the selected museum's id...
         int id = api.getMuseumList().get(position).getId();
 
-        //EXTRA FETCH FOR TESTING PURPOSES
         Log.d("API", "Position: " + position);
-        api.fetchMuseum(api.getMuseumList().get(position).getId());
-
-        while(api.museumStatus() != api.FINISHED_STATUS) {
-            if (api.museumStatus() == api.ERROR_STATUS) break;
-        }
-
-        Log.d("API", "Museum Selected: " + api.getMuseum().getName());
-        //END OF EXTRA FETCH AND TEST
+        Log.d("API", "Museum Selected: " + api.getMuseumList().get(position).getName());
 
         //...and pass it to the new starting gallery view
-        Intent intent = new Intent(this, MuseumGallery.class);
+        Intent intent = new Intent(this, GalleryActivity.class);
         intent.putExtra("ID", id);
         startActivity(intent);
         finish();
@@ -102,20 +94,20 @@ public class museumSelectActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_settings) {
             return true;
         } else if (id == R.id.action_beacon) {
-            return true;
+            Intent intent = new Intent(this, BeaconActivity.class);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.action_map) {
             return true;
         } else if (id == R.id.action_favorites) {
-            return true;
-        } else if (id == R.id.action_search) {
-            Intent intent = new Intent(this, museumSelectActivity.class);
+            Intent intent = new Intent(this, FavoritesActivity.class);
             startActivity(intent);
             finish();
-        } 
+        }
         return super.onOptionsItemSelected(item);
     }
 }

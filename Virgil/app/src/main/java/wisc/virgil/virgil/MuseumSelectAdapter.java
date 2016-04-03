@@ -60,6 +60,9 @@ public class MuseumSelectAdapter extends ArrayAdapter<Museum> {
             viewHolder.image.setImageDrawable(museum.getContent().get(0).getImage());
         }
 
+        viewHolder.image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        viewHolder.image.setCropToPadding(true);
+
         return convertView;
     }
 }

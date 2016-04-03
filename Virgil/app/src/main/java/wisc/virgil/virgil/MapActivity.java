@@ -1,5 +1,6 @@
 package wisc.virgil.virgil;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -36,11 +37,22 @@ public class MapActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_beacon) {
+            Intent intent = new Intent(this, BeaconActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.action_favorites) {
+            Intent intent = new Intent(this, FavoritesActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.action_search) {
+            Intent intent = new Intent(this, MuseumSelectActivity.class);
+            startActivity(intent);
+            finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
