@@ -64,15 +64,17 @@ public class GalleryActivity extends AppCompatActivity {
 
         //Fill Titles for tabs with gallery names
         List<String> nameList = new ArrayList<>();
-        int count;
+        int count = 0;
         nameList.add("Description");
-        for(count = 1; count < api.getMuseum().getGalleries().size(); count++) {
+        while(count < api.getMuseum().getGalleries().size()) {
             nameList.add(api.getMuseum().getGalleries().get(count).getName());
+            count++;
         }
 
         //Extra galleries to show scrollable tabs
-        for(; count < 8; count++) {
+        while(count < 8) {
             nameList.add("Gallery " + count);
+            count++;
         }
 
         Titles = nameList.toArray(new CharSequence[nameList.size()]);
@@ -106,7 +108,7 @@ public class GalleryActivity extends AppCompatActivity {
 
     private void setupTabIcons() {
         //Set each tab's icon
-        for(int i = 0; i < api.getMuseum().getGalleries().size(); i++) {
+        for(int i = 0; i < tabs.getTabCount(); i++) {
             tabs.getTabAt(i).setIcon(R.drawable.ic_virgil);
         }
     }
