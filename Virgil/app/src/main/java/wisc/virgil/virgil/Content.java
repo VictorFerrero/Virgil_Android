@@ -11,7 +11,7 @@ import android.util.Log;
 public class Content {
 
     private final String IP_ADDRESS = "http://52.24.10.104/";
-    private final String RESOURCE_PATH = "var/www/html/Virgil_Uploads/images/";
+    private final String RESOURCE_PATH = "Virgil_Uploads/images/";
     private final String DEFAULT_IMAGE = "drawable/museum_list_image.jpg";
 
     private int id, galleryId, exhibitId, museumId;
@@ -25,7 +25,7 @@ public class Content {
         this.exhibitId = exhibitId;
         this.museumId = museumId;
         this.description = description;
-        this.pathToContent = IP_ADDRESS + RESOURCE_PATH + this.museumId + pathToContent;
+        this.pathToContent = IP_ADDRESS + RESOURCE_PATH + pathToContent;
         this.image = null;
 
         loadContentImage();
