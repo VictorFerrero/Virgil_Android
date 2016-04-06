@@ -49,6 +49,12 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <activity
+            android:name=".MapActivity"
+            android:label="@string/museum_map"
+            android:screenOrientation="portrait">
+        </activity>
+
 
     </application>
 </manifest>

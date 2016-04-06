@@ -1,25 +1,46 @@
 package wisc.virgil.virgil;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 /**
  * Created by Ty Talafous on 3/28/2016.
  */
 public class MapActivity extends AppCompatActivity {
 
+    VirgilAPI api;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_view);
 
+        api = new VirgilAPI();
+        Intent intent = getIntent();
+        int museumId = intent.getIntExtra("ID", 0);
+
+        api.fetchMuseum(museumId);
+
+        //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
+        while(api.museumStatus() != api.FINISHED_STATUS) {
+            if (api.museumStatus() == api.ERROR_STATUS) break;
+        }
+
         //inflates toolbar
-        //Toolbar myToolbar = (Toolbar) findViewById(R.id.tb_museum_select);
-        //setSupportActionBar(myToolbar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.tb_museum_map);
+        setSupportActionBar(myToolbar);
+
+        setTitle(api.getMuseum().getName() + " Map");
+
+        ImageView map = (ImageView) findViewById(R.id.map_item);
+        map.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.map_placeholder));
     }
 
     @Override

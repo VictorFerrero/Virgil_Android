@@ -158,7 +158,10 @@ public class GalleryActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else if (id == R.id.action_map) {
-            return true;
+            Intent intent = new Intent(this, MapActivity.class);
+            intent.putExtra("ID", museumId);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.action_favorites) {
             Intent intent = new Intent(this, FavoritesActivity.class);
             startActivity(intent);
