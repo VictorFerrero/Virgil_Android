@@ -7,13 +7,11 @@
     <ImageView
         android:id="@+id/iv_museum_favorites"
         android:src="@drawable/museum_list_image"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
         android:scaleType="fitXY"
+        android:layout_margin="15dp"
+        android:background="@android:drawable/dialog_holo_light_frame">
 
-
-        android:layout_marginRight="10px">
     </ImageView>
-
-
 </LinearLayout>

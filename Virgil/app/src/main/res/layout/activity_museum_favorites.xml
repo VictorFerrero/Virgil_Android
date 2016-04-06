@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MuseumSelectActivity"
-    android:background="@color/colorPrimary">
+    android:fitsSystemWindows="true"
+    tools:context="wisc.virgil.virgil.FavoritesActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -13,7 +12,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/tb_museum_favorites"
+            android:id="@+id/tb_favorites"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -21,19 +20,25 @@
 
     </android.support.design.widget.AppBarLayout>
 
-<GridView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPrimary"
-    android:id="@+id/gv_museum_favorites"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:numColumns="auto_fit"
-    android:columnWidth="150dp"
-    android:horizontalSpacing="15dp"
-    android:verticalSpacing="15dp"
-    android:gravity="center"
-    android:stretchMode="columnWidth">
-</GridView>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:background="@color/colorCreme">
 
-</RelativeLayout>
+        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/gv_museum_favorites"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:numColumns="auto_fit"
+            android:columnWidth="150dp"
+            android:layout_marginTop="40dp"
+            android:horizontalSpacing="15dp"
+            android:verticalSpacing="15dp"
+            android:gravity="center"
+            android:stretchMode="columnWidth">
+        </GridView>
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
 
