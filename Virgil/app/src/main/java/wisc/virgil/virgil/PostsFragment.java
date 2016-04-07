@@ -42,16 +42,24 @@ public class PostsFragment extends Fragment {
 
     void setUPList(){
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        CommonRecycleAdapter adapter = new CommonRecycleAdapter(createItemList());
+        CommonRecycleAdapter adapter = new CommonRecycleAdapter(createItemList(), createItemTitle());
         recyclerView.setAdapter(adapter);
     }
 
     private List<String> createItemList() {
         List<String> itemList = new ArrayList<>();
         for(int i=0;i<30;i++) {
-            itemList.add("Item "+i);
+            itemList.add("Title : " + i);
         }
         return itemList;
     }
 
+    private List<String> createItemTitle() {
+        List<String> titleList = new ArrayList<>();
+
+        for(int i=0; i<30; i++) {
+            titleList.add("Here is some basic info : " + i);
+        }
+        return titleList;
+    }
 }

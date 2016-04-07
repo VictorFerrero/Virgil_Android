@@ -39,12 +39,12 @@ public class museumSelectActivity extends AppCompatActivity {
 
         showListView();
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_select);
+      /**  mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_select);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
             setupDrawerContent(navigationView);
-        }
+        }**/
     }
 
     private void showListView() {

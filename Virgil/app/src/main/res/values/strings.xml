@@ -19,4 +19,7 @@
     <string name="get_beacon_info">See a beacon? Tap this beacon.</string>
     <string name="MuseumImage">Museum Image</string>
     <string name="exhibit_content">Exhibit Content</string>
+    <string name="basic_content">Here is some basic information</string>
+    <string name="gallery_title">Gallery Title</string>
+    <string name="exhibit_title">Exhibit Title</string>
 </resources>
