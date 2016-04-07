@@ -27,8 +27,11 @@ public class CommonRecycleAdapter extends RecyclerView.Adapter<CommonRecycleAdap
     @Override
     public CommonRecycleAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.exhibit_view, parent, false);
+        View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(
+                R.layout.exhibit_view, parent, false);
+
         ViewHolder viewHolder = new ViewHolder(itemLayoutView);
+
         return viewHolder;
     }
 

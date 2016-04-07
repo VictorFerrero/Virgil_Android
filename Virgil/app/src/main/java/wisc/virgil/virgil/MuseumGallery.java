@@ -37,7 +37,15 @@ public class MuseumGallery extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         setUpTabs();
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.dl_gallery);
+
+         NavigationView navigationView = (NavigationView) findViewById(R.id.nv_gallery );
+         if (navigationView != null) {
+            setupDrawerContent(navigationView);
+         }
     }
+
 
     void setUpTabs(){
         adapter =  new MainPagerAdapter(this.getSupportFragmentManager(),Titles,Titles.length);

@@ -31,6 +31,13 @@ public class Beacon extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.tb_beacon);
         setSupportActionBar(toolbar);
 
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.dl_beacon);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nv_beacon);
+        if (navigationView != null) {
+            setupDrawerContent(navigationView);
+        }
+
         buttonBeacon = (Button) findViewById(R.id.btn_beacon);
         buttonBeacon.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View view, MotionEvent motionEvent) {
