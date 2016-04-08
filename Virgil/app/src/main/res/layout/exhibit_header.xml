@@ -12,6 +12,6 @@
             android:id="@+id/exhibit_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/gallery_title"
+            android:text="@string/exhibit_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
 </LinearLayout>

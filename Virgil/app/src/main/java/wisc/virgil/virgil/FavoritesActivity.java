@@ -29,10 +29,10 @@ public class FavoritesActivity extends AppCompatActivity {
         api = new VirgilAPI();
 
         //inflates toolbar
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.tb_museum_favorites);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.tb_favorites);
         setSupportActionBar(myToolbar);
 
-        GridView gridView = (GridView) findViewById(R.id.gv_museum_favorites);
+        GridView gridView = (GridView) findViewById(R.id.gv_favorites);
 
         //*Temporary* Clear database so we don't keep creating more of the same museums
         while(!api.getFavorites(this).isEmpty()) {

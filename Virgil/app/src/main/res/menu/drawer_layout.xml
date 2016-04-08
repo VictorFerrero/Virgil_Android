@@ -26,9 +26,15 @@
             android:icon="@drawable/ic_home_blue_24dp"
             android:title="@string/action_home" />
         <item
-            android:id="@+id/nav_friends"
+            android:id="@+id/nav_maps"
             android:icon="@drawable/ic_map_blue_24dp"
-            android:title="Friends" />
+            android:title="@string/museum_map" />
+
+        <item
+            android:id="@+id/nav_beacon"
+            android:icon="@drawable/ic_bluetooth_searching_white_24dp"
+            android:title="@string/action_beacon" />
+
         <item
             android:id="@+id/nav_search"
             android:icon="@drawable/ic_search_blue_24dp"
