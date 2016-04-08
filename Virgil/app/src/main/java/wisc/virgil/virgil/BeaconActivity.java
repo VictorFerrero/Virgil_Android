@@ -18,7 +18,7 @@ import android.widget.Button;
 /**
  * Created by Summer on 3/28/2016.
  */
-public class Beacon extends AppCompatActivity {
+public class BeaconActivity extends AppCompatActivity {
 
     //instance variables
     private Button buttonBeacon;
@@ -82,7 +82,7 @@ public class Beacon extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id        = item.getItemId();
+        int id = item.getItemId();
 
 
         if (id == R.id.action_settings) {
@@ -90,9 +90,11 @@ public class Beacon extends AppCompatActivity {
         } else if (id == R.id.action_map) {
             return true;
         } else if (id == R.id.action_favorites) {
-            return true;
+            Intent intent = new Intent(this, FavoritesActivity.class);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.action_search) {
-            Intent intent = new Intent(this, museumSelectActivity.class);
+            Intent intent = new Intent(this, MuseumSelectActivity.class);
             startActivity(intent);
             finish();
         }

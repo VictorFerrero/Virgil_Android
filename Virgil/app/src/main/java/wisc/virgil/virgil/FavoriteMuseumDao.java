@@ -20,7 +20,7 @@ public class FavoriteMuseumDao extends AbstractDao<FavoriteMuseum, Long> {
 
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property MuseumID = new Property(1, String.class, "museumID", false, "MUSEUM_ID");
+        public final static Property MuseumID = new Property(1, Integer.class, "museumID", false, "MUSEUM_ID");
         public final static Property Name = new Property(2, String.class, "name", false, "NAME");
         public final static Property Address = new Property(3, String.class, "address", false, "ADDRESS");
         public final static Property PathToPicture = new Property(4, String.class, "pathToPicture", false, "PATH_TO_PICTURE");
@@ -40,7 +40,7 @@ public class FavoriteMuseumDao extends AbstractDao<FavoriteMuseum, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String sql = "CREATE TABLE " + (ifNotExists? "IF NOT EXISTS ": "") + "'FAVORITE_MUSEUM' (" + //
                 "'_id' INTEGER PRIMARY KEY ," + // 0: id
-                "'MUSEUM_ID' TEXT," + // 1: museumID
+                "'MUSEUM_ID' INTEGER," + // 1: museumID
                 "'NAME' TEXT," + // 2: name
                 "'ADDRESS' TEXT," + // 3: address
                 "'PATH_TO_PICTURE' TEXT," + // 4: pathToPicture
@@ -64,9 +64,9 @@ public class FavoriteMuseumDao extends AbstractDao<FavoriteMuseum, Long> {
             stmt.bindLong(1, id);
         }
  
-        String museumID = entity.getMuseumID();
+        Integer museumID = entity.getMuseumID();
         if (museumID != null) {
-            stmt.bindString(2, museumID);
+            stmt.bindLong(2, museumID);
         }
  
         String name = entity.getName();
@@ -101,7 +101,7 @@ public class FavoriteMuseumDao extends AbstractDao<FavoriteMuseum, Long> {
     public FavoriteMuseum readEntity(Cursor cursor, int offset) {
         FavoriteMuseum entity = new FavoriteMuseum( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // museumID
+            cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1), // museumID
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // name
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // address
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // pathToPicture
@@ -114,7 +114,7 @@ public class FavoriteMuseumDao extends AbstractDao<FavoriteMuseum, Long> {
     @Override
     public void readEntity(Cursor cursor, FavoriteMuseum entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setMuseumID(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setMuseumID(cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1));
         entity.setName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setAddress(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setPathToPicture(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));

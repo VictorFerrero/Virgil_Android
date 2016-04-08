@@ -7,7 +7,7 @@ package wisc.virgil.virgil;
 public class FavoriteMuseum {
 
     private Long id;
-    private String museumID;
+    private Integer museumID;
     private String name;
     private String address;
     private String pathToPicture;
@@ -20,7 +20,7 @@ public class FavoriteMuseum {
         this.id = id;
     }
 
-    public FavoriteMuseum(Long id, String museumID, String name, String address, String pathToPicture, Boolean display) {
+    public FavoriteMuseum(Long id, Integer museumID, String name, String address, String pathToPicture, Boolean display) {
         this.id = id;
         this.museumID = museumID;
         this.name = name;
@@ -37,11 +37,11 @@ public class FavoriteMuseum {
         this.id = id;
     }
 
-    public String getMuseumID() {
+    public Integer getMuseumID() {
         return museumID;
     }
 
-    public void setMuseumID(String museumID) {
+    public void setMuseumID(Integer museumID) {
         this.museumID = museumID;
     }
 

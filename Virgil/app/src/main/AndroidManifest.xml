@@ -19,20 +19,15 @@
         </activity>
 
         <activity
-            android:name=".MuseumGallery"
+            android:name=".GalleryActivity"
             android:label="@string/museum_exhibition"
             android:screenOrientation="portrait">
         </activity>
 
 
-        <activity android:name=".museumSelectActivity"
+        <activity
+            android:name=".MuseumSelectActivity"
             android:label="@string/museum_select"
-            android:screenOrientation="portrait">
-
-        </activity>
-
-        <activity android:name=".Splash"
-            android:theme="@style/SplashTheme"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,7 +36,21 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Beacon"
+        <activity
+            android:name=".BeaconActivity"
+            android:label="@string/museum_beacon"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".FavoritesActivity"
+            android:label="@string/museum_favorites"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".MapActivity"
+            android:label="@string/museum_map"
             android:screenOrientation="portrait">
         </activity>
 

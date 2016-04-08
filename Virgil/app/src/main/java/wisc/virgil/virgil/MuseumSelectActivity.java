@@ -10,16 +10,17 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.util.Log;
-
 import java.util.ArrayList;
+import java.util.List;
 
-public class museumSelectActivity extends AppCompatActivity {
+public class MuseumSelectActivity extends AppCompatActivity {
 
     VirgilAPI api;
     private DrawerLayout mDrawerLayout;
@@ -33,8 +34,8 @@ public class museumSelectActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.tb_museum_select);
         setSupportActionBar(myToolbar);
 
+        //Setup API and fetch museum list
         api = new VirgilAPI();
-
         api.fetchAllMuseums();
 
         showListView();
@@ -48,18 +49,22 @@ public class museumSelectActivity extends AppCompatActivity {
     }
 
     private void showListView() {
-        ArrayList<Museum> museums = new ArrayList<Museum>();
+        ArrayList<Museum> museums = new ArrayList<>();
 
         MuseumSelectAdapter adapter = new MuseumSelectAdapter(this, museums);
 
+        //Set listview adapter
         ListView listView = (ListView) findViewById(R.id.lv_museum_select);
         listView.setAdapter(adapter);
 
+        //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
         while(api.museumListStatus() != api.FINISHED_STATUS) {
         }
 
+        //Add all list items to adapter
         adapter.addAll(api.getMuseumList());
 
+        //Make museums clickable and switch to their respective galleries
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                             @Override
                                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -82,17 +87,16 @@ public class museumSelectActivity extends AppCompatActivity {
     }
 
     public void switchToGallery(int position) {
+
+        //Get the selected museum's id...
+        int id = api.getMuseumList().get(position).getId();
+
         Log.d("API", "Position: " + position);
-        api.fetchMuseum(api.getMuseumList().get(position));
+        Log.d("API", "Museum Selected: " + api.getMuseumList().get(position).getName());
 
-        while(api.museumStatus() != api.FINISHED_STATUS) {
-            if (api.museumStatus() == api.ERROR_STATUS) break;
-        }
-
-        Log.d("API", "Museum Selected: " + api.getMuseum().getName());
-
-        Intent intent = new Intent(this, MuseumGallery.class);
-        intent.putExtra("POSITION", position);
+        //...and pass it to the new starting gallery view
+        Intent intent = new Intent(this, GalleryActivity.class);
+        intent.putExtra("ID", id);
         startActivity(intent);
         finish();
     }
@@ -112,20 +116,20 @@ public class museumSelectActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_settings) {
             return true;
         } else if (id == R.id.action_beacon) {
-            Intent intent = new Intent(this, Beacon.class);
+            Intent intent = new Intent(this, BeaconActivity.class);
             startActivity(intent);
             finish();
         } else if (id == R.id.action_map) {
             return true;
-
         } else if (id == R.id.action_favorites) {
-            return true;
+            Intent intent = new Intent(this, FavoritesActivity.class);
+            startActivity(intent);
+            finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

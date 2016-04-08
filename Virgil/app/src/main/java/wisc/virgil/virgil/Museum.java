@@ -9,16 +9,18 @@ import java.util.ArrayList;
 public class Museum {
 
     private int id;
+    private String[] hours;
     private String name, address;
     private ArrayList<Gallery> galleries;
     private ArrayList<Content> content;
 
-    public Museum(int id, String name, String address) {
+    public Museum(int id, String name, String address, String[] hours) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.galleries = new ArrayList<>();
         this.content = new ArrayList<>();
+        this.hours = hours;
     }
 
     public int getId() {
@@ -47,5 +49,9 @@ public class Museum {
 
     public ArrayList<Content> getContent() {
         return this.content;
+    }
+
+    public String[] getHours() {
+        return this.hours;
     }
 }

@@ -1,49 +1,76 @@
 package wisc.virgil.virgil;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
+
+import java.util.List;
 
 /**
- * Created by Summer on 4/1/2016.
+ * Created by Ty Talafous on 4/3/2016.
  */
 public class FavoritesActivity extends AppCompatActivity {
 
-    private DrawerLayout mDrawerLayout;
+    VirgilAPI api;
+    List<FavoriteMuseum> favs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_museum_favorites);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.tb_favorites);
-        setSupportActionBar(toolbar);
+        setTitle("Favorites");
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.dl_favorites);
+        api = new VirgilAPI();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nv_favorites);
-        if (navigationView != null) {
-            setupDrawerContent(navigationView);
+        //inflates toolbar
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.tb_museum_favorites);
+        setSupportActionBar(myToolbar);
+
+        GridView gridView = (GridView) findViewById(R.id.gv_museum_favorites);
+
+        //*Temporary* Clear database so we don't keep creating more of the same museums
+        while(!api.getFavorites(this).isEmpty()) {
+            api.deleteFavorite(api.getFavorites(this).get(0).getMuseumID(), this);
         }
+
+        api.addFavorite(1, this);
+        api.addFavorite(2, this);
+        if(api.getFavorites(this) != null && !api.getFavorites(this).isEmpty()) {
+            gridView.setAdapter(new FavoritesAdapter(this, api.getFavorites(this)));
+        } else {
+            //Will display error message
+        }
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switchToGallery(position);
+            }
+        });
     }
 
-    private void setupDrawerContent(NavigationView navigationView) {
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        mDrawerLayout.closeDrawers();
-                        return true;
-                    }
-                });
+    public void switchToGallery(int position) {
+        api.getFavorites(this).get(position).getMuseumID();
+        Intent intent = new Intent(this, GalleryActivity.class);
+        intent.putExtra("ID", api.getFavorites(this).get(position).getMuseumID());
+        startActivity(intent);
+        finish();
     }
+
+    //*Temporary* Clear database so we don't keep creating more of the same museums
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        api.deleteFavorite(1, this);
+        api.deleteFavorite(2, this);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -59,11 +86,20 @@ public class FavoritesActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_beacon) {
+            Intent intent = new Intent(this, BeaconActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.action_map) {
+            return true;
+        } else if (id == R.id.action_search) {
+            Intent intent = new Intent(this, MuseumSelectActivity.class);
+            startActivity(intent);
+            finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

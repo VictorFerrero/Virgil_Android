@@ -21,7 +21,7 @@ public class DBGenerator {
         //Add FavoriteMuseum
         Entity guest = schema.addEntity("FavoriteMuseum");
         guest.addIdProperty();
-        guest.addStringProperty("museumID");
+        guest.addIntProperty("museumID");
         guest.addStringProperty("name");
         guest.addStringProperty("address");
         guest.addStringProperty("pathToPicture");

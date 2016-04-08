@@ -10,16 +10,16 @@
     <string name="splash">splash screen</string>
     <string name="museum_name">museum name</string>
     <string name="dummy_address">502 N Frances "\n"Madison, WI, 53703</string>
-    <string name="dummy_hours">Hours: MON-FRI: 8:00AM-5:00PM"</string>
+    <string name="dummy_hours">Hours:"\n"MON-FRI:8:00AM-5:00PM"</string>\
     <string name="museum_select">Museums</string>
+    <string name="museum_beacon">Beacon</string>
+    <string name="museum_favorites">Favorites</string>
     <string name="action_favorites">Favorites</string>
+    <string name="museum_map">Map</string>
     <string name="museum_exhibition">Museum Exhibitions</string>
     <string name="Map">Map</string>
     <string name="ask_virgil">Ask Virgil</string>
     <string name="get_beacon_info">See a beacon? Tap this beacon.</string>
     <string name="MuseumImage">Museum Image</string>
     <string name="exhibit_content">Exhibit Content</string>
-    <string name="basic_content">Here is some basic information</string>
-    <string name="gallery_title">Gallery Title</string>
-    <string name="exhibit_title">Exhibit Title</string>
 </resources>
