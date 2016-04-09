@@ -103,7 +103,7 @@ public class GalleryActivity extends AppCompatActivity {
         }
         */
 
-        setupTabIcons();
+        //setupTabIcons();
     }
 
     private void setupTabIcons() {

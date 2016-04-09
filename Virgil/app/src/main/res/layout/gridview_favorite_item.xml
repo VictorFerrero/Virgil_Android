@@ -6,7 +6,7 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/cv_exhibit_image"
-        android:layout_width="165dp"
+        android:layout_width="162dp"
         android:layout_height="190dp"
         app:cardCornerRadius="3dp"
         app:cardElevation="5dp"
@@ -20,8 +20,8 @@
             <ImageView
                 android:id="@+id/iv_museum_favorites"
                 android:src="@drawable/museum_list_image"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
+                android:layout_width="155dp"
+                android:layout_height="155dp"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="fitXY"
                 android:background="@android:drawable/dialog_holo_light_frame"/>
