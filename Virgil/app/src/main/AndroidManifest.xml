@@ -24,17 +24,20 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <activity android:name=".Splash"
+                    android:theme="@style/SplashTheme"
+                    android:screenOrientation="portrait">
+                <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
+
+                    <category android:name="android.intent.category.LAUNCHER" />
+                </intent-filter>
+        </activity>
 
         <activity
             android:name=".MuseumSelectActivity"
             android:label="@string/museum_select"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".BeaconActivity"
