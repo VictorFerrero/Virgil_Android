@@ -50,7 +50,19 @@
             android:gravity="center"
             android:stretchMode="columnWidth">
         </GridView>
+
+        <at.markushi.ui.CircleButton
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            app:cb_color="@color/colorOrange"
+            app:cb_pressedRingWidth="9dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_delete"/>
+
     </RelativeLayout>
+
 </android.support.design.widget.CoordinatorLayout>
 
     <!-- NavigationView is the second child -->
