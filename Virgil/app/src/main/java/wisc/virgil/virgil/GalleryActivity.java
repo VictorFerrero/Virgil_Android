@@ -69,7 +69,7 @@ public class GalleryActivity extends AppCompatActivity {
 
         //Fill Titles for tabs with gallery names
         List<String> nameList = new ArrayList<>();
-        nameList.add("Description");
+        nameList.add("Events");
         for(int i = 0; i < api.getMuseum().getGalleries().size(); i++) {
             nameList.add(api.getMuseum().getGalleries().get(i).getName());
         }
@@ -79,6 +79,13 @@ public class GalleryActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         setUpTabs();
+
+        ImageView imageView = (ImageView) findViewById(R.id.iv_gallery);
+        if(api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage() == null) {
+            imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
+        } else {
+            imageView.setImageDrawable(api.getMuseum().getContent().get(0).getImage());
+        }
     }
 
     void setUpTabs(){
@@ -103,10 +110,10 @@ public class GalleryActivity extends AppCompatActivity {
                     } else {
                         imageView.setImageDrawable(api.getMuseum().getContent().get(0).getImage());
                     }
-                } else if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position).getContent().isEmpty() || api.getMuseum().getGalleries().get(position).getContent().get(0).getImage() == null) {
+                } else if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position - 1).getContent().isEmpty() || api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage() == null) {
                     imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
                 } else {
-                    imageView.setImageDrawable(api.getMuseum().getGalleries().get(position).getContent().get(0).getImage());
+                    imageView.setImageDrawable(api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage());
                 }
 
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
