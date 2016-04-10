@@ -34,17 +34,11 @@ public class MuseumSelectActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.tb_museum_select);
         setSupportActionBar(myToolbar);
 
-        //Setup API and fetch museum list
-        Intent intent = getIntent();
-        if(intent.hasExtra("API")) {
-            api = (VirgilAPI) intent.getSerializableExtra("API");
-        } else {
-            api = new VirgilAPI();
-            api.fetchAllMuseums();
-            //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
-            while(api.museumListStatus() != api.FINISHED_STATUS) {
-            }
-        }
+        api = new VirgilAPI();
+        api.fetchAllMuseums();
+
+        //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
+        while(api.museumListStatus() != api.FINISHED_STATUS) {}
 
         showListView();
 
@@ -78,7 +72,7 @@ public class MuseumSelectActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.lv_museum_select);
         listView.setAdapter(adapter);
 
-        //Add all list items to adapter\
+        //Add all list items to adapter
         Log.d("Museum List Size: ", ""+api.getMuseumList().size());
         adapter.addAll(api.getMuseumList());
 
