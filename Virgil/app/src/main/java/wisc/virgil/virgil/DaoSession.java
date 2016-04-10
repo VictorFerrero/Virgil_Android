@@ -2,6 +2,7 @@ package wisc.virgil.virgil;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import de.greenrobot.dao.AbstractDao;
@@ -20,7 +21,7 @@ import wisc.virgil.virgil.FavoriteMuseumDao;
  * 
  * @see de.greenrobot.dao.AbstractDaoSession
  */
-public class DaoSession extends AbstractDaoSession {
+public class DaoSession extends AbstractDaoSession implements Serializable {
 
     private final DaoConfig favoriteMuseumDaoConfig;
 

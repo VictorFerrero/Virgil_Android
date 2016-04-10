@@ -1,7 +1,6 @@
 package wisc.virgil.virgil;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import android.util.Log;
 import java.util.List;
@@ -10,7 +9,7 @@ import android.content.Context;
 /**
  * Created by TylerPhelps on 3/19/16.
  */
-public class VirgilAPI {
+public class VirgilAPI implements Serializable {
 
     private final String GET_MUSEUM = "getMuseum";
     private final String GET_ALL_MUSEUMS = "getAllMuseums";

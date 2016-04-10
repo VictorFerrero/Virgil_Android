@@ -1,12 +1,13 @@
 package wisc.virgil.virgil;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
  * Created by TylerPhelps on 3/18/16.
  */
-public class Museum {
+public class Museum implements Serializable {
 
     private int id;
     private String[] hours;
