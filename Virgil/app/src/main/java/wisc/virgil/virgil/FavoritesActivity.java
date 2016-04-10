@@ -27,7 +27,8 @@ public class FavoritesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_museum_favorites);
         setTitle("Favorites");
 
-        api = new VirgilAPI();
+        Intent intent = getIntent();
+        api = (VirgilAPI) intent.getSerializableExtra("API");
 
         //inflates toolbar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.tb_favorites);
@@ -60,6 +61,7 @@ public class FavoritesActivity extends AppCompatActivity {
         api.getFavorites(this).get(position).getMuseumID();
         Intent intent = new Intent(this, GalleryActivity.class);
         intent.putExtra("ID", api.getFavorites(this).get(position).getMuseumID());
+        intent.putExtra("API", api);
         startActivity(intent);
         finish();
     }
@@ -90,6 +92,8 @@ public class FavoritesActivity extends AppCompatActivity {
     public void onBackPressed() {
         Log.d("CDA", "onBackPressed Called");
         Intent intent = new Intent(this, MuseumSelectActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }
@@ -114,12 +118,14 @@ public class FavoritesActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.action_beacon) {
             Intent intent = new Intent(this, BeaconActivity.class);
+            intent.putExtra("API", api);
             startActivity(intent);
             finish();
         } else if (id == R.id.action_map) {
             return true;
         } else if (id == R.id.action_search) {
             Intent intent = new Intent(this, MuseumSelectActivity.class);
+            intent.putExtra("API", api);
             startActivity(intent);
             finish();
         }

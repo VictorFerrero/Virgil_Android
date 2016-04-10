@@ -25,6 +25,7 @@ public class BeaconActivity extends AppCompatActivity {
     //instance variables
     private Button buttonBeacon;
     private DrawerLayout mDrawerLayout;
+    VirgilAPI api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,8 @@ public class BeaconActivity extends AppCompatActivity {
         setContentView(R.layout.beacon);
         Toolbar toolbar = (Toolbar) findViewById(R.id.tb_beacon);
         setSupportActionBar(toolbar);
+
+        api = (VirgilAPI) getIntent().getSerializableExtra("API");
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.dl_beacon);
 
@@ -77,6 +80,8 @@ public class BeaconActivity extends AppCompatActivity {
     public void onBackPressed() {
         Log.d("CDA", "onBackPressed Called");
         Intent intent = new Intent(this, MuseumSelectActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }
@@ -116,10 +121,12 @@ public class BeaconActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.action_favorites) {
             Intent intent = new Intent(this, FavoritesActivity.class);
+            intent.putExtra("API", api);
             startActivity(intent);
             finish();
         } else if (id == R.id.action_search) {
             Intent intent = new Intent(this, MuseumSelectActivity.class);
+            intent.putExtra("API", api);
             startActivity(intent);
             finish();
         }

@@ -24,16 +24,9 @@ public class MapActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_view);
 
-        api = new VirgilAPI();
         Intent intent = getIntent();
         int museumId = intent.getIntExtra("ID", 0);
-
-        api.fetchMuseum(museumId);
-
-        //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
-        while(api.museumStatus() != api.FINISHED_STATUS) {
-            if (api.museumStatus() == api.ERROR_STATUS) break;
-        }
+        api = (VirgilAPI) intent.getSerializableExtra("API");
 
         //inflates toolbar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.tb_museum_map);
@@ -63,6 +56,8 @@ public class MapActivity extends AppCompatActivity {
     public void onBackPressed() {
         Log.d("CDA", "onBackPressed Called");
         Intent intent = new Intent(this, MuseumSelectActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }
@@ -87,14 +82,17 @@ public class MapActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.action_beacon) {
             Intent intent = new Intent(this, BeaconActivity.class);
+            intent.putExtra("API", api);
             startActivity(intent);
             finish();
         } else if (id == R.id.action_favorites) {
             Intent intent = new Intent(this, FavoritesActivity.class);
+            intent.putExtra("API", api);
             startActivity(intent);
             finish();
         } else if (id == R.id.action_search) {
             Intent intent = new Intent(this, MuseumSelectActivity.class);
+            intent.putExtra("API", api);
             startActivity(intent);
             finish();
         }

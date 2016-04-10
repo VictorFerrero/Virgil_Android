@@ -34,12 +34,25 @@ public class MuseumSelectActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.tb_museum_select);
         setSupportActionBar(myToolbar);
 
-        //Setup API and fetch museum list
         api = new VirgilAPI();
         api.fetchAllMuseums();
 
-        api.fetchMuseum(0);
+        //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
+        while(api.museumListStatus() != api.FINISHED_STATUS) {}
 
+        showListView();
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.dl_select);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nv_select);
+        if (navigationView != null) {
+            setupDrawerContent(navigationView);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         showListView();
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.dl_select);
@@ -59,12 +72,11 @@ public class MuseumSelectActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.lv_museum_select);
         listView.setAdapter(adapter);
 
-        //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
-        while(api.museumListStatus() != api.FINISHED_STATUS) {
-        }
-
         //Add all list items to adapter
+        Log.d("Museum List Size: ", ""+api.getMuseumList().size());
         adapter.addAll(api.getMuseumList());
+
+        adapter.setNotifyOnChange(true);
 
         //Make museums clickable and switch to their respective galleries
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -97,8 +109,19 @@ public class MuseumSelectActivity extends AppCompatActivity {
         Log.d("API", "Museum Selected: " + api.getMuseumList().get(position).getName());
 
         //...and pass it to the new starting gallery view
+
+        api.fetchMuseum(position + 1);
+
+        //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
+        while(api.museumStatus() != api.FINISHED_STATUS) {
+            if (api.museumStatus() == api.ERROR_STATUS) {
+                Log.d("API", "Fetched museum with ERROR_STATUS");
+                break;
+            }
+        }
+
         Intent intent = new Intent(this, GalleryActivity.class);
-        intent.putExtra("ID", id);
+        intent.putExtra("API", api);
         startActivity(intent);
         finish();
     }
@@ -123,12 +146,14 @@ public class MuseumSelectActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.action_beacon) {
             Intent intent = new Intent(this, BeaconActivity.class);
+            intent.putExtra("API", api);
             startActivity(intent);
             finish();
         } else if (id == R.id.action_map) {
             return true;
         } else if (id == R.id.action_favorites) {
             Intent intent = new Intent(this, FavoritesActivity.class);
+            intent.putExtra("API", api);
             startActivity(intent);
             finish();
         }
