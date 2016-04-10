@@ -3,6 +3,7 @@ package wisc.virgil.virgil;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -61,6 +62,7 @@ public class GalleryActivity extends AppCompatActivity {
         while(api.museumStatus() != api.FINISHED_STATUS) {
             if (api.museumStatus() == api.ERROR_STATUS) {
                 Log.d("API", "Fetched museum with ERROR_STATUS");
+                break;
             }
         }
         setTitle(api.getMuseum().getName());
@@ -84,20 +86,6 @@ public class GalleryActivity extends AppCompatActivity {
         pager.setAdapter(adapter);
         tabs.setupWithViewPager(pager);
 
-        //TODO: Unsure how to edit the lists within each tab
-
-        /*
-        //Create list of strings to fill tabs with
-        ArrayList<String> exhibitList;
-        for(int i = 0; i < api.getMuseum().getGalleries().size(); i++) {
-            exhibitList = new ArrayList<String>();
-            for(int j = 0; j < api.getMuseum().getGalleries().get(i).getExhibits().size(); j++) {
-                exhibitList.add(api.getMuseum().getGalleries().get(i).getExhibits().get(j).getName());
-            }
-            adapter.getItem(i).setUPList(exhibitList);
-        }
-        */
-
         //setupTabIcons();
 
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -111,12 +99,12 @@ public class GalleryActivity extends AppCompatActivity {
                 ImageView imageView = (ImageView) findViewById(R.id.iv_gallery);
                 if(position == 0) {
                     if(api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage() == null) {
-                        imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_virgil));
+                        imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
                     } else {
                         imageView.setImageDrawable(api.getMuseum().getContent().get(0).getImage());
                     }
                 } else if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position).getContent().isEmpty() || api.getMuseum().getGalleries().get(position).getContent().get(0).getImage() == null) {
-                    imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_virgil));
+                    imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
                 } else {
                     imageView.setImageDrawable(api.getMuseum().getGalleries().get(position).getContent().get(0).getImage());
                 }
