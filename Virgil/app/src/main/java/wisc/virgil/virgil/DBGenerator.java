@@ -1,5 +1,7 @@
 package wisc.virgil.virgil;
 
+import java.io.Serializable;
+
 import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
 import de.greenrobot.daogenerator.Schema;
@@ -8,7 +10,7 @@ import de.greenrobot.daogenerator.Schema;
  * Created by TylerPhelps on 3/27/16.
  */
 
-public class DBGenerator {
+public class DBGenerator implements Serializable {
     public static void main(String[] args) throws Exception {
         Schema schema = new Schema(1, "wisc.virgil.virgil"); //Scheme for GreenDAO ORM
         createDB(schema);

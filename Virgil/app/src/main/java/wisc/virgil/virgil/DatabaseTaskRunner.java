@@ -3,13 +3,15 @@ package wisc.virgil.virgil;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.content.Context;
+
+import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 
 /**
  * Created by TylerPhelps on 4/1/16.
  */
-public class DatabaseTaskRunner {
+public class DatabaseTaskRunner implements Serializable {
 
     private VirgilAPI myParent;
 
