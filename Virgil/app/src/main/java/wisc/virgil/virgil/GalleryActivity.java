@@ -44,7 +44,7 @@ public class GalleryActivity extends AppCompatActivity {
         Intent intent = getIntent();
         museumId = intent.getIntExtra("ID", 0);
 
-        /* Future code for when api contains content/galleries/exhibits (crap search though)
+        /* Future code for when favorites api contains content/galleries/exhibits
         if(!api.getFavorites(this).isEmpty()) {
             for(int i = 0; i < api.getFavorites(this).size(); i++) {
                 if(api.getFavorites(this).get(i).getMuseumID() == museumId) {
