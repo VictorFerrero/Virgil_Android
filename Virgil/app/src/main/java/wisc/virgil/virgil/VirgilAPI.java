@@ -10,7 +10,7 @@ import android.content.Context;
 /**
  * Created by TylerPhelps on 3/19/16.
  */
-public class VirgilAPI {
+public class VirgilAPI implements Serializable {
 
     private final String GET_MUSEUM = "getMuseum";
     private final String GET_ALL_MUSEUMS = "getAllMuseums";

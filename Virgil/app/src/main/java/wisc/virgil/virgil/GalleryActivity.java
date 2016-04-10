@@ -42,9 +42,9 @@ public class GalleryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gallery);
 
         //Setup API, retrieve id of selected museum, and fetch the corresponding gallery
-        api = new VirgilAPI();
         Intent intent = getIntent();
         museumId = intent.getIntExtra("ID", 0);
+        api = (VirgilAPI) intent.getSerializableExtra("API");
 
         /* Future code for when favorites api contains content/galleries/exhibits
         if(!api.getFavorites(this).isEmpty()) {
@@ -56,15 +56,6 @@ public class GalleryActivity extends AppCompatActivity {
         }
         End of future code */
 
-        api.fetchMuseum(museumId);
-
-        //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
-        while(api.museumStatus() != api.FINISHED_STATUS) {
-            if (api.museumStatus() == api.ERROR_STATUS) {
-                Log.d("API", "Fetched museum with ERROR_STATUS");
-                break;
-            }
-        }
         setTitle(api.getMuseum().getName());
 
         //Fill Titles for tabs with gallery names
@@ -152,6 +143,7 @@ public class GalleryActivity extends AppCompatActivity {
     public void onBackPressed() {
         Log.d("CDA", "onBackPressed Called");
         Intent intent = new Intent(this, MuseumSelectActivity.class);
+        intent.putExtra("API", api);
         startActivity(intent);
         finish();
     }
@@ -176,19 +168,23 @@ public class GalleryActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.action_beacon) {
             Intent intent = new Intent(this, BeaconActivity.class);
+            intent.putExtra("API", api);
             startActivity(intent);
             finish();
         } else if (id == R.id.action_map) {
             Intent intent = new Intent(this, MapActivity.class);
+            intent.putExtra("API", api);
             intent.putExtra("ID", museumId);
             startActivity(intent);
             finish();
         } else if (id == R.id.action_favorites) {
             Intent intent = new Intent(this, FavoritesActivity.class);
+            intent.putExtra("API", api);
             startActivity(intent);
             finish();
         } else if (id == R.id.action_search) {
             Intent intent = new Intent(this, MuseumSelectActivity.class);
+            intent.putExtra("API", api);
             startActivity(intent);
             finish();
         }

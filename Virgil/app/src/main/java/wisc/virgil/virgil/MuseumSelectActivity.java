@@ -35,10 +35,13 @@ public class MuseumSelectActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         //Setup API and fetch museum list
-        api = new VirgilAPI();
-        api.fetchAllMuseums();
-
-        api.fetchMuseum(0);
+        Intent intent = getIntent();
+        if(intent.hasExtra("API")) {
+            api = (VirgilAPI) intent.getSerializableExtra("API");
+        } else {
+            api = new VirgilAPI();
+            api.fetchAllMuseums();
+        }
 
         showListView();
 
@@ -97,8 +100,19 @@ public class MuseumSelectActivity extends AppCompatActivity {
         Log.d("API", "Museum Selected: " + api.getMuseumList().get(position).getName());
 
         //...and pass it to the new starting gallery view
+
+        api.fetchMuseum(position);
+
+        //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
+        while(api.museumStatus() != api.FINISHED_STATUS) {
+            if (api.museumStatus() == api.ERROR_STATUS) {
+                Log.d("API", "Fetched museum with ERROR_STATUS");
+                break;
+            }
+        }
+
         Intent intent = new Intent(this, GalleryActivity.class);
-        intent.putExtra("ID", id);
+        intent.putExtra("API", api);
         startActivity(intent);
         finish();
     }
@@ -123,12 +137,14 @@ public class MuseumSelectActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.action_beacon) {
             Intent intent = new Intent(this, BeaconActivity.class);
+            intent.putExtra("API", api);
             startActivity(intent);
             finish();
         } else if (id == R.id.action_map) {
             return true;
         } else if (id == R.id.action_favorites) {
             Intent intent = new Intent(this, FavoritesActivity.class);
+            intent.putExtra("API", api);
             startActivity(intent);
             finish();
         }
