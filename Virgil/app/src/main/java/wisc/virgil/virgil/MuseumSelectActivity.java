@@ -41,8 +41,24 @@ public class MuseumSelectActivity extends AppCompatActivity {
         } else {
             api = new VirgilAPI();
             api.fetchAllMuseums();
+            //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
+            while(api.museumListStatus() != api.FINISHED_STATUS) {
+            }
         }
 
+        showListView();
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.dl_select);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nv_select);
+        if (navigationView != null) {
+            setupDrawerContent(navigationView);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         showListView();
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.dl_select);
@@ -62,12 +78,11 @@ public class MuseumSelectActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.lv_museum_select);
         listView.setAdapter(adapter);
 
-        //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
-        while(api.museumListStatus() != api.FINISHED_STATUS) {
-        }
-
-        //Add all list items to adapter
+        //Add all list items to adapter\
+        Log.d("Museum List Size: ", ""+api.getMuseumList().size());
         adapter.addAll(api.getMuseumList());
+
+        adapter.setNotifyOnChange(true);
 
         //Make museums clickable and switch to their respective galleries
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -101,7 +116,7 @@ public class MuseumSelectActivity extends AppCompatActivity {
 
         //...and pass it to the new starting gallery view
 
-        api.fetchMuseum(position);
+        api.fetchMuseum(position + 1);
 
         //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
         while(api.museumStatus() != api.FINISHED_STATUS) {
