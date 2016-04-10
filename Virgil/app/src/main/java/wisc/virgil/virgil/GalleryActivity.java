@@ -10,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,23 +59,17 @@ public class GalleryActivity extends AppCompatActivity {
 
         //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
         while(api.museumStatus() != api.FINISHED_STATUS) {
-            if (api.museumStatus() == api.ERROR_STATUS) break;
+            if (api.museumStatus() == api.ERROR_STATUS) {
+                Log.d("API", "Fetched museum with ERROR_STATUS");
+            }
         }
         setTitle(api.getMuseum().getName());
 
         //Fill Titles for tabs with gallery names
         List<String> nameList = new ArrayList<>();
-        int count = 0;
         nameList.add("Description");
-        while(count < api.getMuseum().getGalleries().size()) {
-            nameList.add(api.getMuseum().getGalleries().get(count).getName());
-            count++;
-        }
-
-        //Extra galleries to show scrollable tabs
-        while(count < 8) {
-            nameList.add("Gallery " + count);
-            count++;
+        for(int i = 0; i < api.getMuseum().getGalleries().size(); i++) {
+            nameList.add(api.getMuseum().getGalleries().get(i).getName());
         }
 
         Titles = nameList.toArray(new CharSequence[nameList.size()]);
@@ -104,6 +99,37 @@ public class GalleryActivity extends AppCompatActivity {
         */
 
         //setupTabIcons();
+
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                ImageView imageView = (ImageView) findViewById(R.id.iv_gallery);
+                if(position == 0) {
+                    if(api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage() == null) {
+                        imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_virgil));
+                    } else {
+                        imageView.setImageDrawable(api.getMuseum().getContent().get(0).getImage());
+                    }
+                } else if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position).getContent().isEmpty() || api.getMuseum().getGalleries().get(position).getContent().get(0).getImage() == null) {
+                    imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_virgil));
+                } else {
+                    imageView.setImageDrawable(api.getMuseum().getGalleries().get(position).getContent().get(0).getImage());
+                }
+
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setCropToPadding(true);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private void setupTabIcons() {
