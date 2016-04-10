@@ -38,6 +38,8 @@ public class MuseumSelectActivity extends AppCompatActivity {
         api = new VirgilAPI();
         api.fetchAllMuseums();
 
+        api.fetchMuseum(0);
+
         showListView();
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.dl_select);

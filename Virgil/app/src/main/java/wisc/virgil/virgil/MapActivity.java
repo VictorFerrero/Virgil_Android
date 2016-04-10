@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -41,6 +43,28 @@ public class MapActivity extends AppCompatActivity {
 
         ImageView map = (ImageView) findViewById(R.id.map_item);
         map.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.map_placeholder));
+    }
+
+    //Provide back button support
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5
+                && keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Log.d("CDA", "onKeyDown Called");
+            onBackPressed();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    //Provide back button support
+    @Override
+    public void onBackPressed() {
+        Log.d("CDA", "onBackPressed Called");
+        Intent intent = new Intent(this, MuseumSelectActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override

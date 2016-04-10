@@ -1,5 +1,6 @@
 package wisc.virgil.virgil;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import android.util.Log;
