@@ -71,4 +71,14 @@ public class PostsFragment extends Fragment {
         }
         return descList;
     }
+
+    private List<String> createItemHeader() {
+        List<String> headerList = new ArrayList<>();
+
+        for (int i=0; i<30; i++) {
+            headerList.add("Virgil Header : " + i);
+        }
+
+        return headerList;
+    }
 }

@@ -22,11 +22,14 @@ public class CommonRecycleAdapter extends RecyclerView.Adapter<CommonRecycleAdap
     private List<String> itemsData;
     private List<String> itemsTitle;
     private List<Drawable> itemsImage;
+    private List<String> itemsHeader;
+    private ViewHolder viewHolder;
 
     public CommonRecycleAdapter(List<String> itemsTitle, List<String> itemsData, List<Drawable> itemsImage) {
         this.itemsData  = itemsData;
         this.itemsTitle = itemsTitle;
         this.itemsImage = itemsImage;
+        this.itemsHeader = itemsTitle;
     }
 
     @Override
@@ -35,17 +38,17 @@ public class CommonRecycleAdapter extends RecyclerView.Adapter<CommonRecycleAdap
         View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.exhibit_view, parent, false);
 
-        ViewHolder viewHolder = new ViewHolder(itemLayoutView);
+        this.viewHolder = new ViewHolder(itemLayoutView);
 
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-
         viewHolder.exhibitTitle.setText(this.itemsTitle.get(position));
         viewHolder.exhibitDescription.setText(this.itemsData.get(position));
         viewHolder.exhibitImage.setImageDrawable(this.itemsImage.get(position));
+        viewHolder.exhibitHeader.setText(this.itemsHeader.get(position));
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -53,6 +56,7 @@ public class CommonRecycleAdapter extends RecyclerView.Adapter<CommonRecycleAdap
         @Bind(R.id.tv_exhibit_title)       TextView exhibitTitle;
         @Bind(R.id.tv_exhibit_description) TextView exhibitDescription;
         @Bind(R.id.iv_exhibit_image)       ImageView exhibitImage;
+        @Bind(R.id.exhibit_title)          TextView exhibitHeader;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
