@@ -12,7 +12,8 @@
             android:id="@+id/exhibit_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
             android:text="@string/exhibit_title"
-            android:gravity="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+            android:gravity="center_horizontal"
+            android:textAllCaps="true"/>
 </LinearLayout>

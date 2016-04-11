@@ -6,11 +6,7 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/cv_exhibit_image"
-<<<<<<< HEAD
-        android:layout_width="160dp"
-=======
         android:layout_width="162dp"
->>>>>>> stage
         android:layout_height="190dp"
         app:cardCornerRadius="3dp"
         app:cardElevation="5dp"

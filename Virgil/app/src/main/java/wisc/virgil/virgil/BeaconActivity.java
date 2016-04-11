@@ -2,11 +2,11 @@ package wisc.virgil.virgil;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 /**
  * Created by Summer on 3/28/2016.
@@ -22,7 +23,7 @@ public class BeaconActivity extends AppCompatActivity {
 
     //instance variables
     private Button buttonBeacon;
-    private DrawerLayout mDrawerLayout;
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,11 @@ public class BeaconActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.tb_beacon);
         setSupportActionBar(toolbar);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.dl_beacon);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.dl_beacon);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nv_beacon);
         if (navigationView != null) {
@@ -60,7 +65,9 @@ public class BeaconActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
+            MenuItem item = menu.findItem(R.id.main_beacon);
+            item.setVisible(false);
+            this.invalidateOptionsMenu();
         return true;
     }
 
@@ -71,7 +78,7 @@ public class BeaconActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         menuItem.setChecked(true);
-                        mDrawerLayout.closeDrawers();
+                        drawerLayout.closeDrawers();
                         return true;
                     }
                 });
@@ -85,18 +92,21 @@ public class BeaconActivity extends AppCompatActivity {
         int id = item.getItemId();
 
 
-        if (id == R.id.action_settings) {
-            return true;
-        } else if (id == R.id.action_map) {
-            return true;
-        } else if (id == R.id.action_favorites) {
+         if (id == R.id.main_favorites) {
+
             Intent intent = new Intent(this, FavoritesActivity.class);
             startActivity(intent);
             finish();
-        } else if (id == R.id.action_search) {
-            Intent intent = new Intent(this, MuseumSelectActivity.class);
-            startActivity(intent);
-            finish();
+
+        }  else if (id == R.id.main_search) {
+                Intent intent = new Intent(this, MuseumSelectActivity.class);
+                startActivity(intent);
+                finish();
+
+        } else if (id == android.R.id.home) {
+
+            drawerLayout.openDrawer(GravityCompat.START);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

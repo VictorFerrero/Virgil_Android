@@ -7,11 +7,7 @@
     <item>
         <bitmap
             android:gravity="center"
-<<<<<<< HEAD
             android:src="@drawable/ic_launcher_mid"/>
-=======
-            android:src="@drawable/ic_launcher_medium"/>
->>>>>>> stage
     </item>
 
 </layer-list>

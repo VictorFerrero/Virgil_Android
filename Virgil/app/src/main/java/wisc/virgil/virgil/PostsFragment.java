@@ -42,7 +42,8 @@ public class PostsFragment extends Fragment {
 
     void setUPList(){
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        CommonRecycleAdapter adapter = new CommonRecycleAdapter(createItemList(), createItemTitle());
+        CommonRecycleAdapter adapter = new CommonRecycleAdapter(createItemList(), createItemTitle(),
+                createItemHeader());
         recyclerView.setAdapter(adapter);
     }
 
@@ -61,5 +62,15 @@ public class PostsFragment extends Fragment {
             titleList.add("Here is some basic info : " + i);
         }
         return titleList;
+    }
+
+    private List<String> createItemHeader() {
+        List<String> headerList = new ArrayList<>();
+
+        for (int i=0; i<30; i++) {
+            headerList.add("Virgil Header : " + i);
+        }
+
+        return headerList;
     }
 }

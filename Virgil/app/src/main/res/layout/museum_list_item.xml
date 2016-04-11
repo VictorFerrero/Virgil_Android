@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="175dp"
+    android:layout_height="wrap_content"
+    android:elevation="5dp"
     android:background="@android:drawable/dialog_holo_light_frame"
-    android:elevation="4dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp">
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
         android:layout_width="160dp"
@@ -14,10 +15,7 @@
         android:id="@+id/iv_museumListImage"
         android:src="@drawable/virgil_blue_icon"
         android:contentDescription="@string/MuseumImage"
-        android:background="@android:drawable/dialog_holo_light_frame"
-        android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true" />
 
@@ -25,26 +23,43 @@
         android:id="@+id/rl_text"
         android:layout_width="250dp"
         android:layout_height="150dp"
-        android:padding="2dp"
         android:layout_margin="4dp"
         android:layout_toEndOf="@+id/iv_museumListImage"
         android:layout_alignParentBottom="true"
         android:layout_alignTop="@+id/iv_museumListImage">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tv_museumAddress"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="5dp"
+            android:id="@+id/relativeLayout"
+            android:layout_marginBottom="20dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/museum_name"
             android:gravity="left"
+            android:textColor="@color/colorPrimaryDark"
             android:textAlignment="gravity"
             android:id="@+id/tv_museumName"
-            android:layout_above="@+id/tv_museumAddress"
+
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="22dp" />
+            android:layout_marginBottom="1dp" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_below="@+id/tv_museumName" />
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorTertiary"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/dummy_hours"
             android:id="@+id/tv_museumListHours"
@@ -52,20 +67,22 @@
             android:textAlignment="gravity"
             android:layout_marginRight="4dp"
             android:layout_below="@+id/tv_museumAddress"
-            android:layout_alignStart="@+id/tv_museumName"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true" />
-
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="5dp"
+            android:layout_alignStart="@+id/tv_museumAddress" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/dummy_address"
+            android:textColor="@color/colorTertiary"
             android:id="@+id/tv_museumAddress"
             android:gravity="left"
             android:textAlignment="gravity"
             android:layout_centerVertical="true"
-            android:layout_alignStart="@+id/tv_museumName"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignStart="@+id/relativeLayout" />
+
     </RelativeLayout>
 </RelativeLayout>
