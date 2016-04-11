@@ -110,6 +110,7 @@ public class MuseumSelectActivity extends AppCompatActivity {
             }
         }
 
+        Log.d("API", "OK");
         Intent intent = new Intent(this, GalleryActivity.class);
         intent.putExtra("API", api);
         intent.putExtra("ID", id);

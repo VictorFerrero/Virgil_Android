@@ -21,6 +21,8 @@ public class VirgilAPI implements Serializable {
     public Museum museum;
     public ArrayList<Museum> museumList;
     public boolean listFinished;
+    public boolean museumFinished;
+    public boolean museumError;
 
     public ArrayList<Event> eventList;
     public boolean eventListFinished;
@@ -28,6 +30,8 @@ public class VirgilAPI implements Serializable {
     public VirgilAPI() {
         this.museum = null;
         this.museumList = null;
+        this.museumFinished = false;
+        this.museumError = false;
         this.listFinished = false;
         this.eventList = null;
         this.eventListFinished = false;
@@ -59,13 +63,15 @@ public class VirgilAPI implements Serializable {
     }
 
     public int museumStatus() {
-        if (this.museum != null) {
-            if (this.museum.getName().isEmpty()) {
-                return this.ERROR_STATUS;
-            }
-            else return this.FINISHED_STATUS;
+        if (this.museumFinished) {
+            return this.FINISHED_STATUS;
         }
-        else return this.PENDING_STATUS;
+        else if (this.museumError) {
+            return this.ERROR_STATUS;
+        }
+        else {
+            return this.PENDING_STATUS;
+        }
     }
 
     public int museumListStatus() {

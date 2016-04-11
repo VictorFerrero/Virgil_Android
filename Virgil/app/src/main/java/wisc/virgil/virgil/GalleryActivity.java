@@ -34,6 +34,7 @@ public class GalleryActivity extends AppCompatActivity {
     @Bind(R.id.vp_gallery) ViewPager pager;
 
     MainPagerAdapter adapter;
+    int museumId;
 
     VirgilAPI api;
     CharSequence Titles[];
@@ -46,9 +47,10 @@ public class GalleryActivity extends AppCompatActivity {
 
         //Setup API, retrieve id of selected museum, and fetch the corresponding gallery
         Intent intent = getIntent();
+        museumId = intent.getIntExtra("ID", 0);
         api = (VirgilAPI) intent.getSerializableExtra("API");
 
-        Log.d("Gallery", "ID: " + api.getMuseum().getId());
+        Log.d("Gallery", "ID: " + this.museumId);
 
         //inflates toolbar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.tb_gallery);
