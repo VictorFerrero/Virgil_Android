@@ -46,6 +46,7 @@ public class GalleryActivity extends AppCompatActivity {
         museumId = intent.getIntExtra("ID", 0);
         api = (VirgilAPI) intent.getSerializableExtra("API");
 
+        Log.d("Gallery", "ID: " + this.museumId);
         /* Future code for when favorites api contains content/galleries/exhibits
         if(!api.getFavorites(this).isEmpty()) {
             for(int i = 0; i < api.getFavorites(this).size(); i++) {
@@ -77,6 +78,7 @@ public class GalleryActivity extends AppCompatActivity {
         } else {
             imageView.setImageDrawable(api.getMuseum().getContent().get(0).getImage());
         }
+
     }
 
     void setUpTabs(){
@@ -179,6 +181,7 @@ public class GalleryActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else if (id == R.id.action_favorites) {
+            //api.addFavorite(this.museumId, this);
             Intent intent = new Intent(this, FavoritesActivity.class);
             intent.putExtra("API", api);
             startActivity(intent);

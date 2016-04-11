@@ -36,18 +36,17 @@ public class FavoritesActivity extends AppCompatActivity {
 
         GridView gridView = (GridView) findViewById(R.id.gv_favorites);
 
-        //*Temporary* Clear database so we don't keep creating more of the same museums
-        while(!api.getFavorites(this).isEmpty()) {
+        /*while (!api.getFavorites(this).isEmpty()) {
             api.deleteFavorite(api.getFavorites(this).get(0).getMuseumID(), this);
-        }
+        }*/
 
-        api.addFavorite(1, this);
-        api.addFavorite(2, this);
         if(api.getFavorites(this) != null && !api.getFavorites(this).isEmpty()) {
             gridView.setAdapter(new FavoritesAdapter(this, api.getFavorites(this)));
         } else {
             //Will display error message
         }
+
+        Log.d("API", "Favorites: "+api.getFavorites(this).size());
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -70,8 +69,6 @@ public class FavoritesActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        api.deleteFavorite(1, this);
-        api.deleteFavorite(2, this);
     }
 
     //Provide back button support

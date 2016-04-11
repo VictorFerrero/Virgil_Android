@@ -117,11 +117,12 @@ public class MuseumSelectActivity extends AppCompatActivity {
             if (api.museumStatus() == api.ERROR_STATUS) {
                 Log.d("API", "Fetched museum with ERROR_STATUS");
                 break;
-            }
+            };
         }
 
         Intent intent = new Intent(this, GalleryActivity.class);
         intent.putExtra("API", api);
+        intent.putExtra("ID", id);
         startActivity(intent);
         finish();
     }

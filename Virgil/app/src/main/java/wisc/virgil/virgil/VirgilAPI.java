@@ -34,6 +34,7 @@ public class VirgilAPI implements Serializable {
     }
 
     public void fetchMuseum(int id) {
+        this.museum = null;
         BackendTaskRunner runner = new BackendTaskRunner(this);
         runner.execute(GET_MUSEUM, Integer.toString(id));
     }
@@ -43,6 +44,7 @@ public class VirgilAPI implements Serializable {
     }
 
     public void fetchAllMuseums() {
+        this.museumList = null;
         BackendTaskRunner runner = new BackendTaskRunner(this);
         runner.execute(GET_ALL_MUSEUMS);
     }
@@ -109,11 +111,13 @@ public class VirgilAPI implements Serializable {
     }
 
     public boolean addFavorite(int id, Context context) {
+        this.museum = null;
         DatabaseTaskRunner dbRunner = new DatabaseTaskRunner(context, this);
         return dbRunner.addFavorite(id);
     }
 
     public boolean deleteFavorite(int id, Context context) {
+        this.museum = null;
         DatabaseTaskRunner dbRunner = new DatabaseTaskRunner(context, this);
         return dbRunner.deleteFavorite(id);
     }

@@ -72,7 +72,6 @@ public class DatabaseTaskRunner implements Serializable {
         Log.d("DB", ("add " + id));
 
         myParent.fetchMuseum(id);
-        Log.d("DB", "fetched");
 
         while (myParent.museumStatus() == myParent.PENDING_STATUS) {
             if (myParent.museumStatus() == myParent.ERROR_STATUS) {
@@ -82,6 +81,10 @@ public class DatabaseTaskRunner implements Serializable {
         }
 
         Museum museum = myParent.getMuseum();
+
+
+        Log.d("DB", "fetched " + myParent.getMuseum().getId());
+
         Random rand = new Random();
 
         FavoriteMuseum newFav = new FavoriteMuseum(rand.nextLong(), id, museum.getName(), museum.getAddress(), "/", true);
