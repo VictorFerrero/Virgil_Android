@@ -74,7 +74,7 @@ public class GalleryActivity extends AppCompatActivity {
 
         ImageView imageView = (ImageView) findViewById(R.id.iv_gallery);
         if(api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage() == null) {
-            imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
+            imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.bucky_museum));
         } else {
             imageView.setImageDrawable(api.getMuseum().getContent().get(0).getImage());
         }
@@ -87,44 +87,30 @@ public class GalleryActivity extends AppCompatActivity {
         tabs.setupWithViewPager(pager);
 
         //setupTabIcons();
+        tabs.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
+                                          @Override
+                                     public void onTabSelected(TabLayout.Tab tab) {
+                                             super.onTabSelected(tab);
 
-        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                                             int position = tab.getPosition();
+                                             ImageView imageView = (ImageView) findViewById(R.id.iv_gallery);
+                                             if(position == 0) {
+                                                 if(api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage() == null) {
+                                                     imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.bucky_museum));
+                                                 } else {
+                                                     imageView.setImageDrawable(api.getMuseum().getContent().get(0).getImage());
+                                                 }
+                                             } else if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position - 1).getContent().isEmpty() || api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage() == null) {
+                                                 imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.bucky_history));
+                                             } else {
+                                                 imageView.setImageDrawable(api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage());
+                                             }
 
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                ImageView imageView = (ImageView) findViewById(R.id.iv_gallery);
-                if(position == 0) {
-                    if(api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage() == null) {
-                        imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
-                    } else {
-                        imageView.setImageDrawable(api.getMuseum().getContent().get(0).getImage());
-                    }
-                } else if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position - 1).getContent().isEmpty() || api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage() == null) {
-                    imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
-                } else {
-                    imageView.setImageDrawable(api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage());
-                }
-
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setCropToPadding(true);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-    }
-
-    private void setupTabIcons() {
-        //Set each tab's icon
-        for(int i = 0; i < tabs.getTabCount(); i++) {
-            tabs.getTabAt(i).setIcon(R.drawable.ic_virgil);
-        }
+                                              imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                                              imageView.setCropToPadding(true);
+                                         }
+                                      }
+        );
     }
 
     //Provide back button support

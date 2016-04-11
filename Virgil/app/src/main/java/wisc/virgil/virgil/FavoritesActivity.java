@@ -119,7 +119,10 @@ public class FavoritesActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else if (id == R.id.action_map) {
-            return true;
+            Intent intent = new Intent(this, MapActivity.class);
+            intent.putExtra("API", api);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.action_search) {
             Intent intent = new Intent(this, MuseumSelectActivity.class);
             intent.putExtra("API", api);

@@ -118,7 +118,10 @@ public class BeaconActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         } else if (id == R.id.action_map) {
-            return true;
+            Intent intent = new Intent(this, MapActivity.class);
+            intent.putExtra("API", api);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.action_favorites) {
             Intent intent = new Intent(this, FavoritesActivity.class);
             intent.putExtra("API", api);

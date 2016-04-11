@@ -50,19 +50,6 @@ public class MuseumSelectActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        showListView();
-
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.dl_select);
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nv_select);
-        if (navigationView != null) {
-            setupDrawerContent(navigationView);
-        }
-    }
-
     private void showListView() {
         ArrayList<Museum> museums = new ArrayList<>();
 
@@ -117,7 +104,7 @@ public class MuseumSelectActivity extends AppCompatActivity {
             if (api.museumStatus() == api.ERROR_STATUS) {
                 Log.d("API", "Fetched museum with ERROR_STATUS");
                 break;
-            };
+            }
         }
 
         Intent intent = new Intent(this, GalleryActivity.class);
@@ -151,7 +138,13 @@ public class MuseumSelectActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else if (id == R.id.action_map) {
-            return true;
+            //Only menu item not working correctly on museum select
+            /*
+            Intent intent = new Intent(this, MapActivity.class);
+            intent.putExtra("API", api);
+            startActivity(intent);
+            finish();
+            */
         } else if (id == R.id.action_favorites) {
             Intent intent = new Intent(this, FavoritesActivity.class);
             intent.putExtra("API", api);
