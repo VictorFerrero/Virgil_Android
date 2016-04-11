@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,6 @@ public class GalleryActivity extends AppCompatActivity {
     @Bind(R.id.vp_gallery) ViewPager pager;
 
     MainPagerAdapter adapter;
-    int museumId;
 
     VirgilAPI api;
     CharSequence Titles[];
@@ -43,10 +43,9 @@ public class GalleryActivity extends AppCompatActivity {
 
         //Setup API, retrieve id of selected museum, and fetch the corresponding gallery
         Intent intent = getIntent();
-        museumId = intent.getIntExtra("ID", 0);
         api = (VirgilAPI) intent.getSerializableExtra("API");
 
-        Log.d("Gallery", "ID: " + this.museumId);
+        Log.d("Gallery", "ID: " + api.getMuseum().getId());
         /* Future code for when favorites api contains content/galleries/exhibits
         if(!api.getFavorites(this).isEmpty()) {
             for(int i = 0; i < api.getFavorites(this).size(); i++) {
@@ -74,7 +73,13 @@ public class GalleryActivity extends AppCompatActivity {
 
         ImageView imageView = (ImageView) findViewById(R.id.iv_gallery);
         if(api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage() == null) {
-            imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.bucky_museum));
+            if(api.getMuseum().getId() == 1) {
+                imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.bucky_museum));
+            } else if(api.getMuseum().getId() == 2) {
+                imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.camp_randall_museum));
+            } else {
+                imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
+            }
         } else {
             imageView.setImageDrawable(api.getMuseum().getContent().get(0).getImage());
         }
@@ -82,11 +87,10 @@ public class GalleryActivity extends AppCompatActivity {
     }
 
     void setUpTabs(){
-        adapter =  new MainPagerAdapter(this.getSupportFragmentManager(),Titles,Titles.length);
+        adapter =  new MainPagerAdapter(this.getSupportFragmentManager(),Titles,Titles.length,api);
         pager.setAdapter(adapter);
         tabs.setupWithViewPager(pager);
 
-        //setupTabIcons();
         tabs.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
                                           @Override
                                      public void onTabSelected(TabLayout.Tab tab) {
@@ -163,7 +167,6 @@ public class GalleryActivity extends AppCompatActivity {
         } else if (id == R.id.action_map) {
             Intent intent = new Intent(this, MapActivity.class);
             intent.putExtra("API", api);
-            intent.putExtra("ID", museumId);
             startActivity(intent);
             finish();
         } else if (id == R.id.action_favorites) {

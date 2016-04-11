@@ -56,8 +56,10 @@ public class MuseumSelectAdapter extends ArrayAdapter<Museum> {
         if(museum.getContent().isEmpty() || museum.getContent().get(0).getImage() == null) {
             if(museum.getId() == 1) {
                 viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.bucky_museum));
-            } else {
+            } else if (museum.getId() == 2) {
                 viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.camp_randall_museum));
+            } else {
+                viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_virgil));
             }
         } else {
             viewHolder.image.setImageDrawable(museum.getContent().get(0).getImage());

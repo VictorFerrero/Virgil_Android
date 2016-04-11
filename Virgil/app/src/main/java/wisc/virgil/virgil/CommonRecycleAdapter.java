@@ -1,5 +1,8 @@
 package wisc.virgil.virgil;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +21,12 @@ public class CommonRecycleAdapter extends RecyclerView.Adapter<CommonRecycleAdap
 
     private List<String> itemsData;
     private List<String> itemsTitle;
+    private List<Drawable> itemsImage;
 
-    public CommonRecycleAdapter(List<String> itemsData, List<String> itemsTitle) {
+    public CommonRecycleAdapter(List<String> itemsTitle, List<String> itemsData, List<Drawable> itemsImage) {
         this.itemsData  = itemsData;
         this.itemsTitle = itemsTitle;
+        this.itemsImage = itemsImage;
     }
 
     @Override
@@ -38,14 +43,16 @@ public class CommonRecycleAdapter extends RecyclerView.Adapter<CommonRecycleAdap
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
 
-        viewHolder.exhibitTitle.setText(itemsData.get(position));
-        viewHolder.exhibitDescription.setText(itemsTitle.get(position));
+        viewHolder.exhibitTitle.setText(this.itemsTitle.get(position));
+        viewHolder.exhibitDescription.setText(this.itemsData.get(position));
+        viewHolder.exhibitImage.setImageDrawable(this.itemsImage.get(position));
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.tv_exhibit_title)       TextView exhibitTitle;
         @Bind(R.id.tv_exhibit_description) TextView exhibitDescription;
+        @Bind(R.id.iv_exhibit_image)       ImageView exhibitImage;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
@@ -55,6 +62,6 @@ public class CommonRecycleAdapter extends RecyclerView.Adapter<CommonRecycleAdap
 
     @Override
     public int getItemCount() {
-        return itemsData.size();
+        return itemsTitle.size();
     }
 }
