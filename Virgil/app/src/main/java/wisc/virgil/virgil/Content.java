@@ -29,7 +29,7 @@ public class Content implements Serializable {
         this.pathToContent = IP_ADDRESS + RESOURCE_PATH + pathToContent;
         this.image = null;
 
-        loadContentImage();
+        //loadContentImage();
     }
 
     public int getId() { return this.id; }

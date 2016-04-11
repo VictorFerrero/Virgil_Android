@@ -39,6 +39,8 @@ public class VirgilAPI implements Serializable {
 
     public void fetchMuseum(int id) {
         this.museum = null;
+        this.museumFinished = false;
+        this.museumError = false;
         BackendTaskRunner runner = new BackendTaskRunner(this);
         runner.execute(GET_MUSEUM, Integer.toString(id));
     }
