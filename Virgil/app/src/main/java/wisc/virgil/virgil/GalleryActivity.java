@@ -212,8 +212,28 @@ public class GalleryActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else if (id == R.id.action_favorite_item) {
-            Toast.makeText(this, getResources().getString(R.string.added_favorite),
-                    Toast.LENGTH_SHORT).show();
+            boolean inDB = false;
+
+            for (FavoriteMuseum favMus : api.getFavorites(this)) {
+                if (favMus.getMuseumID() == this.museumId) {
+                    api.deleteFavorite(this.museumId, this);
+                    inDB = true;
+                    Toast.makeText(this, "Unfavorited",
+                            Toast.LENGTH_SHORT).show();
+                    break;
+                }
+            }
+
+            if (!inDB) {
+                if (api.addFavorite(this.museumId, this)) {
+                    Toast.makeText(this, getResources().getString(R.string.added_favorite),
+                            Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(this, "Error fetching data from server.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
             return true;
 
         } else if (id == android.R.id.home) {

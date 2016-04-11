@@ -53,9 +53,13 @@ public class FavoritesActivity extends AppCompatActivity {
         }
         GridView gridView = (GridView) findViewById(R.id.gv_favorites);
 
-        /*while (!api.getFavorites(this).isEmpty()) {
+       /*while (!api.getFavorites(this).isEmpty()) {
             api.deleteFavorite(api.getFavorites(this).get(0).getMuseumID(), this);
-        }*/
+       }*/
+
+        for (FavoriteMuseum favMus : api.getFavorites(this)) {
+            Log.d("FAV", favMus.getName() + " " + favMus.getMuseumID());
+        }
 
         if(api.getFavorites(this) != null && !api.getFavorites(this).isEmpty()) {
             gridView.setAdapter(new FavoritesAdapter(this, api.getFavorites(this)));
@@ -74,10 +78,20 @@ public class FavoritesActivity extends AppCompatActivity {
     }
 
     public void switchToGallery(int position) {
-        api.getFavorites(this).get(position).getMuseumID();
+        Log.d("API", "" + api.getFavorites(this).get(position).getMuseumID());
+       api.fetchMuseum(api.getFavorites(this).get(position).getMuseumID());
+
+        //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
+        while(api.museumStatus() != api.FINISHED_STATUS) {
+            if (api.museumStatus() == api.ERROR_STATUS) {
+                Log.d("API", "Fetched museum with ERROR_STATUS");
+                break;
+            }
+        }
+
         Intent intent = new Intent(this, GalleryActivity.class);
-        intent.putExtra("ID", api.getFavorites(this).get(position).getMuseumID());
         intent.putExtra("API", api);
+        intent.putExtra("ID", api.getFavorites(this).get(position).getMuseumID());
         startActivity(intent);
         finish();
     }

@@ -113,13 +113,17 @@ public class VirgilAPI implements Serializable {
     public boolean addFavorite(int id, Context context) {
         this.museum = null;
         DatabaseTaskRunner dbRunner = new DatabaseTaskRunner(context, this);
-        return dbRunner.addFavorite(id);
+        boolean success = dbRunner.addFavorite(id);
+        this.museum = null;
+        return success;
     }
 
     public boolean deleteFavorite(int id, Context context) {
         this.museum = null;
         DatabaseTaskRunner dbRunner = new DatabaseTaskRunner(context, this);
-        return dbRunner.deleteFavorite(id);
+        boolean success = dbRunner.deleteFavorite(id);
+        this.museum = null;
+        return success;
     }
 
     public void addFavorite(Museum favMuseum, Context context) {

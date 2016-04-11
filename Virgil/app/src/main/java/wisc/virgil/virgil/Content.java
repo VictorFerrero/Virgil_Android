@@ -2,13 +2,14 @@ package wisc.virgil.virgil;
 
 import android.graphics.drawable.Drawable;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.URL;
 import android.util.Log;
 
 /**
  * Created by TylerPhelps on 3/18/16.
  */
-public class Content {
+public class Content implements Serializable {
 
     private final String IP_ADDRESS = "http://52.24.10.104/";
     private final String RESOURCE_PATH = "Virgil_Uploads/images/";

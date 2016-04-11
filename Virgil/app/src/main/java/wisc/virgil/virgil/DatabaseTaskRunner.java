@@ -69,7 +69,7 @@ public class DatabaseTaskRunner implements Serializable {
 
     public boolean addFavorite(int id)
     {
-        Log.d("DB", ("add " + id));
+        Log.d("DB", ("adding " + id));
 
         myParent.fetchMuseum(id);
 
@@ -82,6 +82,11 @@ public class DatabaseTaskRunner implements Serializable {
 
         Museum museum = myParent.getMuseum();
 
+        if (museum.getId() == 0) {
+            Log.d("DB", "error fetching " + id);
+            closeDatabase();
+            return false;
+        }
 
         Log.d("DB", "fetched " + myParent.getMuseum().getId());
 
