@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import java.util.Calendar;
+import java.util.Date;
+import java.text.DateFormatSymbols;
+import java.util.Locale;
 import java.util.ArrayList;
 
 /**
@@ -62,6 +65,14 @@ public class MuseumSelectAdapter extends ArrayAdapter<Museum> {
 
         viewHolder.image.setScaleType(ImageView.ScaleType.CENTER_CROP);
         viewHolder.image.setCropToPadding(true);
+
+        String weekdays[] = new      DateFormatSymbols(Locale.ENGLISH).getWeekdays();
+        Calendar c = Calendar.getInstance();
+        Date date = new Date();
+        c.setTime(date);
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+        String hours[] = museum.getHours();
+        viewHolder.hours.setText(weekdays[dayOfWeek] + " Hours: " + hours[dayOfWeek]);
 
         return convertView;
     }
