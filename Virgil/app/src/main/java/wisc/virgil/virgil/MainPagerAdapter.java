@@ -1,5 +1,6 @@
 package wisc.virgil.virgil;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -17,29 +18,37 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
         int NumbOfTabs;        // Store the number of tabs, this will also be passed when
                                // the ViewPagerAdapter is created
+        VirgilAPI api;
 
 
         // Build a Constructor and assign the passed Values to appropriate values in the class
-        public MainPagerAdapter(FragmentManager fm, CharSequence mTitles[], int mNumbOfTabsumb) {
+        public MainPagerAdapter(FragmentManager fm, CharSequence mTitles[], int mNumbOfTabsumb, VirgilAPI api) {
             super(fm);
 
             this.Titles = mTitles;
             this.NumbOfTabs = mNumbOfTabsumb;
-
+            this.api = api;
         }
 
         //This method return the fragment for the every position in the View Pager
         @Override
         public Fragment getItem(int position) {
 
-            if(position == 0) // if the position is 0 we are returning the First tab
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("API", api);
+
+            if(position == 0) // if the position is 0 we are returning the Events tab
             {
                 PostsFragment tab1 = new PostsFragment();
+                bundle.putInt("POS", position);
+                tab1.setArguments(bundle);
                 return tab1;
             }
             else    // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
             {
                 PostsFragment tab2 = new PostsFragment();
+                bundle.putInt("POS", position - 1);
+                tab2.setArguments(bundle);
                 return tab2;
             }
 

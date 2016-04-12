@@ -4,6 +4,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
+import java.io.Serializable;
+
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.DaoConfig;
 import de.greenrobot.dao.Property;
@@ -14,7 +16,7 @@ import wisc.virgil.virgil.FavoriteMuseum;
 /** 
  * DAO for table FAVORITE_MUSEUM.
 */
-public class FavoriteMuseumDao extends AbstractDao<FavoriteMuseum, Long> {
+public class FavoriteMuseumDao extends AbstractDao<FavoriteMuseum, Long> implements Serializable {
 
     public static final String TABLENAME = "FAVORITE_MUSEUM";
 

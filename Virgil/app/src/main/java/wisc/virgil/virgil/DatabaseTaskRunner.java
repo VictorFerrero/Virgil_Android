@@ -3,13 +3,15 @@ package wisc.virgil.virgil;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.content.Context;
+
+import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 
 /**
  * Created by TylerPhelps on 4/1/16.
  */
-public class DatabaseTaskRunner {
+public class DatabaseTaskRunner implements Serializable {
 
     private VirgilAPI myParent;
 
@@ -67,10 +69,9 @@ public class DatabaseTaskRunner {
 
     public boolean addFavorite(int id)
     {
-        Log.d("DB", ("add " + id));
+        Log.d("DB", ("adding " + id));
 
         myParent.fetchMuseum(id);
-        Log.d("DB", "fetched");
 
         while (myParent.museumStatus() == myParent.PENDING_STATUS) {
             if (myParent.museumStatus() == myParent.ERROR_STATUS) {
@@ -80,6 +81,15 @@ public class DatabaseTaskRunner {
         }
 
         Museum museum = myParent.getMuseum();
+
+        if (museum.getId() == 0) {
+            Log.d("DB", "error fetching " + id);
+            closeDatabase();
+            return false;
+        }
+
+        Log.d("DB", "fetched " + myParent.getMuseum().getId());
+
         Random rand = new Random();
 
         FavoriteMuseum newFav = new FavoriteMuseum(rand.nextLong(), id, museum.getName(), museum.getAddress(), "/", true);

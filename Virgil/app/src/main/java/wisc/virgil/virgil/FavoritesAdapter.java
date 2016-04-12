@@ -13,6 +13,9 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -48,11 +51,15 @@ public class FavoritesAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
+        TextView textView;
 
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.gridview_favorite_item, null);
         }
         imageView = (ImageView) convertView.findViewById(R.id.iv_museum_favorites);
+        textView = (TextView) convertView.findViewById(R.id.tv_museum_favorites);
+
+        textView.setText(favList.get(position).getName());
 
         Bitmap bitmap = BitmapFactory.decodeFile(favList.get(position).getPathToPicture());
         if(bitmap == null) {

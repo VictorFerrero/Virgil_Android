@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+
+<!-- Drawer Layout will be the parent of the activities -->
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dl_map"
     android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true">
+
+
+    <!-- This is the main content for the gallery view. It is the first child-->
+
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MapActivity">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="wisc.virgil.virgil.MapActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -22,6 +35,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <ImageView
+        android:paddingTop="30dp"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:id="@+id/map_item"
@@ -29,4 +43,15 @@
 
     </ImageView>
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
+
+            <!-- NavigationView is the second child -->
+        <android.support.design.widget.NavigationView
+        android:id="@+id/nv_map"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_layout"/>
+    </android.support.v4.widget.DrawerLayout>

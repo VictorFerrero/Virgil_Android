@@ -1,6 +1,6 @@
 package wisc.virgil.virgil;
 
-import java.lang.reflect.Array;
+import java.io.Serializable;
 import java.util.ArrayList;
 import android.util.Log;
 import java.util.List;
@@ -9,7 +9,7 @@ import android.content.Context;
 /**
  * Created by TylerPhelps on 3/19/16.
  */
-public class VirgilAPI {
+public class VirgilAPI implements Serializable {
 
     private final String GET_MUSEUM = "getMuseum";
     private final String GET_ALL_MUSEUMS = "getAllMuseums";
@@ -21,6 +21,8 @@ public class VirgilAPI {
     public Museum museum;
     public ArrayList<Museum> museumList;
     public boolean listFinished;
+    public boolean museumFinished;
+    public boolean museumError;
 
     public ArrayList<Event> eventList;
     public boolean eventListFinished;
@@ -28,12 +30,17 @@ public class VirgilAPI {
     public VirgilAPI() {
         this.museum = null;
         this.museumList = null;
+        this.museumFinished = false;
+        this.museumError = false;
         this.listFinished = false;
         this.eventList = null;
         this.eventListFinished = false;
     }
 
     public void fetchMuseum(int id) {
+        this.museum = null;
+        this.museumFinished = false;
+        this.museumError = false;
         BackendTaskRunner runner = new BackendTaskRunner(this);
         runner.execute(GET_MUSEUM, Integer.toString(id));
     }
@@ -43,6 +50,7 @@ public class VirgilAPI {
     }
 
     public void fetchAllMuseums() {
+        this.museumList = null;
         BackendTaskRunner runner = new BackendTaskRunner(this);
         runner.execute(GET_ALL_MUSEUMS);
     }
@@ -57,13 +65,15 @@ public class VirgilAPI {
     }
 
     public int museumStatus() {
-        if (this.museum != null) {
-            if (this.museum.getName().isEmpty()) {
-                return this.ERROR_STATUS;
-            }
-            else return this.FINISHED_STATUS;
+        if (this.museumFinished) {
+            return this.FINISHED_STATUS;
         }
-        else return this.PENDING_STATUS;
+        else if (this.museumError) {
+            return this.ERROR_STATUS;
+        }
+        else {
+            return this.PENDING_STATUS;
+        }
     }
 
     public int museumListStatus() {
@@ -109,13 +119,19 @@ public class VirgilAPI {
     }
 
     public boolean addFavorite(int id, Context context) {
+        this.museum = null;
         DatabaseTaskRunner dbRunner = new DatabaseTaskRunner(context, this);
-        return dbRunner.addFavorite(id);
+        boolean success = dbRunner.addFavorite(id);
+        this.museum = null;
+        return success;
     }
 
     public boolean deleteFavorite(int id, Context context) {
+        this.museum = null;
         DatabaseTaskRunner dbRunner = new DatabaseTaskRunner(context, this);
-        return dbRunner.deleteFavorite(id);
+        boolean success = dbRunner.deleteFavorite(id);
+        this.museum = null;
+        return success;
     }
 
     public void addFavorite(Museum favMuseum, Context context) {

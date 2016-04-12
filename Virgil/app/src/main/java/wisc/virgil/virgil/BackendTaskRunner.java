@@ -158,6 +158,9 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
     private void parseMuseum(String input) {
 
         try {
+            this.myParent.museumFinished = false;
+            this.myParent.museumError = false;
+
             JSONObject jsonObject = new JSONObject(input);
 
             JSONArray museum = (JSONArray) jsonObject.get("museum");
@@ -233,12 +236,17 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
             }
 
             Log.d("Runner", "Museum Name: "+this.myParent.museum.getName());
-
+            this.myParent.museumFinished = true;
+            Log.d("Runner", "museumFinished: " + myParent.museumFinished);
         }
         catch (Exception e) {
             Log.d("Error", "Couldn't parse this museum.");
+            this.myParent.museumError = true;
             this.myParent.museum = new Museum(0, "", "", new String[7]);
         }
+
+        this.myParent.museumFinished = true;
+        Log.d("Outside Runner", "museumFinished: " + myParent.museumFinished);
     }
 
     private void parseEventList(String input) {

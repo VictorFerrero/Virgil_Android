@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Drawer Layout will be the parent of the activities -->
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dl_beacon"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -36,21 +45,21 @@
             android:textColor="@color/colorAccent"
             android:text="@string/get_beacon_info"
             android:fontFamily="sans-serif"
+            android:layout_marginTop="104dp"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="99dp" />
+            android:layout_centerHorizontal="true" />
 
         <Button
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:id="@+id/btn_beacon"
-            android:background="@drawable/beacon_button"
+            android:background="@drawable/beacon"
             android:stateListAnimator="@null"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:onClick="onTouch"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/Beacon_Text"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="134dp" />
+            android:layout_marginTop="33dp" />
     </RelativeLayout>
 
     <FrameLayout
@@ -59,4 +68,17 @@
         android:contentDescription="@string/exhibit_content"
         android:id="@+id/fgt_beacon">
     </FrameLayout>
+
 </android.support.design.widget.CoordinatorLayout>
+
+
+    <!-- NavigationView is the second child -->
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nv_beacon"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_layout"/>
+</android.support.v4.widget.DrawerLayout>

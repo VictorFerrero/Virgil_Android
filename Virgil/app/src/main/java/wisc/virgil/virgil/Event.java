@@ -1,11 +1,12 @@
 package wisc.virgil.virgil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by TylerPhelps on 4/2/16.
  */
-public class Event {
+public class Event implements Serializable {
     private int id, galleryId, exhibitId, museumId;
     private int startDay, startMonth, startYear, startHour, startMin, startSec;
     private int endDay, endMonth, endYear, endHour, endMin, endSec;

@@ -1,11 +1,12 @@
 package wisc.virgil.virgil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by TylerPhelps on 3/18/16.
  */
-public class Gallery {
+public class Gallery implements Serializable {
 
     private int id, museumId;
     private String name;

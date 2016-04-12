@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Drawer Layout will be the parent of the activities -->
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dl_favorites"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true">
+
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MuseumSelectActivity"
-    android:background="@color/colorPrimary">
+    android:fitsSystemWindows="true"
+    tools:context="wisc.virgil.virgil.FavoritesActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:id="@+id/view">
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/tb_museum_favorites"
+            android:id="@+id/tb_favorites"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -22,20 +29,50 @@
 
     </android.support.design.widget.AppBarLayout>
 
-<GridView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPrimary"
-    android:id="@+id/gv_museum_favorites"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:numColumns="auto_fit"
-    android:columnWidth="150dp"
-    android:horizontalSpacing="15dp"
-    android:verticalSpacing="15dp"
-    android:gravity="center"
-    android:stretchMode="columnWidth"
-    android:layout_below="@id/view">
-</GridView>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@color/colorCreme">
 
-</RelativeLayout>
+        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/gv_favorites"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:numColumns="auto_fit"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:columnWidth="150dp"
+            android:layout_marginTop="40dp"
+            android:horizontalSpacing="15dp"
+            android:verticalSpacing="15dp"
+            android:gravity="center"
+            android:stretchMode="columnWidth">
+        </GridView>
 
+        <at.markushi.ui.CircleButton
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            app:cb_color="@color/colorOrange"
+            app:cb_pressedRingWidth="9dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_delete"/>
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>
+
+    <!-- NavigationView is the second child -->
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nv_favorites"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_layout"/>
+
+</android.support.v4.widget.DrawerLayout>
