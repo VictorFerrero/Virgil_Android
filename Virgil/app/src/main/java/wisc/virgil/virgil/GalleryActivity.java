@@ -34,7 +34,6 @@ public class GalleryActivity extends AppCompatActivity {
     @Bind(R.id.vp_gallery) ViewPager pager;
 
     MainPagerAdapter adapter;
-    int museumId;
 
     VirgilAPI api;
     CharSequence Titles[];
@@ -47,10 +46,9 @@ public class GalleryActivity extends AppCompatActivity {
 
         //Setup API, retrieve id of selected museum, and fetch the corresponding gallery
         Intent intent = getIntent();
-        museumId = intent.getIntExtra("ID", 0);
         api = (VirgilAPI) intent.getSerializableExtra("API");
 
-        Log.d("Gallery", "ID: " + this.museumId);
+        Log.d("Gallery", "ID: " + api.getMuseum().getId());
 
         //inflates toolbar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.tb_gallery);
@@ -66,16 +64,6 @@ public class GalleryActivity extends AppCompatActivity {
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
-
-        /* Future code for when api contains content/galleries/exhibits
-        if(!api.getFavorites(this).isEmpty()) {
-            for(int i = 0; i < api.getFavorites(this).size(); i++) {
-                if(api.getFavorites(this).get(i).getMuseumID() == museumId) {
-                    //Assign found museum so no fetch necessary (Offline Viewing)
-                }
-            }
-        }
-        End of future code */
 
         setTitle(api.getMuseum().getName());
 
@@ -217,8 +205,8 @@ public class GalleryActivity extends AppCompatActivity {
             boolean inDB = false;
 
             for (FavoriteMuseum favMus : api.getFavorites(this)) {
-                if (favMus.getMuseumID() == this.museumId) {
-                    api.deleteFavorite(this.museumId, this);
+                if (favMus.getMuseumID() == api.getMuseum().getId()) {
+                    api.deleteFavorite(api.getMuseum().getId(), this);
                     inDB = true;
                     Toast.makeText(this, "Unfavorited",
                             Toast.LENGTH_SHORT).show();
@@ -227,7 +215,7 @@ public class GalleryActivity extends AppCompatActivity {
             }
 
             if (!inDB) {
-                if (api.addFavorite(this.museumId, this)) {
+                if (api.addFavorite(api.getMuseum().getId(), this)) {
                     Toast.makeText(this, getResources().getString(R.string.added_favorite),
                             Toast.LENGTH_SHORT).show();
                 }

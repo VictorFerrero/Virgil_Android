@@ -91,7 +91,6 @@ public class FavoritesActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, GalleryActivity.class);
         intent.putExtra("API", api);
-        intent.putExtra("ID", api.getFavorites(this).get(position).getMuseumID());
         startActivity(intent);
         finish();
     }
