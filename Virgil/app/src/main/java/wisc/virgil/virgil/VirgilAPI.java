@@ -1,10 +1,11 @@
 package wisc.virgil.virgil;
 
+import android.content.Context;
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import android.util.Log;
 import java.util.List;
-import android.content.Context;
 
 /**
  * Created by TylerPhelps on 3/19/16.
@@ -119,18 +120,18 @@ public class VirgilAPI implements Serializable {
     }
 
     public boolean addFavorite(int id, Context context) {
-        this.museum = null;
+   //     this.museum = null;
         DatabaseTaskRunner dbRunner = new DatabaseTaskRunner(context, this);
         boolean success = dbRunner.addFavorite(id);
-        this.museum = null;
+    //    this.museum = null;
         return success;
     }
 
     public boolean deleteFavorite(int id, Context context) {
-        this.museum = null;
+     //   this.museum = null;
         DatabaseTaskRunner dbRunner = new DatabaseTaskRunner(context, this);
         boolean success = dbRunner.deleteFavorite(id);
-        this.museum = null;
+     //   this.museum = null;
         return success;
     }
 

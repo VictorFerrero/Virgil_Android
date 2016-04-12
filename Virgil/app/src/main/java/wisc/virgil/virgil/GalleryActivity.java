@@ -37,8 +37,11 @@ public class GalleryActivity extends AppCompatActivity {
 
     VirgilAPI api;
     CharSequence Titles[];
-    DrawerLayout drawerLayout;
+    private DrawerLayout drawerLayout;
 
+    private boolean inDB;
+    private int museumId;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,23 +50,39 @@ public class GalleryActivity extends AppCompatActivity {
         //Setup API, retrieve id of selected museum, and fetch the corresponding gallery
         Intent intent = getIntent();
         api = (VirgilAPI) intent.getSerializableExtra("API");
-
+        this.museumId = api.getMuseum().getId();
         Log.d("Gallery", "ID: " + api.getMuseum().getId());
 
         //inflates toolbar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.tb_gallery);
         setSupportActionBar(myToolbar);
 
+        //creates an action bar hamburger bar
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        //Adds drawer layout
         drawerLayout = (DrawerLayout) findViewById(R.id.dl_gallery);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nv_gallery);
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
+
+        //sets the database variable
+        inDB = inDatabase();
+
+        /* Future code for when api contains content/galleries/exhibits
+        if(!api.getFavorites(this).isEmpty()) {
+            for(int i = 0; i < api.getFavorites(this).size(); i++) {
+                if(api.getFavorites(this).get(i).getMuseumID() == museumId) {
+                    //Assign found museum so no fetch necessary (Offline Viewing)
+                }
+            }
+        }
+        End of future code */
+
 
         setTitle(api.getMuseum().getName());
 
@@ -115,26 +134,26 @@ public class GalleryActivity extends AppCompatActivity {
 
         tabs.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
                                           @Override
-                                     public void onTabSelected(TabLayout.Tab tab) {
-                                             super.onTabSelected(tab);
+                                          public void onTabSelected(TabLayout.Tab tab) {
+                                              super.onTabSelected(tab);
 
-                                             int position = tab.getPosition();
-                                             ImageView imageView = (ImageView) findViewById(R.id.iv_gallery);
-                                             if(position == 0) {
-                                                 if(api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage() == null) {
-                                                     imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.bucky_museum));
-                                                 } else {
-                                                     imageView.setImageDrawable(api.getMuseum().getContent().get(0).getImage());
-                                                 }
-                                             } else if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position - 1).getContent().isEmpty() || api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage() == null) {
-                                                 imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.bucky_history));
-                                             } else {
-                                                 imageView.setImageDrawable(api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage());
-                                             }
+                                              int position = tab.getPosition();
+                                              ImageView imageView = (ImageView) findViewById(R.id.iv_gallery);
+                                              if (position == 0) {
+                                                  if (api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage() == null) {
+                                                      imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.bucky_museum));
+                                                  } else {
+                                                      imageView.setImageDrawable(api.getMuseum().getContent().get(0).getImage());
+                                                  }
+                                              } else if (api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position - 1).getContent().isEmpty() || api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage() == null) {
+                                                  imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.bucky_history));
+                                              } else {
+                                                  imageView.setImageDrawable(api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage());
+                                              }
 
                                               imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                                               imageView.setCropToPadding(true);
-                                         }
+                                          }
                                       }
         );
 
@@ -169,6 +188,17 @@ public class GalleryActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_gallery, menu);
+
+        MenuItem item = menu.findItem(R.id.action_favorite_item);
+
+        if (inDB) {
+
+            item.setIcon(R.drawable.star);
+        } else {
+            item.setIcon(R.drawable.star_outline);
+        }
+
+
         return true;
     }
 
@@ -178,7 +208,6 @@ public class GalleryActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
 
         if (id == R.id.action_beacon) {
             Intent intent = new Intent(this, BeaconActivity.class);
@@ -202,22 +231,23 @@ public class GalleryActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else if (id == R.id.action_favorite_item) {
-            boolean inDB = false;
 
-            for (FavoriteMuseum favMus : api.getFavorites(this)) {
-                if (favMus.getMuseumID() == api.getMuseum().getId()) {
-                    api.deleteFavorite(api.getMuseum().getId(), this);
-                    inDB = true;
-                    Toast.makeText(this, "Unfavorited",
-                            Toast.LENGTH_SHORT).show();
-                    break;
-                }
-            }
+            if (inDB) {
 
-            if (!inDB) {
-                if (api.addFavorite(api.getMuseum().getId(), this)) {
+                item.setIcon(R.drawable.star_outline);
+                api.deleteFavorite(this.museumId, this);
+
+                Toast.makeText(this, getResources().getString(R.string.unfavorited),
+                        Toast.LENGTH_SHORT).show();
+                inDB = false;
+
+            } else if (!inDB) {
+                if (api.addFavorite(this.museumId, this)) {
                     Toast.makeText(this, getResources().getString(R.string.added_favorite),
                             Toast.LENGTH_SHORT).show();
+
+                    item.setIcon(R.drawable.star);
+                    inDB = true;
                 }
                 else {
                     Toast.makeText(this, "Error fetching data from server.",
@@ -231,5 +261,16 @@ public class GalleryActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private boolean inDatabase()
+    {
+        for (FavoriteMuseum favMus : api.getFavorites(this)) {
+            if (favMus.getMuseumID() == this.museumId) {
+                return true;
+            }
+        }
+        return false;
     }
 }
