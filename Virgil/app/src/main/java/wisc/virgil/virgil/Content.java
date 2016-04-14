@@ -1,11 +1,9 @@
 package wisc.virgil.virgil;
 
 import android.graphics.drawable.Drawable;
-import java.io.InputStream;
 import java.io.Serializable;
-import java.net.URL;
 import android.util.Log;
-import android.widget.ImageView;
+import android.graphics.Bitmap;
 
 /**
  * Created by TylerPhelps on 3/18/16.
@@ -17,6 +15,10 @@ public class Content implements Serializable {
 
     private int id, galleryId, exhibitId, museumId;
     private String description, pathToContent;
+
+
+    public boolean contentFinished;
+    public boolean contentError;
 
     public Content(int id, int galleryId, int exhibitId,
                    int museumId, String description, String pathToContent) {
@@ -41,7 +43,27 @@ public class Content implements Serializable {
     public String getPathToContent() { return this.pathToContent; }
 
     public Drawable getImage() {
-        return null;
+        //get
+        this.contentFinished = false;
+        this.contentError = false;
+        ImageDownloadTaskRunner runner = new ImageDownloadTaskRunner(this);
+        runner.execute(pathToContent);
+
+        //wait
+        while (!this.contentFinished) {
+            if (this.contentError) {
+                Log.d("Content", "Error in getting image");
+                return null;
+            }
+        }
+
+        //return
+        Drawable image = runner.getImage();
+        if (image != null){
+            Log.d("Content", "SUCCESS!!!!!");
+        }
+
+        return image;
     }
 
 }
