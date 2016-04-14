@@ -13,6 +13,7 @@ import java.util.Date;
 import java.text.DateFormatSymbols;
 import java.util.Locale;
 import java.util.ArrayList;
+import android.util.Log;
 
 /**
  * Created by Ty Talafous on 3/26/2016.
@@ -53,6 +54,7 @@ public class MuseumSelectAdapter extends ArrayAdapter<Museum> {
         //Fill in view holder
         viewHolder.name.setText(museum.getName());
         viewHolder.address.setText(museum.getAddress());
+
         if(museum.getContent().isEmpty() || museum.getContent().get(0).getImage() == null) {
             if(museum.getId() == 1) {
                 viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.bucky_museum));
@@ -74,7 +76,7 @@ public class MuseumSelectAdapter extends ArrayAdapter<Museum> {
         c.setTime(date);
         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
         String hours[] = museum.getHours();
-        viewHolder.hours.setText(weekdays[dayOfWeek] + " Hours: " + hours[dayOfWeek]);
+        viewHolder.hours.setText(weekdays[dayOfWeek] + " Hours: " + hours[dayOfWeek-1]);
 
         return convertView;
     }

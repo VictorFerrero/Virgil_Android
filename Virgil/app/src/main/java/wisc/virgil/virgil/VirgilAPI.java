@@ -120,18 +120,14 @@ public class VirgilAPI implements Serializable {
     }
 
     public boolean addFavorite(int id, Context context) {
-   //     this.museum = null;
         DatabaseTaskRunner dbRunner = new DatabaseTaskRunner(context, this);
         boolean success = dbRunner.addFavorite(id);
-    //    this.museum = null;
         return success;
     }
 
     public boolean deleteFavorite(int id, Context context) {
-     //   this.museum = null;
         DatabaseTaskRunner dbRunner = new DatabaseTaskRunner(context, this);
         boolean success = dbRunner.deleteFavorite(id);
-     //   this.museum = null;
         return success;
     }
 
@@ -141,5 +137,15 @@ public class VirgilAPI implements Serializable {
 
     public void deleteFavorite(Museum favMuseum, Context context) {
         deleteFavorite(museum.getId(), context);
+    }
+
+    public boolean databaseContains(int museumId, Context context) {
+        for (FavoriteMuseum favMus : getFavorites(context)) {
+            if (favMus.getMuseumID() == museumId) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

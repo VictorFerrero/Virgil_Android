@@ -71,7 +71,7 @@ public class GalleryActivity extends AppCompatActivity {
         }
 
         //sets the database variable
-        inDB = inDatabase();
+        inDB = api.databaseContains(this.museumId, this);
 
         /* Future code for when api contains content/galleries/exhibits
         if(!api.getFavorites(this).isEmpty()) {
@@ -261,16 +261,5 @@ public class GalleryActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-
-    private boolean inDatabase()
-    {
-        for (FavoriteMuseum favMus : api.getFavorites(this)) {
-            if (favMus.getMuseumID() == this.museumId) {
-                return true;
-            }
-        }
-        return false;
     }
 }

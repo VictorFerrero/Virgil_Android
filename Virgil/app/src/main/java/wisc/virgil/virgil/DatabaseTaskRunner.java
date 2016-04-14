@@ -92,7 +92,7 @@ public class DatabaseTaskRunner implements Serializable {
 
         Random rand = new Random();
 
-        FavoriteMuseum newFav = new FavoriteMuseum(rand.nextLong(), id, museum.getName(), museum.getAddress(), "/", true);
+        FavoriteMuseum newFav = new FavoriteMuseum(rand.nextLong(), id, museum.getName(), museum.getAddress(), "", true);
 
         favMuseumDao.insert(newFav);
         Log.d("DB", "added successfully");

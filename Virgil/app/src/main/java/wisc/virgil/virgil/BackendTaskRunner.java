@@ -136,13 +136,14 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
                 JSONObject hours = new JSONObject(hoursString);
 
                 String[] museumHours = new String[7];
-                museumHours[0] = hours.getString("mon");
-                museumHours[1] = hours.getString("tue");
-                museumHours[2] = hours.getString("wed");
-                museumHours[3] = hours.getString("thur");
-                museumHours[4] = hours.getString("fri");
-                museumHours[5] = hours.getString("sat");
-                museumHours[6] = hours.getString("sun");
+                museumHours[0] = hours.getString("sun");
+                museumHours[1] = hours.getString("mon");
+                museumHours[2] = hours.getString("tue");
+                museumHours[3] = hours.getString("wed");
+                museumHours[4] = hours.getString("thur");
+                museumHours[5] = hours.getString("fri");
+                museumHours[6] = hours.getString("sat");
+
 
                 Museum newMuseum = new Museum(Integer.parseInt(id), name, address, museumHours);
                 this.myParent.museumList.add(newMuseum);
@@ -173,13 +174,13 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
             JSONObject hours = new JSONObject(hoursString);
 
             String[] museumHours = new String[7];
-            museumHours[0] = hours.getString("mon");
-            museumHours[1] = hours.getString("tue");
-            museumHours[2] = hours.getString("wed");
-            museumHours[3] = hours.getString("thur");
-            museumHours[4] = hours.getString("fri");
-            museumHours[5] = hours.getString("sat");
-            museumHours[6] = hours.getString("sun");
+            museumHours[0] = hours.getString("sun");
+            museumHours[1] = hours.getString("mon");
+            museumHours[2] = hours.getString("tue");
+            museumHours[3] = hours.getString("wed");
+            museumHours[4] = hours.getString("thur");
+            museumHours[5] = hours.getString("fri");
+            museumHours[6] = hours.getString("sat");
 
             this.myParent.museum = new Museum(Integer.parseInt(id), name, address, museumHours);
             Log.d("Mon:", museumHours[0]);
