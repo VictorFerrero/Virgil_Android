@@ -82,7 +82,7 @@ public class Content implements Serializable {
         Log.d("Content", "Saving to internal storage");
         ContextWrapper cw = new ContextWrapper(context);
         // path to /data/data/yourapp/app_data/imageDir
-        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        File directory = cw.getDir("cachedImageDir", Context.MODE_PRIVATE);
         // Create imageDir
         File mypath=new File(directory,this.cachedImageName);
 
@@ -106,7 +106,7 @@ public class Content implements Serializable {
 
         try {
             ContextWrapper cw = new ContextWrapper(context);
-            File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+            File directory = cw.getDir("cachedImageDir", Context.MODE_PRIVATE);
             File f=new File(directory, this.cachedImageName);
             museumImage = BitmapFactory.decodeStream(new FileInputStream(f));
         }
