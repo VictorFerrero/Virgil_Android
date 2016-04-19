@@ -48,6 +48,7 @@ public class GalleryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
+        this.context = this;
 
         //Setup API, retrieve id of selected museum, and fetch the corresponding gallery
         Intent intent = getIntent();
@@ -243,17 +244,24 @@ public class GalleryActivity extends AppCompatActivity {
                 inDB = false;
 
             } else if (!inDB) {
-                if (api.addFavorite(this.museumId, this)) {
-                    Toast.makeText(this, getResources().getString(R.string.added_favorite),
-                            Toast.LENGTH_SHORT).show();
+                try {
+                    if (api.addFavorite(this.museumId, this.context)) {
+                        Toast.makeText(this, getResources().getString(R.string.added_favorite),
+                                Toast.LENGTH_SHORT).show();
 
-                    item.setIcon(R.drawable.star);
-                    inDB = true;
+                        item.setIcon(R.drawable.star);
+                        inDB = true;
+                    }
+                    else {
+                        Toast.makeText(this, "Error fetching data from server.",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
-                else {
-                    Toast.makeText(this, "Error fetching data from server.",
+                catch (Exception e) {
+                    Toast.makeText(this, "Error adding to favorites.",
                             Toast.LENGTH_SHORT).show();
                 }
+
             }
             return true;
 
