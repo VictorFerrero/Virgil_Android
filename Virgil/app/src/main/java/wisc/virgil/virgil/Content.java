@@ -112,7 +112,7 @@ public class Content implements Serializable {
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+
         }
 
         return museumImage;

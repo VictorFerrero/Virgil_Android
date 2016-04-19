@@ -40,6 +40,8 @@ public class FavoriteMuseum implements Serializable {
         this.pathToPicture = pathToPicture;
         this.display = display;
 
+        this.context = context;
+
         if (image != null) {
             Log.d("FavMuseum", "Image to save for the museum!");
             saveToInternalStorage(image);
@@ -128,12 +130,12 @@ public class FavoriteMuseum implements Serializable {
         return directory.getAbsolutePath();
     }
 
-    private Bitmap getImage()
+    public Bitmap getImage(Context context)
     {
         Bitmap museumImage = null;
 
         try {
-            ContextWrapper cw = new ContextWrapper(this.context);
+            ContextWrapper cw = new ContextWrapper(context);
             File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
             File f=new File(directory, this.pathToPicture);
             museumImage = BitmapFactory.decodeStream(new FileInputStream(f));

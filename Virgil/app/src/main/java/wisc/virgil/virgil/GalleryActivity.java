@@ -260,6 +260,8 @@ public class GalleryActivity extends AppCompatActivity {
                 catch (Exception e) {
                     Toast.makeText(this, "Error adding to favorites.",
                             Toast.LENGTH_SHORT).show();
+                    Log.d("ADD FAV", "ERROR:");
+                    e.printStackTrace();
                 }
 
             }

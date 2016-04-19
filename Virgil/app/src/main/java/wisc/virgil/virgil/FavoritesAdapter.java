@@ -61,7 +61,7 @@ public class FavoritesAdapter extends BaseAdapter {
 
         textView.setText(favList.get(position).getName());
 
-        Bitmap bitmap = BitmapFactory.decodeFile(favList.get(position).getPathToPicture());
+        Bitmap bitmap = favList.get(position).getImage(mContext);
         if(bitmap == null) {
             //*Temporary* Small drawable placeholder to prevent too much memory usage
             imageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_virgil));
