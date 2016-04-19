@@ -1,16 +1,14 @@
 package wisc.virgil.virgil;
 
-import android.graphics.drawable.Drawable;
+import android.content.ContextWrapper;
+import android.graphics.BitmapFactory;
+import java.io.FileInputStream;
 import java.io.Serializable;
-
-import android.os.Environment;
 import android.util.Log;
 import android.content.Context;
 import java.io.File;
 import java.io.FileOutputStream;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.Canvas;
 
 /**
  * Created by TylerPhelps on 3/18/16.
@@ -22,7 +20,6 @@ public class Content implements Serializable {
 
     private int id, galleryId, exhibitId, museumId;
     private String description, pathToContent, cachedImageName;
-
     public boolean contentFinished;
     public boolean contentError;
 
@@ -50,12 +47,11 @@ public class Content implements Serializable {
 
     public String getPathToContent() { return this.pathToContent; }
 
-    public Drawable getImage() {
-        Drawable image = null;
+    public Bitmap getImage(Context context) {
+        Bitmap contentImage = getImageFromInternalStorage(context);
 
-        image = getImageFromMemCache();
-
-        if (image == null) {
+        if (contentImage == null) {
+            Log.d("Content", "Pulling image from web");
             //get
             this.contentFinished = false;
             this.contentError = false;
@@ -71,81 +67,55 @@ public class Content implements Serializable {
             }
 
             //return
-            image = runner.getImage();
-            if (image != null){
+            contentImage = runner.getImage();
+            if (contentImage != null){
                 Log.d("Content", "SUCCESS!!!!!");
-                addImageToMemoryCache(image);
-            }
-            return image;
-        }
-        else {
-            return image;
-        }
-    }
-
-
-    public void addImageToMemoryCache(Drawable imageToCache) {
-        try {
-            Bitmap bm = drawableToBitmap(imageToCache);
-            File fileDir = new File("cache/images/");
-            saveBitmapToFile(fileDir, cachedImageName, bm, Bitmap.CompressFormat.PNG, 75);
-        }
-        catch (Exception e) {
-
-        }
-
-    }
-
-    public Drawable getImageFromMemCache() {
-        Drawable d = Drawable.createFromPath("cache/images/"+cachedImageName);
-        return d;
-    }
-
-
-
-    public static Bitmap drawableToBitmap (Drawable drawable) {
-        Bitmap bitmap = null;
-
-        if (drawable instanceof BitmapDrawable) {
-            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-            if(bitmapDrawable.getBitmap() != null) {
-                return bitmapDrawable.getBitmap();
+                saveToInternalStorage(contentImage, context);
             }
         }
 
-        if(drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
-            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
-        } else {
-            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        }
-
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-        return bitmap;
+        return contentImage;
     }
 
 
-
-    public boolean saveBitmapToFile(File dir, String fileName, Bitmap bm,
-                                    Bitmap.CompressFormat format, int quality) {
-
-        File imageFile = new File(dir,fileName);
+    private String saveToInternalStorage(Bitmap bitmapImage, Context context){
+        Log.d("Content", "Saving to internal storage");
+        ContextWrapper cw = new ContextWrapper(context);
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        // Create imageDir
+        File mypath=new File(directory,this.cachedImageName);
 
         FileOutputStream fos = null;
         try {
-            fos = new FileOutputStream(imageFile);
-
-            bm.compress(format,quality,fos);
-
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
             fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-            return true;
+        return directory.getAbsolutePath();
+    }
+
+    private Bitmap getImageFromInternalStorage(Context context)
+    {
+        Log.d("Content", "Searching internal storage");
+        Bitmap museumImage = null;
+
+        try {
+            ContextWrapper cw = new ContextWrapper(context);
+            File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+            File f=new File(directory, this.cachedImageName);
+            museumImage = BitmapFactory.decodeStream(new FileInputStream(f));
         }
-        catch (Exception e) {
-            Log.e("Content", e.getMessage());
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
-        return false;
+
+        return museumImage;
     }
 
 }

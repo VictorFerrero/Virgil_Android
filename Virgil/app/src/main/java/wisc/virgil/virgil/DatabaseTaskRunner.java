@@ -7,6 +7,7 @@ import android.content.Context;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
+import android.graphics.Bitmap;
 
 /**
  * Created by TylerPhelps on 4/1/16.
@@ -92,7 +93,17 @@ public class DatabaseTaskRunner implements Serializable {
 
         Random rand = new Random();
 
-        FavoriteMuseum newFav = new FavoriteMuseum(rand.nextLong(), id, museum.getName(), museum.getAddress(), "", true);
+        String imageName = "museum_"+museum.getId()+".png";
+        Bitmap museumImage;
+        if (museum.getContent().size() > 0) {
+            museumImage = (Bitmap) museum.getContent().get(0).getImage(this.context);
+        }
+        else {
+            museumImage = null;
+        }
+
+        FavoriteMuseum newFav = new FavoriteMuseum(rand.nextLong(), id, museum.getName(),
+                museum.getAddress(), imageName, true, museumImage, this.context);
 
         favMuseumDao.insert(newFav);
         Log.d("DB", "added successfully");

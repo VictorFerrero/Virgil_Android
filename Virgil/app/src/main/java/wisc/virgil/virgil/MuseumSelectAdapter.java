@@ -55,7 +55,7 @@ public class MuseumSelectAdapter extends ArrayAdapter<Museum> {
         viewHolder.name.setText(museum.getName());
         viewHolder.address.setText(museum.getAddress());
 
-        if(museum.getContent().isEmpty() || museum.getContent().get(0).getImage() == null) {
+        if(museum.getContent().isEmpty() || museum.getContent().get(0).getImage(getContext()) == null) {
             if(museum.getId() == 1) {
                 viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.bucky_museum));
             } else if (museum.getId() == 2) {
@@ -64,7 +64,7 @@ public class MuseumSelectAdapter extends ArrayAdapter<Museum> {
                 viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_virgil));
             }
         } else {
-            viewHolder.image.setImageDrawable(museum.getContent().get(0).getImage());
+            viewHolder.image.setImageBitmap(museum.getContent().get(0).getImage(getContext()));
         }
 
         viewHolder.image.setScaleType(ImageView.ScaleType.CENTER_CROP);

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import android.content.Context;
 
 /**
  *  Written by   : Munish Kapoor
@@ -41,6 +42,7 @@ public class GalleryActivity extends AppCompatActivity {
 
     private boolean inDB;
     private int museumId;
+    private Context context;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,10 +99,10 @@ public class GalleryActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        setUpTabs();
+        setUpTabs(this.context);
 
         ImageView imageView = (ImageView) findViewById(R.id.iv_gallery);
-        if(api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage() == null) {
+        if(api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage(this.context) == null) {
             if(api.getMuseum().getId() == 1) {
                 imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.bucky_museum));
             } else if(api.getMuseum().getId() == 2) {
@@ -109,7 +111,7 @@ public class GalleryActivity extends AppCompatActivity {
                 imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
             }
         } else {
-            imageView.setImageDrawable(api.getMuseum().getContent().get(0).getImage());
+            imageView.setImageBitmap(api.getMuseum().getContent().get(0).getImage(this.context));
         }
 
     }
@@ -127,28 +129,27 @@ public class GalleryActivity extends AppCompatActivity {
     }
 
 
-    void setUpTabs(){
+    void setUpTabs(Context context){
         adapter =  new MainPagerAdapter(this.getSupportFragmentManager(),Titles,Titles.length,api);
         pager.setAdapter(adapter);
         tabs.setupWithViewPager(pager);
 
         tabs.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
-                                          @Override
-                                          public void onTabSelected(TabLayout.Tab tab) {
+                                          public void onTabSelected(TabLayout.Tab tab, Context context) {
                                               super.onTabSelected(tab);
 
                                               int position = tab.getPosition();
                                               ImageView imageView = (ImageView) findViewById(R.id.iv_gallery);
                                               if (position == 0) {
-                                                  if (api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage() == null) {
+                                                  if (api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage(context) == null) {
                                                       imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.bucky_museum));
                                                   } else {
-                                                      imageView.setImageDrawable(api.getMuseum().getContent().get(0).getImage());
+                                                      imageView.setImageBitmap(api.getMuseum().getContent().get(0).getImage(context));
                                                   }
-                                              } else if (api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position - 1).getContent().isEmpty() || api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage() == null) {
+                                              } else if (api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position - 1).getContent().isEmpty() || api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage(context) == null) {
                                                   imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.bucky_history));
                                               } else {
-                                                  imageView.setImageDrawable(api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage());
+                                                  imageView.setImageBitmap(api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage(context));
                                               }
 
                                               imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);

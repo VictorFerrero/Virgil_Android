@@ -17,6 +17,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import android.graphics.drawable.BitmapDrawable;
 
 /**
  *  Written by   : Munish Kapoor
@@ -54,10 +55,10 @@ public class PostsFragment extends Fragment {
             Toast.makeText(getActivity(), "This gallery is empty!", Toast.LENGTH_LONG).show();
         } else {
             for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
-                if(exhibit.getContent().isEmpty() || exhibit.getContent().get(0).getImage() == null) {
+                if(exhibit.getContent().isEmpty() || exhibit.getContent().get(0).getImage(getContext()) == null) {
                     imageList.add(ContextCompat.getDrawable(getContext(), R.drawable.bucky_history));
                 } else {
-                    imageList.add(exhibit.getContent().get(0).getImage());
+                    imageList.add(new BitmapDrawable(getResources(), exhibit.getContent().get(0).getImage(getContext())));
                 }
             }
         }

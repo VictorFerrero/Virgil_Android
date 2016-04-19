@@ -19,12 +19,10 @@ public class ImageDownloadTaskRunner extends AsyncTask<String, Void, Bitmap> {
 
     private Content parent;
     private Bitmap bitmap;
-    private Drawable image;
 
     public ImageDownloadTaskRunner (Content parent) {
         this.parent = parent;
         this.bitmap = null;
-        this.image = null;
     }
 
     @Override
@@ -49,7 +47,6 @@ public class ImageDownloadTaskRunner extends AsyncTask<String, Void, Bitmap> {
             InputStream input = connection.getInputStream();
 
             this.bitmap = BitmapFactory.decodeStream(input);
-            this.image = new BitmapDrawable(this.bitmap);
             Log.d("Downloader", "winning");
             this.parent.contentFinished = true;
         }
@@ -59,8 +56,8 @@ public class ImageDownloadTaskRunner extends AsyncTask<String, Void, Bitmap> {
         }
     }
 
-    public Drawable getImage() {
+    public Bitmap getImage() {
         Log.d("Downloader", "returning");
-        return this.image;
+        return this.bitmap;
     }
 }
