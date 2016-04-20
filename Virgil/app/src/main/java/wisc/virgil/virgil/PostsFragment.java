@@ -76,8 +76,10 @@ public class PostsFragment extends Fragment {
                 for(int i = 0; i < exhibit.getContent().size(); i++) {
                     if(exhibit.getName() == null) {
                         titleList.add("Exhibit");
-                    } else {
+                    } else if (i == 0) {
                         titleList.add(exhibit.getName());
+                    } else {
+                        titleList.add("Exhibit");
                     }
                 }
             }
@@ -92,10 +94,10 @@ public class PostsFragment extends Fragment {
         } else {
             for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
                 for(int i = 0; i < exhibit.getContent().size(); i++) {
-                    if(exhibit.getContent().isEmpty() || exhibit.getContent().get(position).getDescription() == null) {
+                    if(exhibit.getContent().isEmpty() || exhibit.getContent().get(i).getDescription() == null) {
                         descList.add("Description");
                     } else {
-                        descList.add(exhibit.getContent().get(position).getDescription());
+                        descList.add(exhibit.getContent().get(i).getDescription());
                     }
                 }
             }
