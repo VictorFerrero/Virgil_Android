@@ -42,7 +42,7 @@ public class FavoritesActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_36dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.dl_favorites);
@@ -160,13 +160,6 @@ public class FavoritesActivity extends AppCompatActivity {
             intent.putExtra("API", api);
             startActivity(intent);
             finish();
-        } else if (id == R.id.action_map) {
-            Intent intent = new Intent(this, MapActivity.class);
-            intent.putExtra("API", api);
-            startActivity(intent);
-            finish();
-        } else if (id == R.id.action_search) {
-
         } else if (id == android.R.id.home) {
             drawerLayout.openDrawer(GravityCompat.START);
             return true;

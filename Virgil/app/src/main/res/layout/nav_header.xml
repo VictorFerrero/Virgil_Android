@@ -31,7 +31,7 @@
         android:id="@+id/iv_nav_header"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/ic_virgil"
+        android:src="@mipmap/virgil_ic"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:layout_gravity="center_horizontal" />
 

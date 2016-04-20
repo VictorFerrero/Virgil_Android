@@ -59,7 +59,7 @@ public class GalleryActivity extends AppCompatActivity {
 
         //creates an action bar hamburger bar
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_36dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         //Adds drawer layout
@@ -106,7 +106,7 @@ public class GalleryActivity extends AppCompatActivity {
             } else if(api.getMuseum().getId() == 2) {
                 imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.camp_randall_museum));
             } else {
-                imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
+                imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.mipmap.virgil_white_ic));
             }
         } else {
             imageView.setImageDrawable(api.getMuseum().getContent().get(0).getImage());
@@ -133,28 +133,28 @@ public class GalleryActivity extends AppCompatActivity {
         tabs.setupWithViewPager(pager);
 
         tabs.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
-                                          @Override
-                                          public void onTabSelected(TabLayout.Tab tab) {
-                                              super.onTabSelected(tab);
+              @Override
+              public void onTabSelected(TabLayout.Tab tab) {
+                  super.onTabSelected(tab);
 
-                                              int position = tab.getPosition();
-                                              ImageView imageView = (ImageView) findViewById(R.id.iv_gallery);
-                                              if (position == 0) {
-                                                  if (api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage() == null) {
-                                                      imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.bucky_museum));
-                                                  } else {
-                                                      imageView.setImageDrawable(api.getMuseum().getContent().get(0).getImage());
-                                                  }
-                                              } else if (api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position - 1).getContent().isEmpty() || api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage() == null) {
-                                                  imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.bucky_history));
-                                              } else {
-                                                  imageView.setImageDrawable(api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage());
-                                              }
+                  int position = tab.getPosition();
+                  ImageView imageView = (ImageView) findViewById(R.id.iv_gallery);
+                  if (position == 0) {
+                      if (api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage() == null) {
+                          imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.bucky_museum));
+                      } else {
+                          imageView.setImageDrawable(api.getMuseum().getContent().get(0).getImage());
+                      }
+                  } else if (api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position - 1).getContent().isEmpty() || api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage() == null) {
+                      imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.bucky_history));
+                  } else {
+                      imageView.setImageDrawable(api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage());
+                  }
 
-                                              imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                                              imageView.setCropToPadding(true);
-                                          }
-                                      }
+                  imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                  imageView.setCropToPadding(true);
+              }
+          }
         );
 
     }
@@ -193,11 +193,10 @@ public class GalleryActivity extends AppCompatActivity {
 
         if (inDB) {
 
-            item.setIcon(R.drawable.star);
-        } else {
-            item.setIcon(R.drawable.star_outline);
+            item.setIcon(R.drawable.ic_star_white_48dp);
+        } else if (!inDB){
+            item.setIcon(R.drawable.ic_star_border_white_48dp);
         }
-
 
         return true;
     }
@@ -234,7 +233,7 @@ public class GalleryActivity extends AppCompatActivity {
 
             if (inDB) {
 
-                item.setIcon(R.drawable.star_outline);
+                item.setIcon(R.drawable.ic_star_border_white_48dp);
                 api.deleteFavorite(this.museumId, this);
 
                 Toast.makeText(this, getResources().getString(R.string.unfavorited),
@@ -246,10 +245,11 @@ public class GalleryActivity extends AppCompatActivity {
                     Toast.makeText(this, getResources().getString(R.string.added_favorite),
                             Toast.LENGTH_SHORT).show();
 
-                    item.setIcon(R.drawable.star);
+                    item.setIcon(R.drawable.ic_star_white_48dp);
                     inDB = true;
                 }
                 else {
+
                     Toast.makeText(this, "Error fetching data from server.",
                             Toast.LENGTH_SHORT).show();
                 }
