@@ -1,9 +1,13 @@
 package wisc.virgil.virgil;
 
+import android.content.ContextWrapper;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.content.Context;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
@@ -122,6 +126,12 @@ public class DatabaseTaskRunner implements Serializable {
         for (FavoriteMuseum favMuseum : favoriteList) {
             if (favMuseum.getMuseumID() == id) {
                 Log.d("DB", "Deleting museum " + id);
+
+                ContextWrapper cw = new ContextWrapper(context);
+                File directory = cw.getDir("favImageDir", Context.MODE_PRIVATE);
+                File file =new File(directory, favMuseum.getPathToPicture());
+                file.delete();
+
                 favMuseumDao.delete(favMuseum);
                 closeDatabase();
                 return true;
