@@ -1,5 +1,6 @@
 package wisc.virgil.virgil;
 
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -17,6 +18,8 @@ import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.Bind;
@@ -27,6 +30,7 @@ import android.content.Context;
  *  Written by   : Munish Kapoor
  *  Original Code:
  *  http://manishkpr.webheavens.com/android-material-design-tabs-collapsible-example/
+ *  MODIFIED BY: Tyler Phelps
  **/
 public class GalleryActivity extends AppCompatActivity {
 
@@ -177,6 +181,7 @@ public class GalleryActivity extends AppCompatActivity {
     //Provide back button support
     @Override
     public void onBackPressed() {
+        clearCache();
         Log.d("CDA", "onBackPressed Called");
         Intent intent = new Intent(this, MuseumSelectActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -272,5 +277,23 @@ public class GalleryActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void clearCache() {
+        ContextWrapper cw = new ContextWrapper(context);
+        File dir = cw.getDir("cachedImageDir", Context.MODE_PRIVATE);
+
+        Log.d("Cache", "cache size: " + dir.list().length);
+        if (dir.isDirectory())
+        {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++)
+            {
+                new File(dir, children[i]).delete();
+            }
+        }
+
+        Log.d("Cache", "cache size: " + dir.list().length);
+        Log.d("Cache", "cleared cached");
     }
 }

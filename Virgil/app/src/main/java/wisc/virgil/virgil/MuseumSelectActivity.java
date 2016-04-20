@@ -1,5 +1,7 @@
 package wisc.virgil.virgil;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -16,12 +18,14 @@ import android.widget.ListView;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class MuseumSelectActivity extends AppCompatActivity {
 
     VirgilAPI api;
     private DrawerLayout drawerLayout;
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
