@@ -246,6 +246,9 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
             this.myParent.museum = new Museum(0, "", "", new String[7]);
         }
 
+        for (Gallery gal : this.myParent.museum.getGalleries()) {
+            Log.d(this.myParent.museum.getName(), gal.getName() + ": " + gal.getExhibits().size() + " exhibits.");
+        }
         this.myParent.museumFinished = true;
         Log.d("Outside Runner", "museumFinished: " + myParent.museumFinished);
     }
@@ -311,6 +314,7 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
     private void sortExhibits(Exhibit exhibit) {
         for (Gallery gallery : this.myParent.museum.getGalleries()) {
             if (gallery.getId() == exhibit.getGallerytId()) {
+                Log.d("Sort Exhibit", "SORTED!");
                 gallery.addExhibit(exhibit);
             }
         }
