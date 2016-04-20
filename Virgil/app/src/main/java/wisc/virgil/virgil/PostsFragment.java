@@ -55,10 +55,12 @@ public class PostsFragment extends Fragment {
             Toast.makeText(getActivity(), "This gallery is empty!", Toast.LENGTH_LONG).show();
         } else {
             for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
-                if(exhibit.getContent().isEmpty() || exhibit.getContent().get(0).getImage(getContext()) == null) {
-                    imageList.add(ContextCompat.getDrawable(getContext(), R.drawable.bucky_history));
-                } else {
-                    imageList.add(new BitmapDrawable(getResources(), exhibit.getContent().get(0).getImage(getContext())));
+                for(int i = 0; i < exhibit.getContent().size(); i++) {
+                    if(exhibit.getContent().isEmpty() || exhibit.getContent().get(i).getImage(getContext()) == null) {
+                        imageList.add(ContextCompat.getDrawable(getContext(), R.drawable.ic_virgil));
+                    } else {
+                        imageList.add(new BitmapDrawable(getResources(), exhibit.getContent().get(i).getImage(getContext())));
+                    }
                 }
             }
         }
@@ -71,10 +73,12 @@ public class PostsFragment extends Fragment {
             Toast.makeText(getActivity(), "This gallery is empty!", Toast.LENGTH_LONG).show();
         } else {
             for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
-                if(exhibit.getName() == null) {
-                    titleList.add("Exhibit");
-                } else {
-                    titleList.add(exhibit.getName());
+                for(int i = 0; i < exhibit.getContent().size(); i++) {
+                    if(exhibit.getName() == null) {
+                        titleList.add("Exhibit");
+                    } else {
+                        titleList.add(exhibit.getName());
+                    }
                 }
             }
         }
@@ -87,10 +91,12 @@ public class PostsFragment extends Fragment {
             Toast.makeText(getActivity(), "This gallery is empty!", Toast.LENGTH_LONG).show();
         } else {
             for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
-                if(exhibit.getContent().isEmpty() || exhibit.getContent().get(0).getDescription() == null) {
-                    descList.add("Description");
-                } else {
-                    descList.add(exhibit.getContent().get(0).getDescription());
+                for(int i = 0; i < exhibit.getContent().size(); i++) {
+                    if(exhibit.getContent().isEmpty() || exhibit.getContent().get(position).getDescription() == null) {
+                        descList.add("Description");
+                    } else {
+                        descList.add(exhibit.getContent().get(position).getDescription());
+                    }
                 }
             }
         }
