@@ -219,6 +219,7 @@ public class GalleryActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else if (id == R.id.action_search) {
+            clearCache();
             Intent intent = new Intent(this, MuseumSelectActivity.class);
             intent.putExtra("API", api);
             startActivity(intent);
