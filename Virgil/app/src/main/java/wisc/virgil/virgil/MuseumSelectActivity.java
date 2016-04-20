@@ -104,7 +104,7 @@ public class MuseumSelectActivity extends AppCompatActivity {
 
         //...and pass it to the new starting gallery view
 
-        api.fetchMuseum(position + 1);
+        api.fetchMuseum(api.getMuseumList().get(position).getId());
 
         //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
         while(api.museumStatus() != api.FINISHED_STATUS) {
