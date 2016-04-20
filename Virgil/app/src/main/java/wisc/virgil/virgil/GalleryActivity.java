@@ -80,17 +80,6 @@ public class GalleryActivity extends AppCompatActivity {
         //sets the database variable
         inDB = api.databaseContains(this.museumId, this);
 
-        /* Future code for when api contains content/galleries/exhibits
-        if(!api.getFavorites(this).isEmpty()) {
-            for(int i = 0; i < api.getFavorites(this).size(); i++) {
-                if(api.getFavorites(this).get(i).getMuseumID() == museumId) {
-                    //Assign found museum so no fetch necessary (Offline Viewing)
-                }
-            }
-        }
-        End of future code */
-
-
         setTitle(api.getMuseum().getName());
 
         //Fill Titles for tabs with gallery names
@@ -156,9 +145,6 @@ public class GalleryActivity extends AppCompatActivity {
                                               } else {
                                                   imageView.setImageBitmap(api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage(context));
                                               }
-
-                                              imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                                              imageView.setCropToPadding(true);
                                           }
                                       }
         );

@@ -51,7 +51,7 @@ public class PostsFragment extends Fragment {
 
     private List<Drawable> createImageList() {
         List<Drawable> imageList = new ArrayList<>();
-        if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(0).getExhibits().isEmpty()) {
+        if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position).getExhibits().isEmpty()) {
             Toast.makeText(getActivity(), "This gallery is empty!", Toast.LENGTH_LONG).show();
         } else {
             for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
@@ -67,7 +67,7 @@ public class PostsFragment extends Fragment {
 
     private List<String> createTitleList() {
         List<String> titleList = new ArrayList<>();
-        if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(0).getExhibits().isEmpty()) {
+        if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position).getExhibits().isEmpty()) {
             Toast.makeText(getActivity(), "This gallery is empty!", Toast.LENGTH_LONG).show();
         } else {
             for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
@@ -83,7 +83,7 @@ public class PostsFragment extends Fragment {
 
     private List<String> createDescList() {
         List<String> descList = new ArrayList<>();
-        if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(0).getExhibits().isEmpty()) {
+        if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position).getExhibits().isEmpty()) {
             Toast.makeText(getActivity(), "This gallery is empty!", Toast.LENGTH_LONG).show();
         } else {
             for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
@@ -95,15 +95,5 @@ public class PostsFragment extends Fragment {
             }
         }
         return descList;
-    }
-
-    private List<String> createItemHeader() {
-        List<String> headerList = new ArrayList<>();
-
-        for (int i=0; i<30; i++) {
-            headerList.add("Virgil Header : " + i);
-        }
-
-        return headerList;
     }
 }

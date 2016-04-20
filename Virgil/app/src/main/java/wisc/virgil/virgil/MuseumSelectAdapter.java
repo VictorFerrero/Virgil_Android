@@ -73,10 +73,6 @@ public class MuseumSelectAdapter extends ArrayAdapter<Museum> {
             viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_virgil));
         }
 
-
-        viewHolder.image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        viewHolder.image.setCropToPadding(true);
-
         String weekdays[] = new      DateFormatSymbols(Locale.ENGLISH).getWeekdays();
         Calendar c = Calendar.getInstance();
         Date date = new Date();
