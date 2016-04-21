@@ -68,9 +68,34 @@ public class MuseumSelectActivity extends AppCompatActivity {
 
         //Add all list items to adapter
         Log.d("Museum List Size: ", ""+api.getMuseumList().size());
-        adapter.addAll(api.getMuseumList());
+        ArrayList<Museum> museumList = api.getMuseumList();
+        Log.d("Museum List Size: ", ""+api.getMuseumList().size());
+
+        for (Museum museumInList : museumList) {
+            api.fetchMuseum(museumInList);
+            boolean successful = true;
+
+            //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
+            while(api.museumStatus() != api.FINISHED_STATUS) {
+                if (api.museumStatus() == api.ERROR_STATUS) {
+                    Log.d("API", "Fetched museum with ERROR_STATUS");
+                    successful = false;
+                    break;
+                }
+            }
+
+            if (successful) {
+                adapter.add(api.getMuseum());
+            }
+            Log.d("List Size (loop): ", ""+api.getMuseumList().size());
+        }
 
         adapter.setNotifyOnChange(true);
+
+        api.fetchAllMuseums();
+
+        //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
+        while(api.museumListStatus() != api.FINISHED_STATUS) {}
 
         //Make museums clickable and switch to their respective galleries
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -105,21 +130,30 @@ public class MuseumSelectActivity extends AppCompatActivity {
         //...and pass it to the new starting gallery view
 
         api.fetchMuseum(api.getMuseumList().get(position).getId());
+        boolean successful = true;
 
         //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
         while(api.museumStatus() != api.FINISHED_STATUS) {
             if (api.museumStatus() == api.ERROR_STATUS) {
                 Log.d("API", "Fetched museum with ERROR_STATUS");
+                successful = false;
                 break;
             }
         }
 
-        Log.d("API", "OK");
-        Intent intent = new Intent(this, GalleryActivity.class);
-        intent.putExtra("API", api);
-        intent.putExtra("ID", id);
-        startActivity(intent);
-        finish();
+        if (successful) {
+            Log.d("API", "OK");
+            Intent intent = new Intent(this, GalleryActivity.class);
+            intent.putExtra("API", api);
+            intent.putExtra("ID", id);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            Toast.makeText(this, "Could not get the selected museum.",
+                    Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
