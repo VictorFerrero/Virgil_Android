@@ -67,9 +67,7 @@ public class MuseumSelectActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         //Add all list items to adapter
-        Log.d("Museum List Size: ", ""+api.getMuseumList().size());
         ArrayList<Museum> museumList = api.getMuseumList();
-        Log.d("Museum List Size: ", ""+api.getMuseumList().size());
 
         for (Museum museumInList : museumList) {
             api.fetchMuseum(museumInList);
@@ -87,15 +85,9 @@ public class MuseumSelectActivity extends AppCompatActivity {
             if (successful) {
                 adapter.add(api.getMuseum());
             }
-            Log.d("List Size (loop): ", ""+api.getMuseumList().size());
         }
 
         adapter.setNotifyOnChange(true);
-
-        api.fetchAllMuseums();
-
-        //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
-        while(api.museumListStatus() != api.FINISHED_STATUS) {}
 
         //Make museums clickable and switch to their respective galleries
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -35,7 +35,7 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
 
     @Override
     protected void onPreExecute() {
-        this.myParent.museumList = new ArrayList<>();
+
     }
 
     @Override
