@@ -116,13 +116,13 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
         this.myParent.museumList = new ArrayList<>();
         this.myParent.listFinished = false;
 
-        String[] splitInput = input.split("\\[");
-        input = splitInput[1];
-        splitInput = input.split("\\]");
-        input = splitInput[0];
-        input = "[" + input + "]";
-
         try {
+            String[] splitInput = input.split("\\[");
+            input = splitInput[1];
+            splitInput = input.split("\\]");
+            input = splitInput[0];
+            input = "[" + input + "]";
+
             JSONArray jsonarray = new JSONArray(input);
 
             for(int i = 0; i < jsonarray.length(); i++){
