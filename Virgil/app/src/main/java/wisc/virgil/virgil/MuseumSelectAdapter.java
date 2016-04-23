@@ -3,18 +3,19 @@ package wisc.virgil.virgil;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.text.DateFormatSymbols;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.text.DateFormatSymbols;
 import java.util.Locale;
-import java.util.ArrayList;
-import android.util.Log;
 
 /**
  * Created by Ty Talafous on 3/26/2016.
@@ -64,13 +65,13 @@ public class MuseumSelectAdapter extends ArrayAdapter<Museum> {
             museumImage = (Bitmap) museum.getContent().get(0).getImage(getContext());
 
             if(museumImage == null) {
-                viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_virgil));
+                viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
             } else {
                 viewHolder.image.setImageBitmap(museumImage);
             }
         }
         else {
-            viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_virgil));
+            viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
         }
 
         String weekdays[] = new      DateFormatSymbols(Locale.ENGLISH).getWeekdays();

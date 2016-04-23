@@ -1,5 +1,6 @@
 package wisc.virgil.virgil;
 
+import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,20 +12,20 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import android.content.Context;
 
 /**
  *  Written by   : Munish Kapoor
@@ -66,7 +67,7 @@ public class GalleryActivity extends AppCompatActivity {
 
         //creates an action bar hamburger bar
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_36dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         //Adds drawer layout
@@ -102,7 +103,7 @@ public class GalleryActivity extends AppCompatActivity {
             } else if(api.getMuseum().getId() == 2) {
                 imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.camp_randall_museum));
             } else {
-                imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
+                imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.mipmap.virgil_white_ic));
             }
         } else {
             imageView.setImageBitmap(api.getMuseum().getContent().get(0).getImage(this.context));
@@ -186,11 +187,10 @@ public class GalleryActivity extends AppCompatActivity {
 
         if (inDB) {
 
-            item.setIcon(R.drawable.star);
-        } else {
-            item.setIcon(R.drawable.star_outline);
+            item.setIcon(R.drawable.ic_star_white_48dp);
+        } else if (!inDB){
+            item.setIcon(R.drawable.ic_star_border_white_48dp);
         }
-
 
         return true;
     }
@@ -228,7 +228,7 @@ public class GalleryActivity extends AppCompatActivity {
 
             if (inDB) {
 
-                item.setIcon(R.drawable.star_outline);
+                item.setIcon(R.drawable.ic_star_border_white_48dp);
                 api.deleteFavorite(this.museumId, this);
 
                 Toast.makeText(this, getResources().getString(R.string.unfavorited),
@@ -240,8 +240,7 @@ public class GalleryActivity extends AppCompatActivity {
                     if (api.addFavorite(this.museumId, this.context)) {
                         Toast.makeText(this, getResources().getString(R.string.added_favorite),
                                 Toast.LENGTH_SHORT).show();
-
-                        item.setIcon(R.drawable.star);
+                        item.setIcon(R.drawable.ic_star_white_48dp);
                         inDB = true;
                     }
                     else {
@@ -250,15 +249,12 @@ public class GalleryActivity extends AppCompatActivity {
                     }
                 }
                 catch (Exception e) {
-                    Toast.makeText(this, "Error adding to favorites.",
-                            Toast.LENGTH_SHORT).show();
                     Log.d("ADD FAV", "ERROR:");
-                    e.printStackTrace();
-                }
+					e.printStackTrace();
+				}
 
             }
             return true;
-
         } else if (id == android.R.id.home) {
             drawerLayout.openDrawer(GravityCompat.START);
             return true;

@@ -39,7 +39,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
             if(position == 0) // if the position is 0 we are returning the Events tab
             {
-                PostsFragment tab1 = new PostsFragment();
+                EventsFragment tab1 = new EventsFragment();
                 bundle.putInt("POS", position);
                 tab1.setArguments(bundle);
                 return tab1;

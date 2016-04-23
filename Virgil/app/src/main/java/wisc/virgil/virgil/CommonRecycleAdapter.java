@@ -26,11 +26,15 @@ public class CommonRecycleAdapter extends RecyclerView.Adapter<CommonRecycleAdap
     private ViewHolder viewHolder;
     private View itemLayoutView;
 
-    public CommonRecycleAdapter(List<String> itemsTitle, List<String> itemsData, List<Drawable> itemsImage) {
+
+    public CommonRecycleAdapter(List<String> itemsTitle, List<String> itemsData,
+                                List<Drawable> itemsImage) {
+
         this.itemsData  = itemsData;
         this.itemsTitle = itemsTitle;
         this.itemsImage = itemsImage;
         this.itemsHeader = itemsTitle;
+
     }
 
     @Override

@@ -1,6 +1,7 @@
 package wisc.virgil.virgil;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,7 +18,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import android.graphics.drawable.BitmapDrawable;
 
 /**
  *  Written by   : Munish Kapoor
@@ -57,7 +57,7 @@ public class PostsFragment extends Fragment {
             for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
                 for(int i = 0; i < exhibit.getContent().size(); i++) {
                     if(exhibit.getContent().isEmpty() || exhibit.getContent().get(i).getImage(getContext()) == null) {
-                        imageList.add(ContextCompat.getDrawable(getContext(), R.drawable.ic_virgil));
+                        imageList.add(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
                     } else {
                         imageList.add(new BitmapDrawable(getResources(), exhibit.getContent().get(i).getImage(getContext())));
                     }

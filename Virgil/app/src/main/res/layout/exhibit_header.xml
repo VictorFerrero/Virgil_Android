@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="75dp"
+    android:layout_height="48dp"
     android:background="@color/colorPrimary"
     android:padding="16dp"
-    android:orientation="vertical"
-    android:gravity="bottom"
-    android:id="@+id/exhibit_header">
+    android:id="@+id/exhibit_header"
+    android:orientation="horizontal"
+    android:gravity="bottom">
 
 
         <TextView
             android:id="@+id/exhibit_title"
+            android:textSize="14sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorAccent"
             android:text="@string/exhibit_title"
             android:gravity="center_horizontal"
-            android:textAllCaps="true"/>
+            android:textAllCaps="true" />
 </LinearLayout>

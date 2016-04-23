@@ -37,7 +37,7 @@ public class MuseumSelectActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_36dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         //Setup API and fetch museum list
@@ -180,16 +180,6 @@ public class MuseumSelectActivity extends AppCompatActivity {
             intent.putExtra("API", api);
             startActivity(intent);
             finish();
-        } else if (id == R.id.action_map) {
-            //Only menu item not working correctly on museum select
-            /*
-            Intent intent = new Intent(this, MapActivity.class);
-            intent.putExtra("API", api);
-            startActivity(intent);
-            finish();
-            */
-        } else if (id == R.id.action_favorites) {
-
         } else if (id == R.id.main_favorites) {
             Intent intent = new Intent(this, FavoritesActivity.class);
             intent.putExtra("API", api);

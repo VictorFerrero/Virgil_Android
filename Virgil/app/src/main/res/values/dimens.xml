@@ -5,4 +5,6 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="card_margin">10dp</dimen>
     <dimen name="title_size">36dp</dimen>
+    <dimen name="dialog_margin">24dp</dimen>
 </resources>
+
