@@ -24,4 +24,5 @@
     <string name="exhibit_content">Exhibit Content</string>
     <string name="exhibit_title">Exhibit Title</string>
     <string name="added_favorite">Added to favorites</string>
+    <string name="unfavorited">Unfavorited</string>
 </resources>

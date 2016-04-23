@@ -30,9 +30,6 @@ public class MapActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         api = (VirgilAPI) intent.getSerializableExtra("API");
-        int museumId = intent.getIntExtra("ID", 0);
-
-        api.fetchMuseum(museumId);
 
         //inflates toolbar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.tb_museum_map);

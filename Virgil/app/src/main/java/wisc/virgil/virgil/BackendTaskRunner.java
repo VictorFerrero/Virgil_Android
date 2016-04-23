@@ -116,13 +116,13 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
         this.myParent.museumList = new ArrayList<>();
         this.myParent.listFinished = false;
 
-        String[] splitInput = input.split("\\[");
-        input = splitInput[1];
-        splitInput = input.split("\\]");
-        input = splitInput[0];
-        input = "[" + input + "]";
-
         try {
+            String[] splitInput = input.split("\\[");
+            input = splitInput[1];
+            splitInput = input.split("\\]");
+            input = splitInput[0];
+            input = "[" + input + "]";
+
             JSONArray jsonarray = new JSONArray(input);
 
             for(int i = 0; i < jsonarray.length(); i++){
@@ -136,13 +136,14 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
                 JSONObject hours = new JSONObject(hoursString);
 
                 String[] museumHours = new String[7];
-                museumHours[0] = hours.getString("mon");
-                museumHours[1] = hours.getString("tue");
-                museumHours[2] = hours.getString("wed");
-                museumHours[3] = hours.getString("thur");
-                museumHours[4] = hours.getString("fri");
-                museumHours[5] = hours.getString("sat");
-                museumHours[6] = hours.getString("sun");
+                museumHours[0] = hours.getString("sun");
+                museumHours[1] = hours.getString("mon");
+                museumHours[2] = hours.getString("tue");
+                museumHours[3] = hours.getString("wed");
+                museumHours[4] = hours.getString("thur");
+                museumHours[5] = hours.getString("fri");
+                museumHours[6] = hours.getString("sat");
+
 
                 Museum newMuseum = new Museum(Integer.parseInt(id), name, address, museumHours);
                 this.myParent.museumList.add(newMuseum);
@@ -173,13 +174,13 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
             JSONObject hours = new JSONObject(hoursString);
 
             String[] museumHours = new String[7];
-            museumHours[0] = hours.getString("mon");
-            museumHours[1] = hours.getString("tue");
-            museumHours[2] = hours.getString("wed");
-            museumHours[3] = hours.getString("thur");
-            museumHours[4] = hours.getString("fri");
-            museumHours[5] = hours.getString("sat");
-            museumHours[6] = hours.getString("sun");
+            museumHours[0] = hours.getString("sun");
+            museumHours[1] = hours.getString("mon");
+            museumHours[2] = hours.getString("tue");
+            museumHours[3] = hours.getString("wed");
+            museumHours[4] = hours.getString("thur");
+            museumHours[5] = hours.getString("fri");
+            museumHours[6] = hours.getString("sat");
 
             this.myParent.museum = new Museum(Integer.parseInt(id), name, address, museumHours);
             Log.d("Mon:", museumHours[0]);
@@ -245,6 +246,9 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
             this.myParent.museum = new Museum(0, "", "", new String[7]);
         }
 
+        for (Gallery gal : this.myParent.museum.getGalleries()) {
+            Log.d(this.myParent.museum.getName(), gal.getName() + ": " + gal.getExhibits().size() + " exhibits.");
+        }
         this.myParent.museumFinished = true;
         Log.d("Outside Runner", "museumFinished: " + myParent.museumFinished);
     }
@@ -310,6 +314,7 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
     private void sortExhibits(Exhibit exhibit) {
         for (Gallery gallery : this.myParent.museum.getGalleries()) {
             if (gallery.getId() == exhibit.getGallerytId()) {
+                Log.d("Sort Exhibit", "SORTED!");
                 gallery.addExhibit(exhibit);
             }
         }

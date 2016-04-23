@@ -10,11 +10,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import android.graphics.drawable.BitmapDrawable;
 
 /**
  *  Written by   : Munish Kapoor
@@ -48,37 +51,57 @@ public class PostsFragment extends Fragment {
 
     private List<Drawable> createImageList() {
         List<Drawable> imageList = new ArrayList<>();
-        for(Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
-            //imageList.add(exhibit.getContent().get(0).getImage());
-            imageList.add(ContextCompat.getDrawable(getContext(), R.drawable.bucky_history));
+        if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position).getExhibits().isEmpty()) {
+            Toast.makeText(getActivity(), "This gallery is empty!", Toast.LENGTH_LONG).show();
+        } else {
+            for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
+                for(int i = 0; i < exhibit.getContent().size(); i++) {
+                    if(exhibit.getContent().isEmpty() || exhibit.getContent().get(i).getImage(getContext()) == null) {
+                        imageList.add(ContextCompat.getDrawable(getContext(), R.drawable.ic_virgil));
+                    } else {
+                        imageList.add(new BitmapDrawable(getResources(), exhibit.getContent().get(i).getImage(getContext())));
+                    }
+                }
+            }
         }
         return imageList;
     }
 
     private List<String> createTitleList() {
         List<String> titleList = new ArrayList<>();
-        for(Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
-            titleList.add(exhibit.getName());
+        if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position).getExhibits().isEmpty()) {
+            Toast.makeText(getActivity(), "This gallery is empty!", Toast.LENGTH_LONG).show();
+        } else {
+            for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
+                for(int i = 0; i < exhibit.getContent().size(); i++) {
+                    if(exhibit.getName() == null) {
+                        titleList.add("Exhibit");
+                    } else if (i == 0) {
+                        titleList.add(exhibit.getName());
+                    } else {
+                        titleList.add("Exhibit");
+                    }
+                }
+            }
         }
         return titleList;
     }
 
     private List<String> createDescList() {
         List<String> descList = new ArrayList<>();
-        for(Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
-            //descList.add(exhibit.getContent().get(0).getDescription());
-            descList.add("I'm a description!");
+        if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position).getExhibits().isEmpty()) {
+            Toast.makeText(getActivity(), "This gallery is empty!", Toast.LENGTH_LONG).show();
+        } else {
+            for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
+                for(int i = 0; i < exhibit.getContent().size(); i++) {
+                    if(exhibit.getContent().isEmpty() || exhibit.getContent().get(i).getDescription() == null) {
+                        descList.add("Description");
+                    } else {
+                        descList.add(exhibit.getContent().get(i).getDescription());
+                    }
+                }
+            }
         }
         return descList;
-    }
-
-    private List<String> createItemHeader() {
-        List<String> headerList = new ArrayList<>();
-
-        for (int i=0; i<30; i++) {
-            headerList.add("Virgil Header : " + i);
-        }
-
-        return headerList;
     }
 }

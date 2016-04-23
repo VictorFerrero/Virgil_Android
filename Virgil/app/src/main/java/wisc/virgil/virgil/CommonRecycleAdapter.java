@@ -24,6 +24,7 @@ public class CommonRecycleAdapter extends RecyclerView.Adapter<CommonRecycleAdap
     private List<Drawable> itemsImage;
     private List<String> itemsHeader;
     private ViewHolder viewHolder;
+    private View itemLayoutView;
 
     public CommonRecycleAdapter(List<String> itemsTitle, List<String> itemsData, List<Drawable> itemsImage) {
         this.itemsData  = itemsData;
@@ -35,7 +36,7 @@ public class CommonRecycleAdapter extends RecyclerView.Adapter<CommonRecycleAdap
     @Override
     public CommonRecycleAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(
+        itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.exhibit_view, parent, false);
 
         this.viewHolder = new ViewHolder(itemLayoutView);
@@ -45,10 +46,31 @@ public class CommonRecycleAdapter extends RecyclerView.Adapter<CommonRecycleAdap
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        viewHolder.exhibitTitle.setText(this.itemsTitle.get(position));
-        viewHolder.exhibitDescription.setText(this.itemsData.get(position));
-        viewHolder.exhibitImage.setImageDrawable(this.itemsImage.get(position));
-        viewHolder.exhibitHeader.setText(this.itemsHeader.get(position));
+        if(this.itemsTitle.get(position) == "Exhibit") {
+            viewHolder.exhibitTitle.setVisibility(View.GONE);
+        } else {
+            viewHolder.exhibitTitle.setText(this.itemsTitle.get(position));
+        }
+        if(this.itemsData.get(position) == "Description") {
+            viewHolder.exhibitDescription.setVisibility(View.GONE);
+        } else {
+            viewHolder.exhibitDescription.setText(this.itemsData.get(position));
+        }
+        if(this.itemsTitle.get(position) == "Exhibit" && this.itemsData.get(position) == "Description") {
+            itemLayoutView.findViewById(R.id.cv_exhibit_text_content).setVisibility(View.GONE);
+        }
+        if(this.itemsImage.get(position) == null) {
+            viewHolder.exhibitImage.setVisibility(View.GONE);
+            itemLayoutView.findViewById(R.id.cv_exhibit_image).setVisibility(View.GONE);
+        } else {
+            viewHolder.exhibitImage.setImageDrawable(this.itemsImage.get(position));
+        }
+        if(this.itemsHeader.get(position) == "Exhibit") {
+            viewHolder.exhibitHeader.setVisibility(View.GONE);
+            itemLayoutView.findViewById(R.id.exhibit_header).setVisibility(View.GONE);
+        } else {
+            viewHolder.exhibitHeader.setText(this.itemsHeader.get(position));
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -1,6 +1,7 @@
 package wisc.virgil.virgil;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import java.util.Date;
 import java.text.DateFormatSymbols;
 import java.util.Locale;
 import java.util.ArrayList;
+import android.util.Log;
 
 /**
  * Created by Ty Talafous on 3/26/2016.
@@ -53,20 +55,23 @@ public class MuseumSelectAdapter extends ArrayAdapter<Museum> {
         //Fill in view holder
         viewHolder.name.setText(museum.getName());
         viewHolder.address.setText(museum.getAddress());
-        if(museum.getContent().isEmpty() || museum.getContent().get(0).getImage() == null) {
-            if(museum.getId() == 1) {
-                viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.bucky_museum));
-            } else if (museum.getId() == 2) {
-                viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.camp_randall_museum));
-            } else {
-                viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_virgil));
-            }
-        } else {
-            viewHolder.image.setImageDrawable(museum.getContent().get(0).getImage());
-        }
 
-        viewHolder.image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        viewHolder.image.setCropToPadding(true);
+        Bitmap museumImage = null;
+
+        Log.d("MuseumSelectAdapter", "Trying to get image for museum " + museum.getId());
+        if (museum.getContent().size() > 0) {
+            Log.d("MuseumSelectAdapter", "size > 0");
+            museumImage = (Bitmap) museum.getContent().get(0).getImage(getContext());
+
+            if(museumImage == null) {
+                viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_virgil));
+            } else {
+                viewHolder.image.setImageBitmap(museumImage);
+            }
+        }
+        else {
+            viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_virgil));
+        }
 
         String weekdays[] = new      DateFormatSymbols(Locale.ENGLISH).getWeekdays();
         Calendar c = Calendar.getInstance();
@@ -74,7 +79,7 @@ public class MuseumSelectAdapter extends ArrayAdapter<Museum> {
         c.setTime(date);
         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
         String hours[] = museum.getHours();
-        viewHolder.hours.setText(weekdays[dayOfWeek] + " Hours: " + hours[dayOfWeek]);
+        viewHolder.hours.setText(weekdays[dayOfWeek] + " Hours: " + hours[dayOfWeek-1]);
 
         return convertView;
     }

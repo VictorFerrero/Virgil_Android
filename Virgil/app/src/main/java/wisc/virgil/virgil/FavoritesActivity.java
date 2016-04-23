@@ -53,10 +53,6 @@ public class FavoritesActivity extends AppCompatActivity {
         }
         GridView gridView = (GridView) findViewById(R.id.gv_favorites);
 
-       /*while (!api.getFavorites(this).isEmpty()) {
-            api.deleteFavorite(api.getFavorites(this).get(0).getMuseumID(), this);
-       }*/
-
         for (FavoriteMuseum favMus : api.getFavorites(this)) {
             Log.d("FAV", favMus.getName() + " " + favMus.getMuseumID());
         }
@@ -91,7 +87,6 @@ public class FavoritesActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, GalleryActivity.class);
         intent.putExtra("API", api);
-        intent.putExtra("ID", api.getFavorites(this).get(position).getMuseumID());
         startActivity(intent);
         finish();
     }
