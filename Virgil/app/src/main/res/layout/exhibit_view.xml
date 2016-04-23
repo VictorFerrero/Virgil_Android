@@ -23,6 +23,8 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
             android:id="@+id/iv_exhibit_image"
             android:src="@mipmap/virgil_white_ic"/>
         </LinearLayout>
@@ -36,7 +38,7 @@
         android:layout_margin="10dp">
 
         <LinearLayout
-            style="@style/Widget.CardContent"
+            style="@style/Widget.CardContentText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

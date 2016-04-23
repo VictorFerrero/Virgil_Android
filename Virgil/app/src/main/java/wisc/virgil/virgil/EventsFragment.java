@@ -1,6 +1,7 @@
 package wisc.virgil.virgil;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -57,23 +58,19 @@ public class EventsFragment extends Fragment {
     private List<Drawable> createImageList() {
         List<Drawable> imageList = new ArrayList<>();
 
-        /*
-        if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(0).getExhibits().isEmpty()) {
+        if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position).getExhibits().isEmpty()) {
             Toast.makeText(getActivity(), "This gallery is empty!", Toast.LENGTH_LONG).show();
         } else {
             for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
-                if(exhibit.getContent().isEmpty() || exhibit.getContent().get(0).getImage() == null) {
-                    imageList.add(ContextCompat.getDrawable(getContext(), R.drawable.bucky_history));
-                } else {
-                    imageList.add(exhibit.getContent().get(0).getImage());
+                for(int i = 0; i < exhibit.getContent().size(); i++) {
+                    if(exhibit.getContent().isEmpty() || exhibit.getContent().get(i).getImage(getContext()) == null) {
+                        imageList.add(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
+                    } else {
+                        imageList.add(new BitmapDrawable(getResources(), exhibit.getContent().get(i).getImage(getContext())));
+                    }
                 }
             }
-        }*/
-
-        for (int i=0; i<30; i++) {
-            imageList.add(ContextCompat.getDrawable(getContext(), R.drawable.bucky_history));
         }
-
         return imageList;
     }
 
