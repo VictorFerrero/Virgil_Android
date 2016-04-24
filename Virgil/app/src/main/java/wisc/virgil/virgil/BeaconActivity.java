@@ -37,7 +37,7 @@ public class BeaconActivity extends AppCompatActivity {
         api = (VirgilAPI) getIntent().getSerializableExtra("API");
         drawerLayout = (DrawerLayout) findViewById(R.id.dl_beacon);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_36dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nv_beacon);

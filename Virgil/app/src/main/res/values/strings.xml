@@ -25,4 +25,11 @@
     <string name="exhibit_title">Exhibit Title</string>
     <string name="added_favorite">Added to favorites</string>
     <string name="unfavorited">Unfavorited</string>
+    <string name="add_event">Add Event</string>
+    <string name="museum_event_description">image of museum event</string>
+    <string name="event_title">Event Title</string>
+    <string name="event_date">Date</string>
+    <string name="event_hours">Hours</string>
+    <string name="event_location">Location</string>
+    <string name="event_description">Description</string>
 </resources>

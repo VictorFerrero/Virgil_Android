@@ -19,32 +19,32 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_favorites"
-            android:icon="@drawable/ic_favorite_blue_24dp"
+            android:icon="@drawable/ic_favorite_white_48dp"
             android:title="@string/action_favorites"/>
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_home_blue_24dp"
+            android:icon="@drawable/ic_home_white_48dp"
             android:title="@string/action_home" />
         <item
             android:id="@+id/nav_maps"
-            android:icon="@drawable/ic_map_blue_24dp"
+            android:icon="@drawable/ic_map_white_48dp"
             android:title="@string/museum_map" />
 
         <item
             android:id="@+id/nav_beacon"
-            android:icon="@drawable/ic_bluetooth_searching_white_24dp"
+            android:icon="@drawable/ic_bluetooth_searching_white_48dp"
             android:title="@string/action_beacon" />
 
         <item
             android:id="@+id/nav_search"
-            android:icon="@drawable/ic_search_blue_24dp"
+            android:icon="@drawable/ic_search_white_48dp"
             android:title="@string/action_search" />
     </group>
 
     <item android:title="Sub items">
         <menu>
             <item
-                android:icon="@drawable/virgil_blue_icon"
+                android:icon="@mipmap/virgil_white_ic"
                 android:title="Sub item 1" />
         </menu>
     </item>

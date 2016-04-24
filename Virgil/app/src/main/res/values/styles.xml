@@ -22,10 +22,25 @@
     </style>
 
     <style name="Widget.CardContent" parent="android:Widget">
-        <item name="android:paddingLeft">16dp</item>
-        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Widget.CardContentText" parent="android:Widget">
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:paddingRight">24dp</item>
         <item name="android:paddingTop">24dp</item>
         <item name="android:paddingBottom">24dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Widget.CardContentFavorites" parent="android:Widget">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">16dp</item>
         <item name="android:orientation">vertical</item>
     </style>
 

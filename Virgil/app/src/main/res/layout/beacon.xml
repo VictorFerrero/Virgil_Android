@@ -50,16 +50,16 @@
             android:layout_centerHorizontal="true" />
 
         <Button
-            android:layout_height="wrap_content"
+            android:layout_height="120dp"
             android:layout_width="wrap_content"
             android:id="@+id/btn_beacon"
             android:background="@drawable/beacon"
             android:stateListAnimator="@null"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:onClick="onTouch"
-            android:layout_below="@+id/Beacon_Text"
+            android:scaleType="fitXY"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="33dp" />
+            android:layout_below="@+id/Beacon_Text"
+            android:layout_marginTop="70dp"/>
     </RelativeLayout>
 
     <FrameLayout
