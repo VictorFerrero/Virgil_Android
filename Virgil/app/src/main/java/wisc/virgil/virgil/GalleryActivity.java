@@ -141,6 +141,9 @@ public class GalleryActivity extends AppCompatActivity {
                                                   } else {
                                                       imageView.setImageBitmap(api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage(getApplication()));
                                                   }
+                                                  if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position - 1).getExhibits().isEmpty()) {
+                                                      Toast.makeText(getApplication(), "This gallery is empty!", Toast.LENGTH_SHORT).show();
+                                                  }
                                               }
                                           }
                                       }

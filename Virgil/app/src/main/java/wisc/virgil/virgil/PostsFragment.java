@@ -52,16 +52,12 @@ public class PostsFragment extends Fragment {
 
     private List<Drawable> createImageList() {
         List<Drawable> imageList = new ArrayList<>();
-        if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position).getExhibits().isEmpty()) {
-            Toast.makeText(getActivity(), "This gallery is empty!", Toast.LENGTH_LONG).show();
-        } else {
-            for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
-                for(int i = 0; i < exhibit.getContent().size(); i++) {
-                    if(exhibit.getContent().isEmpty() || exhibit.getContent().get(i).getImage(getContext()) == null) {
-                        imageList.add(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
-                    } else {
-                        imageList.add(new BitmapDrawable(getResources(), exhibit.getContent().get(i).getImage(getContext())));
-                    }
+        for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
+            for(int i = 0; i < exhibit.getContent().size(); i++) {
+                if(exhibit.getContent().isEmpty() || exhibit.getContent().get(i).getImage(getContext()) == null) {
+                    imageList.add(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
+                } else {
+                    imageList.add(new BitmapDrawable(getResources(), exhibit.getContent().get(i).getImage(getContext())));
                 }
             }
         }
@@ -70,18 +66,14 @@ public class PostsFragment extends Fragment {
 
     private List<String> createTitleList() {
         List<String> titleList = new ArrayList<>();
-        if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position).getExhibits().isEmpty()) {
-            Toast.makeText(getActivity(), "This gallery is empty!", Toast.LENGTH_LONG).show();
-        } else {
-            for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
-                for(int i = 0; i < exhibit.getContent().size(); i++) {
-                    if(exhibit.getName() == null) {
-                        titleList.add("Exhibit");
-                    } else if (i == 0) {
-                        titleList.add(exhibit.getName());
-                    } else {
-                        titleList.add("Exhibit");
-                    }
+        for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
+            for(int i = 0; i < exhibit.getContent().size(); i++) {
+                if(exhibit.getName() == null) {
+                    titleList.add("Exhibit");
+                } else if (i == 0) {
+                    titleList.add(exhibit.getName());
+                } else {
+                    titleList.add("Exhibit");
                 }
             }
         }
@@ -90,16 +82,12 @@ public class PostsFragment extends Fragment {
 
     private List<String> createDescList() {
         List<String> descList = new ArrayList<>();
-        if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position).getExhibits().isEmpty()) {
-            Toast.makeText(getActivity(), "This gallery is empty!", Toast.LENGTH_LONG).show();
-        } else {
-            for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
-                for(int i = 0; i < exhibit.getContent().size(); i++) {
-                    if(exhibit.getContent().isEmpty() || exhibit.getContent().get(i).getDescription() == null) {
-                        descList.add("Description");
-                    } else {
-                        descList.add(exhibit.getContent().get(i).getDescription());
-                    }
+        for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
+            for(int i = 0; i < exhibit.getContent().size(); i++) {
+                if(exhibit.getContent().isEmpty() || exhibit.getContent().get(i).getDescription() == null) {
+                    descList.add("Description");
+                } else {
+                    descList.add(exhibit.getContent().get(i).getDescription());
                 }
             }
         }
