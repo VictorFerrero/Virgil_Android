@@ -61,7 +61,9 @@
                     android:layout_gravity="bottom"
                     app:tabBackground="@color/colorPrimary"
                     app:tabIndicatorColor="@color/colorAccent"
-                    app:tabMode="scrollable"/>
+                    app:tabMode="scrollable"
+                    app:tabGravity="fill"
+                    android:background="@color/colorPrimary" />
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
