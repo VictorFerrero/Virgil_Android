@@ -93,21 +93,14 @@ public class GalleryActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        setUpTabs(this.context);
+        setUpTabs();
 
         ImageView imageView = (ImageView) findViewById(R.id.iv_gallery);
         if(api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage(this.context) == null) {
-            if(api.getMuseum().getId() == 1) {
-                imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.bucky_museum));
-            } else if(api.getMuseum().getId() == 2) {
-                imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.camp_randall_museum));
-            } else {
-                imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.mipmap.virgil_white_ic));
-            }
+            imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
         } else {
             imageView.setImageBitmap(api.getMuseum().getContent().get(0).getImage(this.context));
         }
-
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -122,27 +115,32 @@ public class GalleryActivity extends AppCompatActivity {
                 });
     }
 
-    void setUpTabs(Context context){
+    void setUpTabs(){
         adapter =  new MainPagerAdapter(this.getSupportFragmentManager(),Titles,Titles.length,api);
         pager.setAdapter(adapter);
         tabs.setupWithViewPager(pager);
 
         tabs.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
-                                          public void onTabSelected(TabLayout.Tab tab, Context context) {
+                                          public void onTabSelected(TabLayout.Tab tab) {
                                               super.onTabSelected(tab);
 
                                               int position = tab.getPosition();
                                               ImageView imageView = (ImageView) findViewById(R.id.iv_gallery);
-                                              if (position == 0) {
-                                                  if (api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage(context) == null) {
-                                                      imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.bucky_museum));
+                                              if(position == 0) {
+                                                  //EVENT TAB
+                                                  if(api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage(getApplication()) == null) {
+                                                      imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
                                                   } else {
-                                                      imageView.setImageBitmap(api.getMuseum().getContent().get(0).getImage(context));
+                                                      imageView.setImageBitmap(api.getMuseum().getContent().get(0).getImage(getApplication()));
                                                   }
-                                              } else if (api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position - 1).getContent().isEmpty() || api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage(context) == null) {
-                                                  imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.bucky_history));
                                               } else {
-                                                  imageView.setImageBitmap(api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage(context));
+                                                  if (api.getMuseum().getGalleries().isEmpty() ||
+                                                          api.getMuseum().getGalleries().get(position - 1).getContent().isEmpty() ||
+                                                          api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage(getApplication()) == null) {
+                                                      imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
+                                                  } else {
+                                                      imageView.setImageBitmap(api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage(getApplication()));
+                                                  }
                                               }
                                           }
                                       }
