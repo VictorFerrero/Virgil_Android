@@ -70,25 +70,7 @@ public class MuseumSelectActivity extends AppCompatActivity {
         Log.d("Museum List Size: ", ""+api.getMuseumList().size());
         ArrayList<Museum> museumList = api.getMuseumList();
         Log.d("Museum List Size: ", ""+api.getMuseumList().size());
-
-        for (Museum museumInList : museumList) {
-            api.fetchMuseum(museumInList);
-            boolean successful = true;
-
-            //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
-            while(api.museumStatus() != api.FINISHED_STATUS) {
-                if (api.museumStatus() == api.ERROR_STATUS) {
-                    Log.d("API", "Fetched museum with ERROR_STATUS");
-                    successful = false;
-                    break;
-                }
-            }
-
-            if (successful) {
-                adapter.add(api.getMuseum());
-            }
-            Log.d("List Size (loop): ", ""+api.getMuseumList().size());
-        }
+        adapter.addAll(museumList);
 
         adapter.setNotifyOnChange(true);
 
