@@ -53,38 +53,45 @@ public class MuseumSelectAdapter extends ArrayAdapter<Museum> {
         }
 
         //Fill in view holder
-        viewHolder.name.setText(museum.getName());
-        viewHolder.address.setText(museum.getAddress());
+        if(museum == null || museum.getName() == null || museum.getAddress() == null || museum.getHours() == null) {
+            viewHolder.name.setText("Museum");
+            viewHolder.address.setText("Address");
+            viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
+            viewHolder.hours.setText("Hours");
+        } else {
+            viewHolder.name.setText(museum.getName());
+            viewHolder.address.setText(museum.getAddress());
 
-        Bitmap museumImage = null;
+            Bitmap museumImage = null;
 
-        Log.d("MuseumSelectAdapter", "Trying to get image for museum " + museum.getId());
-        if (museum.getContent().size() > 0) {
-            Log.d("MuseumSelectAdapter", "size > 0");
-            for (Content museumContent : museum.getContent()) {
-                if (!museumContent.isMap()) {
-                    museumImage = (Bitmap) museumContent.getImage(getContext());
-                    break;
+            Log.d("MuseumSelectAdapter", "Trying to get image for museum " + museum.getId());
+            if (museum.getContent().size() > 0) {
+                Log.d("MuseumSelectAdapter", "size > 0");
+                for (Content museumContent : museum.getContent()) {
+                    if (!museumContent.isMap()) {
+                        museumImage = (Bitmap) museumContent.getImage(getContext());
+                        break;
+                    }
+                }
+
+                if(museumImage == null) {
+                    viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
+                } else {
+                    viewHolder.image.setImageBitmap(museumImage);
                 }
             }
-
-            if(museumImage == null) {
+            else {
                 viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
-            } else {
-                viewHolder.image.setImageBitmap(museumImage);
             }
-        }
-        else {
-            viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
-        }
 
-        String weekdays[] = new      DateFormatSymbols(Locale.ENGLISH).getWeekdays();
-        Calendar c = Calendar.getInstance();
-        Date date = new Date();
-        c.setTime(date);
-        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-        String hours[] = museum.getHours();
-        viewHolder.hours.setText(weekdays[dayOfWeek] + " Hours: " + hours[dayOfWeek-1]);
+            String weekdays[] = new      DateFormatSymbols(Locale.ENGLISH).getWeekdays();
+            Calendar c = Calendar.getInstance();
+            Date date = new Date();
+            c.setTime(date);
+            int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+            String hours[] = museum.getHours();
+            viewHolder.hours.setText(weekdays[dayOfWeek] + " Hours: " + hours[dayOfWeek-1]);
+        }
 
         return convertView;
     }
