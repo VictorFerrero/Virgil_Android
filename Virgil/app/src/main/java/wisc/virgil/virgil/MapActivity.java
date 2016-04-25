@@ -1,6 +1,7 @@
 package wisc.virgil.virgil;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -54,8 +55,24 @@ public class MapActivity extends AppCompatActivity {
 
         setTitle(api.getMuseum().getName() + " Map");
 
+        Bitmap museumMap = null;
+
+        for (Content museumContent : api.getMuseum().getContent()) {
+            if (museumContent.isMap()) {
+                museumMap = museumContent.getImage(this);
+            }
+        }
+
         ImageView map = (ImageView) findViewById(R.id.map_item);
-        map.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.map_placeholder));
+
+        if (museumMap != null) {
+            Log.d("MAP", "Fetched map from server.");
+            map.setImageBitmap(museumMap);
+        }
+        else {
+            map.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.map_placeholder));
+        }
+
     }
 
     //Provide back button support

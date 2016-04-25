@@ -61,7 +61,12 @@ public class MuseumSelectAdapter extends ArrayAdapter<Museum> {
         Log.d("MuseumSelectAdapter", "Trying to get image for museum " + museum.getId());
         if (museum.getContent().size() > 0) {
             Log.d("MuseumSelectAdapter", "size > 0");
-            museumImage = (Bitmap) museum.getContent().get(0).getImage(getContext());
+            for (Content museumContent : museum.getContent()) {
+                if (!museumContent.isMap()) {
+                    museumImage = (Bitmap) museumContent.getImage(getContext());
+                    break;
+                }
+            }
 
             if(museumImage == null) {
                 viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
