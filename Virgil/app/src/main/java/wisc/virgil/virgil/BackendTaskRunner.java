@@ -35,7 +35,7 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
 
     @Override
     protected void onPreExecute() {
-
+        this.myParent.museumList = new ArrayList<>();
     }
 
     @Override
@@ -229,8 +229,22 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
                 String description = content.getString("description");
                 String pathToContent = content.getString("pathToContent");
 
+                String isMapString = content.getString("contentProfileJSON");
+                Log.d("Content", "isMap String: " + isMapString);
+                JSONObject isMapObject = new JSONObject(isMapString);
+                boolean isMapField = false;
+
+                try {
+                    isMapField = isMapObject.getBoolean("isMap");
+                    Log.d("Content", "isMap: " + isMapField);
+                }
+                catch (Exception e) {
+
+                }
+
                 Content newContent = new Content(Integer.parseInt(contentId), Integer.parseInt(contentGalleryId),
-                        Integer.parseInt(contentExhibitId), Integer.parseInt(contentMuseumId), description, pathToContent);
+                        Integer.parseInt(contentExhibitId), Integer.parseInt(contentMuseumId), description,
+                        pathToContent, isMapField);
 
                 sortContent(newContent);
                 Log.d("API", "Added Content: " + newContent.getDescription());
@@ -257,13 +271,13 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
         this.myParent.eventList = new ArrayList<>();
         this.myParent.eventListFinished = false;
 
-        String[] splitInput = input.split("\\[");
-        input = splitInput[1];
-        splitInput = input.split("\\]");
-        input = splitInput[0];
-        input = "[" + input + "]";
-
         try {
+            String[] splitInput = input.split("\\[");
+            input = splitInput[1];
+            splitInput = input.split("\\]");
+            input = splitInput[0];
+            input = "[" + input + "]";
+
             JSONArray jsonarray = new JSONArray(input);
 
             for(int i = 0; i < jsonarray.length(); i++){

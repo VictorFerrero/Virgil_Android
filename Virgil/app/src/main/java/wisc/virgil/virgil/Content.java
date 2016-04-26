@@ -17,6 +17,7 @@ public class Content implements Serializable {
 
     private final String IP_ADDRESS = "http://52.24.10.104/";
     private final String RESOURCE_PATH = "Virgil_Uploads/images/";
+    private boolean isMap;
 
     private int id, galleryId, exhibitId, museumId;
     private String description, pathToContent, cachedImageName;
@@ -25,7 +26,7 @@ public class Content implements Serializable {
 
 
     public Content(int id, int galleryId, int exhibitId,
-                   int museumId, String description, String pathToContent) {
+                   int museumId, String description, String pathToContent, boolean isMap) {
         this.id = id;
         this.galleryId = galleryId;
         this.exhibitId = exhibitId;
@@ -33,6 +34,7 @@ public class Content implements Serializable {
         this.description = description;
         this.pathToContent = IP_ADDRESS + RESOURCE_PATH + pathToContent;
         this.cachedImageName = id + "_" + exhibitId + "_" + galleryId + "_" + museumId +".png";
+        this.isMap = isMap;
     }
 
     public int getId() { return this.id; }
@@ -46,6 +48,10 @@ public class Content implements Serializable {
     public String getDescription() { return this.description; }
 
     public String getPathToContent() { return this.pathToContent; }
+
+    public boolean isMap() {
+        return this.isMap;
+    }
 
     public Bitmap getImage(Context context) {
         Bitmap contentImage = getImageFromInternalStorage(context);

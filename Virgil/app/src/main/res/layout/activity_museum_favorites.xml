@@ -60,7 +60,6 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_delete_white_48dp"/>
-
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -26,15 +26,13 @@ public class CommonRecycleAdapter extends RecyclerView.Adapter<CommonRecycleAdap
     private ViewHolder viewHolder;
     private View itemLayoutView;
 
-
     public CommonRecycleAdapter(List<String> itemsTitle, List<String> itemsData,
-                                List<Drawable> itemsImage) {
-
+                                List<Drawable> itemsImage) 
+	{
         this.itemsData  = itemsData;
         this.itemsTitle = itemsTitle;
         this.itemsImage = itemsImage;
         this.itemsHeader = itemsTitle;
-
     }
 
     @Override
@@ -42,9 +40,7 @@ public class CommonRecycleAdapter extends RecyclerView.Adapter<CommonRecycleAdap
 
         itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.exhibit_view, parent, false);
-
         this.viewHolder = new ViewHolder(itemLayoutView);
-
         return viewHolder;
     }
 

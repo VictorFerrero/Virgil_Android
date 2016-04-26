@@ -67,27 +67,17 @@ public class MuseumSelectActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         //Add all list items to adapter
+        Log.d("Museum List Size: ", ""+api.getMuseumList().size());
         ArrayList<Museum> museumList = api.getMuseumList();
-
-        for (Museum museumInList : museumList) {
-            api.fetchMuseum(museumInList);
-            boolean successful = true;
-
-            //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
-            while(api.museumStatus() != api.FINISHED_STATUS) {
-                if (api.museumStatus() == api.ERROR_STATUS) {
-                    Log.d("API", "Fetched museum with ERROR_STATUS");
-                    successful = false;
-                    break;
-                }
-            }
-
-            if (successful) {
-                adapter.add(api.getMuseum());
-            }
-        }
+        Log.d("Museum List Size: ", ""+api.getMuseumList().size());
+        adapter.addAll(museumList);
 
         adapter.setNotifyOnChange(true);
+
+        api.fetchAllMuseums();
+
+        //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
+        while(api.museumListStatus() != api.FINISHED_STATUS) {}
 
         //Make museums clickable and switch to their respective galleries
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -172,6 +162,7 @@ public class MuseumSelectActivity extends AppCompatActivity {
             intent.putExtra("API", api);
             startActivity(intent);
             finish();
+
         } else if (id == R.id.main_favorites) {
             Intent intent = new Intent(this, FavoritesActivity.class);
             intent.putExtra("API", api);

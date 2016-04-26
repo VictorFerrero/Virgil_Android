@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -54,33 +53,28 @@ public class MuseumSelectAdapter extends ArrayAdapter<Museum> {
         }
 
         //Fill in view holder
-        viewHolder.name.setText(museum.getName());
-        viewHolder.address.setText(museum.getAddress());
-
-        Bitmap museumImage = null;
-
-        Log.d("MuseumSelectAdapter", "Trying to get image for museum " + museum.getId());
-        if (museum.getContent().size() > 0) {
-            Log.d("MuseumSelectAdapter", "size > 0");
-            museumImage = (Bitmap) museum.getContent().get(0).getImage(getContext());
-
-            if(museumImage == null) {
-                viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
-            } else {
-                viewHolder.image.setImageBitmap(museumImage);
-            }
-        }
-        else {
+        if(museum == null || museum.getName() == null || museum.getAddress() == null || museum.getHours() == null) {
+            viewHolder.name.setText("Museum");
+            viewHolder.address.setText("Address");
             viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
-        }
+            viewHolder.hours.setText("Hours");
+        } else {
+            viewHolder.name.setText(museum.getName());
+            viewHolder.address.setText(museum.getAddress());
 
-        String weekdays[] = new      DateFormatSymbols(Locale.ENGLISH).getWeekdays();
-        Calendar c = Calendar.getInstance();
-        Date date = new Date();
-        c.setTime(date);
-        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-        String hours[] = museum.getHours();
-        viewHolder.hours.setText(weekdays[dayOfWeek] + " Hours: " + hours[dayOfWeek-1]);
+            Bitmap museumImage = null;
+
+            //TODO fetch museum image here
+            viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
+
+            String weekdays[] = new      DateFormatSymbols(Locale.ENGLISH).getWeekdays();
+            Calendar c = Calendar.getInstance();
+            Date date = new Date();
+            c.setTime(date);
+            int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+            String hours[] = museum.getHours();
+            viewHolder.hours.setText(weekdays[dayOfWeek] + " Hours: " + hours[dayOfWeek-1]);
+        }
 
         return convertView;
     }

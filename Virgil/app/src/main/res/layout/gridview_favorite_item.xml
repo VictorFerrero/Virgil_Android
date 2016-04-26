@@ -35,7 +35,5 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title" />
 
         </LinearLayout>
-
-
     </android.support.v7.widget.CardView>
 </LinearLayout>
