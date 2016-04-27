@@ -25,6 +25,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import android.content.Context;
+import android.graphics.Bitmap;
 
 /**
  *  Written by   : Munish Kapoor
@@ -99,7 +100,19 @@ public class GalleryActivity extends AppCompatActivity {
         if(api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage(this.context) == null) {
             imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
         } else {
-            imageView.setImageBitmap(api.getMuseum().getContent().get(0).getImage(this.context));
+            Bitmap tabImage = null;
+            for (Content museumContent : api.getMuseum().getContent()) {
+                if (!museumContent.isMap()) {
+                    tabImage = museumContent.getImage(getApplicationContext());
+                }
+            }
+
+            if (tabImage != null) {
+                imageView.setImageBitmap(tabImage);
+            }
+            else {
+                imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
+            }
         }
     }
 
@@ -131,7 +144,19 @@ public class GalleryActivity extends AppCompatActivity {
                                                   if(api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage(getApplication()) == null) {
                                                       imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
                                                   } else {
-                                                      imageView.setImageBitmap(api.getMuseum().getContent().get(0).getImage(getApplication()));
+                                                      Bitmap tabImage = null;
+                                                      for (Content museumContent : api.getMuseum().getContent()) {
+                                                          if (!museumContent.isMap()) {
+                                                              tabImage = museumContent.getImage(getApplicationContext());
+                                                          }
+                                                      }
+
+                                                      if (tabImage != null) {
+                                                          imageView.setImageBitmap(tabImage);
+                                                      }
+                                                      else {
+                                                          imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
+                                                      }
                                                   }
                                               } else {
                                                   if (api.getMuseum().getGalleries().isEmpty() ||

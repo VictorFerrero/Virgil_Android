@@ -146,8 +146,10 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
 
 
                 Museum newMuseum = new Museum(Integer.parseInt(id), name, address, museumHours);
+
                 this.myParent.museumList.add(newMuseum);
             }
+
             Log.d("API", "List parsed. " + myParent.museumList.size() + " museums.");
             this.myParent.listFinished = true;
         }

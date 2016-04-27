@@ -64,7 +64,7 @@ public class FavoritesAdapter extends BaseAdapter {
         Bitmap bitmap = favList.get(position).getImage(mContext);
         if(bitmap == null) {
             //*Temporary* Small drawable placeholder to prevent too much memory usage
-            imageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.mipmap.ic_launcher));
+            imageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.mipmap.virgil_white_ic));
         } else {
             imageView.setImageBitmap(bitmap);
         }
