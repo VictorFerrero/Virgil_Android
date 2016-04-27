@@ -185,13 +185,18 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
                             Integer.parseInt(contentExhibitId), Integer.parseInt(contentMuseumId), description,
                             pathToContent, isMapField);
 
-                    sortContent(newContent);
+                    sortListContent(newContent);
                     Log.d("API", "Added Content: " + newContent.getDescription());
                 }
 
             }
 
             Log.d("API", "List parsed. " + myParent.museumList.size() + " museums.");
+
+            for (Museum curMuseum : this.myParent.getMuseumList()) {
+                Log.d("API", curMuseum.getName()+": "+curMuseum.getContent().size());
+            }
+
             this.myParent.listFinished = true;
         }
         catch (Exception e) {
@@ -355,15 +360,25 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
                 if (gallery.getId() == content.getGallerytId()) {
                     if (content.getExhibitId() == 0) {
                         gallery.addContent(content);
+                        Log.d("API", " CONTENT SORTED!");
                     }
                     else {
                         for (Exhibit exhibit : gallery.getExhibits()) {
                             if (content.getExhibitId() == exhibit.getId()) {
                                 exhibit.addContent(content);
+                                Log.d("API", " CONTENT SORTED!");
                             }
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private void sortListContent(Content content) {
+        for (Museum museum : this.myParent.getMuseumList()) {
+            if (museum.getId() == content.getMuseumId()) {
+                museum.addContent(content);
             }
         }
     }
