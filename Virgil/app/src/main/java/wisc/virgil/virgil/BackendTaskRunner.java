@@ -117,17 +117,13 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
         this.myParent.listFinished = false;
 
         try {
-            String[] splitInput = input.split("\\[");
-            input = splitInput[1];
-            splitInput = input.split("\\]");
-            input = splitInput[0];
-            input = "[" + input + "]";
 
-            JSONArray jsonarray = new JSONArray(input);
+            JSONObject jsonObject = new JSONObject(input);
 
-            for(int i = 0; i < jsonarray.length(); i++){
-                JSONObject obj = jsonarray.getJSONObject(i);
+            JSONArray museums = (JSONArray) jsonObject.get("museums");
 
+            for (int i = 0; i < museums.length(); i++) {
+                JSONObject obj = museums.getJSONObject(i);
                 String id = obj.getString("id");
                 String name = obj.getString("museumName");
                 String address = obj.getString("address");
@@ -144,10 +140,55 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
                 museumHours[5] = hours.getString("fri");
                 museumHours[6] = hours.getString("sat");
 
+                this.myParent.museum = new Museum(Integer.parseInt(id), name, address, museumHours);
+                Log.d("Mon:", museumHours[0]);
+                Log.d("Tue:", museumHours[1]);
+                Log.d("Wed:", museumHours[2]);
+                Log.d("Thur:", museumHours[3]);
+                Log.d("Fri:", museumHours[4]);
+                Log.d("Sat:", museumHours[5]);
+                Log.d("Sun:", museumHours[6]);
 
-                Museum newMuseum = new Museum(Integer.parseInt(id), name, address, museumHours);
+                Log.d("API", "Added " + name);
+                this.myParent.museumList.add(new Museum(Integer.parseInt(id), name, address, museumHours));
+            }
 
-                this.myParent.museumList.add(newMuseum);
+            JSONArray contents = (JSONArray) jsonObject.get("content");
+            for (int i = 0; i < contents.length(); i++) {
+                JSONArray subContent = (JSONArray) contents.get(i);
+                Log.d("API", ""+subContent.toString());
+
+                for(int j = 0; j < subContent.length(); j++){
+                    JSONObject content = subContent.getJSONObject(j);
+
+                    String contentId = content.getString("id");
+                    String contentGalleryId = content.getString("galleryId");
+                    String contentExhibitId = content.getString("exhibitId");
+                    String contentMuseumId = content.getString("museumId");
+                    String description = content.getString("description");
+                    String pathToContent = content.getString("pathToContent");
+
+                    String isMapString = content.getString("contentProfileJSON");
+                    Log.d("Content", "isMap String: " + isMapString);
+                    JSONObject isMapObject = new JSONObject(isMapString);
+                    boolean isMapField = false;
+
+                    try {
+                        isMapField = isMapObject.getBoolean("isMap");
+                        Log.d("Content", "isMap: " + isMapField);
+                    }
+                    catch (Exception e) {
+
+                    }
+
+                    Content newContent = new Content(Integer.parseInt(contentId), Integer.parseInt(contentGalleryId),
+                            Integer.parseInt(contentExhibitId), Integer.parseInt(contentMuseumId), description,
+                            pathToContent, isMapField);
+
+                    sortContent(newContent);
+                    Log.d("API", "Added Content: " + newContent.getDescription());
+                }
+
             }
 
             Log.d("API", "List parsed. " + myParent.museumList.size() + " museums.");
