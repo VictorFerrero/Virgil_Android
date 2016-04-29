@@ -3,6 +3,7 @@ package wisc.virgil.virgil;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 /**
@@ -26,6 +28,7 @@ public class BeaconActivity extends AppCompatActivity {
     private Button buttonBeacon;
     VirgilAPI api;
     private DrawerLayout drawerLayout;
+    private FrameLayout frame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,9 @@ public class BeaconActivity extends AppCompatActivity {
         setContentView(R.layout.beacon);
         Toolbar toolbar = (Toolbar) findViewById(R.id.tb_beacon);
         setSupportActionBar(toolbar);
+
+        frame = (FrameLayout) findViewById(R.id.fgt_beacon);
+        frame.setVisibility(View.INVISIBLE);
 
         api = (VirgilAPI) getIntent().getSerializableExtra("API");
         drawerLayout = (DrawerLayout) findViewById(R.id.dl_beacon);
@@ -56,12 +62,47 @@ public class BeaconActivity extends AppCompatActivity {
                 switch (action) {
                     case (MotionEvent.ACTION_UP):
                         buttonBeacon.setBackgroundResource(R.drawable.beacon);
+                        frame.setVisibility(View.VISIBLE);
+                        populateFragment();
                         return true;
                     default:
                         return true;
                 }
             }
         });
+    }
+
+
+    private void populateFragment() {
+        //creates the first fragment
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fgt_beacon, setupFragment())
+                .addToBackStack(null)
+                .commit()
+        ;
+    }
+    private void selectItem(int id) {
+
+        if (id == R.id.nav_favorites) {
+            Intent intent = new Intent(this, FavoritesActivity.class);
+            intent.putExtra("API", api);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.nav_search) {
+            Intent intent = new Intent(this, MuseumSelectActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.nav_home) {
+            Toast.makeText(this, getResources().getString(R.string.not_implemented),
+                    Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_maps) {
+            Toast.makeText(this, getResources().getString(R.string.not_implemented),
+                    Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_beacon) {
+            drawerLayout.closeDrawers();
+        }
+
     }
 
     //Provide back button support
@@ -106,6 +147,9 @@ public class BeaconActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         menuItem.setChecked(true);
                         drawerLayout.closeDrawers();
+                        int id = menuItem.getItemId();
+
+                        selectItem(id);
                         return true;
                     }
                 });
@@ -117,6 +161,7 @@ public class BeaconActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        item.setChecked(true);
  
         if (id == R.id.main_favorites) {
             Intent intent = new Intent(this, FavoritesActivity.class);
@@ -134,5 +179,13 @@ public class BeaconActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    private Fragment setupFragment() {
+        BeaconFragment beaconContent = new BeaconFragment();
+
+        return beaconContent;
+    }
+
 }
 
