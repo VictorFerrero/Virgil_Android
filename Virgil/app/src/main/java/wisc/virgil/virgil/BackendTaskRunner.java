@@ -73,6 +73,7 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
             jsonString = getJSONString(GET_EVENTS_PATH+eventNumber);
 
             //parse event
+            parseEventList(jsonString);
             eventNumber = DEFAULT_VAL;
         }
 
@@ -320,19 +321,14 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
         this.myParent.eventListFinished = false;
 
         try {
-            String[] splitInput = input.split("\\[");
-            input = splitInput[1];
-            splitInput = input.split("\\]");
-            input = splitInput[0];
-            input = "[" + input + "]";
-
-            JSONArray jsonarray = new JSONArray(input);
+            JSONObject jsonobject = new JSONObject(input);
+            JSONArray jsonarray = jsonobject.getJSONArray("events");
 
             for(int i = 0; i < jsonarray.length(); i++){
                 JSONObject obj = jsonarray.getJSONObject(i);
 
                 String id = obj.getString("id");
-                String galleryId = obj.getString("galleryid");
+                String galleryId = obj.getString("galleryId");
                 String exhibitId = obj.getString("exhibitId");
                 String museumId = obj.getString("museumId");
                 String description = obj.getString("description");
@@ -343,11 +339,12 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
                         Integer.parseInt(exhibitId), Integer.parseInt(museumId), description, startTime, endTime);
                 this.myParent.eventList.add(newEvent);
             }
+
             Log.d("API", "List parsed. " + myParent.eventList.size() + " events.");
             this.myParent.eventListFinished = true;
         }
         catch (Exception e) {
-            Log.d("Error", "Couldn't parse this list.");
+            Log.d("Error", "Couldn't parse this events list.");
         }
     }
 
