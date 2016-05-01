@@ -1,5 +1,6 @@
 package wisc.virgil.virgil;
 
+import android.util.Log;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -65,18 +66,14 @@ public class EventsFragment extends Fragment {
 
     private List<String> createDescList() {
         List<String> descList = new ArrayList<>();
+
         for (Event event : api.getEventList()) {
-            //descList.add("Description");   //<--------------
-
-            descList.add(event.getDescription());   //<---------------
-
-            /*
             if(event.getDescription() == null) {
                 descList.add("Description");
             } else {
                 descList.add(event.getDescription());
             }
-            */
+
         }
         return descList;
     }
