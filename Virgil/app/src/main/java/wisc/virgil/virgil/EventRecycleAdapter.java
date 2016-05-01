@@ -57,37 +57,13 @@ public class EventRecycleAdapter extends RecyclerView.Adapter<EventRecycleAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        if(this.eventsTitle.get(position) == "Event") {
-            viewHolder.eventTitle.setVisibility(View.GONE);
-        } else {
-            viewHolder.eventTitle.setText(this.eventsTitle.get(position));
-        }
-        if(this.eventsDesc.get(position) == "Description") {
-            viewHolder.eventDescription.setVisibility(View.GONE);
-        } else {
-            viewHolder.eventDescription.setText(this.eventsDesc.get(position));
-        }
-        if(this.eventsImage.get(position) == null) {
-            viewHolder.eventImage.setVisibility(View.GONE);
-        } else {
-            viewHolder.eventImage.setImageDrawable(this.eventsImage.get(position));
-        }
+        viewHolder.eventTitle.setText(this.eventsTitle.get(position));
+        viewHolder.eventDescription.setText(this.eventsDesc.get(position));
+        viewHolder.eventImage.setImageDrawable(this.eventsImage.get(position));
         //viewHolder.eventHeader.setText(this.eventsHeader.get(position));
-        if(this.eventsDate.get(position) == "Date") {
-            viewHolder.eventDate.setVisibility(View.GONE);
-        } else {
-            viewHolder.eventDate.setText(this.eventsDate.get(position));
-        }
-        if(this.eventsHours.get(position) == "Hours") {
-            viewHolder.eventHour.setVisibility(View.GONE);
-        } else {
-            viewHolder.eventHour.setText(this.eventsHours.get(position));
-        }
-        if(this.eventsLocation.get(position) == "Location") {
-            viewHolder.eventLocation.setVisibility(View.GONE);
-        } else {
-            viewHolder.eventLocation.setText(this.eventsLocation.get(position));
-        }
+        viewHolder.eventDate.setText(this.eventsDate.get(position));
+        viewHolder.eventHour.setText(this.eventsHours.get(position));
+        viewHolder.eventLocation.setText(this.eventsLocation.get(position));
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
