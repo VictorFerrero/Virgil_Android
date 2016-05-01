@@ -13,8 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.DateFormatSymbols;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -41,113 +46,103 @@ public class EventsFragment extends Fragment {
         api = (VirgilAPI) getArguments().getSerializable("API");
         position = getArguments().getInt("POS");
 
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.gallery_content, null);
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.event_content, null);
         ButterKnife.bind(this, root);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-
-            EventRecycleAdapter adapter = new EventRecycleAdapter(createTitleList(),
-                    createDescList(), createImageList(), createHoursList(), createLocationList(),
-                    createDateList());
-
+        EventRecycleAdapter adapter = new EventRecycleAdapter(createTitleList(), createDescList(),
+                createImageList(), createHourList(), createLocationList(), createDateList());
         recyclerView.setAdapter(adapter);
-
         return root;
-    }
-
-    private List<Drawable> createImageList() {
-        List<Drawable> imageList = new ArrayList<>();
-
-        if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(position).getExhibits().isEmpty()) {
-            Toast.makeText(getActivity(), "This gallery is empty!", Toast.LENGTH_LONG).show();
-        } else {
-            for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
-                for(int i = 0; i < exhibit.getContent().size(); i++) {
-                    if(exhibit.getContent().isEmpty() || exhibit.getContent().get(i).getImage(getContext()) == null) {
-                        imageList.add(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
-                    } else {
-                        imageList.add(new BitmapDrawable(getResources(), exhibit.getContent().get(i).getImage(getContext())));
-                    }
-                }
-            }
-        }
-        return imageList;
     }
 
     private List<String> createTitleList() {
         List<String> titleList = new ArrayList<>();
-        if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(0).getExhibits().isEmpty()) {
-            Toast.makeText(getActivity(), "This gallery is empty!", Toast.LENGTH_LONG).show();
-        } else {
-            for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
-                if(exhibit.getName() == null) {
-                    titleList.add("Exhibit");
-                } else {
-                    titleList.add(exhibit.getName());
-                }
-            }
+        for (Event event : api.getEventList()) {
+            titleList.add("Event");
         }
         return titleList;
     }
 
     private List<String> createDescList() {
         List<String> descList = new ArrayList<>();
-
-
-        if(api.getMuseum().getGalleries().isEmpty() || api.getMuseum().getGalleries().get(0).getExhibits().isEmpty()) {
-            Toast.makeText(getActivity(), "This gallery is empty!", Toast.LENGTH_LONG).show();
-        } else {
-            for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
-                if(exhibit.getContent().isEmpty() || exhibit.getContent().get(0).getDescription() == null) {
-                    descList.add("Description");
-                } else {
-                    descList.add(exhibit.getContent().get(0).getDescription());
-                }
+        for (Event event : api.getEventList()) {
+            descList.add("Description");
+            if(event.getDescription() == null) {
+                descList.add("Description");
+            } else {
+                descList.add(event.getDescription());
             }
         }
-
         return descList;
     }
 
-    private List<String> createItemHeader() {
-        List<String> headerList = new ArrayList<>();
-
-        for (int i=0; i<30; i++) {
-            headerList.add("Virgil Header : " + i);
+    private List<Drawable> createImageList() {
+        List<Drawable> imageList = new ArrayList<>();
+        for (Event event : api.getEventList()) {
+            imageList.add(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
+            if(event.getEventContent().isEmpty() || event.getEventContent().get(0).getImage(getContext()) == null) {
+                imageList.add(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
+            } else {
+                imageList.add(new BitmapDrawable(getResources(), event.getEventContent().get(0).getImage(getContext())));
+            }
         }
-
-        return headerList;
+        return imageList;
     }
 
-    private List<String> createHoursList() {
-        List<String> hoursList = new ArrayList<>();
-
-        for (int i=0; i<30; i++) {
-            hoursList.add("Hours : " + i);
+    private List<String> createHourList() {
+        List<String> hourList = new ArrayList<>();
+        for (Event event : api.getEventList()) {
+            String startAMPM = "AM";
+            String endAMPM = "AM";
+            if(event.getStartHour() > 12) {
+                startAMPM = "PM";
+            }
+            if(event.getEndHour() > 12) {
+                endAMPM = "PM";
+            }
+            if(event.getStartHour() == 0 && event.getEndHour() == 0) {
+                hourList.add("Hours");
+            } else if(event.getEndHour() == 0) {
+                hourList.add("Opens at " + event.getStartHour() + ":" + event.getStartMin() + startAMPM);
+            } else {
+                hourList.add("From " + event.getStartHour() + ":" + event.getStartMin() + startAMPM + " to " + event.getEndHour() + ":" + event.getEndMin() + endAMPM);
+            }
         }
-
-        return hoursList;
+        return hourList;
     }
-
-
-    private List<String> createDateList() {
-        List<String> dateList = new ArrayList<>();
-
-        for (int i=0; i<30; i++) {
-            dateList.add("Dates : " + i);
-        }
-
-        return dateList;
-    }
-
 
     private List<String> createLocationList() {
         List<String> locationList = new ArrayList<>();
-
-        for (int i=0; i<30; i++) {
-            locationList.add("Address : " + i);
+        for (Event event : api.eventList) {
+            locationList.add("Location");
+            if(event.getExhibitId() > 0 && event.getGalleryId() > 0) {
+                locationList.add(api.getMuseum().getGalleries().get(event.getGalleryId()).getExhibits().get(event.getExhibitId()).getName());
+            } else if(event.getGalleryId() > 0) {
+                locationList.add(api.getMuseum().getGalleries().get(event.getGalleryId()).getName());
+            } else {
+                locationList.add("Location");
+            }
         }
-
         return locationList;
+    }
+
+    private List<String> createDateList() {
+        List<String> dateList = new ArrayList<>();
+        for (Event event : api.getEventList()) {
+            String string;
+            if(event.getStartYear() != 0) {
+                string = new DateFormatSymbols().getMonths()[event.getStartMonth()-1] + " " + event.getStartDay() + ", " + event.getStartYear() + " to "
+                        + new DateFormatSymbols().getMonths()[event.getStartMonth()-1] + " " + event.getStartDay() + ", " + event.getStartYear();
+            } else if(event.getStartMonth() != 0) {
+                string = new DateFormatSymbols().getMonths()[event.getStartMonth()-1] + " " + event.getStartDay() + " to "
+                        + new DateFormatSymbols().getMonths()[event.getStartMonth()-1] + " " + event.getStartDay();
+            } else if(event.getStartDay() != 0){
+                string = "The " + event.getStartDay() + " to " + event.getEndDay() + " of this month";
+            } else {
+                string = "Date";
+            }
+            dateList.add(string);
+        }
+        return dateList;
     }
 }
