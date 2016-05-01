@@ -1,5 +1,6 @@
 package wisc.virgil.virgil;
 
+import android.content.Intent;
 import android.util.Log;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
