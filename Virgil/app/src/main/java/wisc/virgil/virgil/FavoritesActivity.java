@@ -88,12 +88,20 @@ public class FavoritesActivity extends AppCompatActivity {
 
     public void switchToGallery(int position) {
         Log.d("API", "" + api.getFavorites(this).get(position).getMuseumID());
-       api.fetchMuseum(api.getFavorites(this).get(position).getMuseumID());
+        api.fetchMuseum(api.getFavorites(this).get(position).getMuseumID());
 
         //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
         while(api.museumStatus() != api.FINISHED_STATUS) {
             if (api.museumStatus() == api.ERROR_STATUS) {
                 Log.d("API", "Fetched museum with ERROR_STATUS");
+                break;
+            }
+        }
+
+        api.fetchEvents(api.getFavorites(this).get(position).getMuseumID());
+        while(api.eventListStatus() != api.FINISHED_STATUS) {
+            if (api.museumListStatus() == api.ERROR_STATUS) {
+                Log.d("API", "Fetched events with ERROR_STATUS");
                 break;
             }
         }
