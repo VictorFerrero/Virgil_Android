@@ -67,7 +67,7 @@ Android application to serve as a personal museum tour guide.
 ---
 
 ##Modified Resources
--https://github.com/chrisbanes/cheesesquare by chrisbanes
--http://manishkpr.webheavens.com/android-material-design-tabs-collapsible-example/ by Munish Kapoor
+-https://github.com/chrisbanes/cheesesquare by chrisbanes </br>
+-http://manishkpr.webheavens.com/android-material-design-tabs-collapsible-example/ by Munish Kapoor</br>
 
 
