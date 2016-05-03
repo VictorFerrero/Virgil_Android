@@ -15,9 +15,10 @@
   ~ limitations under the License.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="192dp"
+    android:layout_height="170dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/nav_header"
     android:gravity="bottom"
     android:orientation="vertical"
@@ -28,4 +29,4 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
 
-</LinearLayout>
+</android.support.percent.PercentRelativeLayout>
