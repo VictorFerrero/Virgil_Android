@@ -22,6 +22,8 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.estimote.sdk.SystemRequirementsChecker;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
@@ -208,6 +210,13 @@ public class BeaconActivity extends AppCompatActivity {
         BeaconFragment beaconContent = new BeaconFragment();
 
         return beaconContent;
+    }
+
+    protected void onResume() {
+        super.onResume();
+
+        // Beacon runtime permissions checker
+        SystemRequirementsChecker.checkWithDefaultDialogs(this);
     }
 
 }

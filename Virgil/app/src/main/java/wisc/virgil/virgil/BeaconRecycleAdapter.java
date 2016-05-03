@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Summer on 4/29/2016.
  */
-public class BeaconRecycleAdapter extends RecyclerView.Adapter<BeaconRecycleAdapter.ViewHolder> {
+public class   BeaconRecycleAdapter extends RecyclerView.Adapter<BeaconRecycleAdapter.ViewHolder> {
 
     private List<String> itemsData;
     private List<String> itemsTitle;
