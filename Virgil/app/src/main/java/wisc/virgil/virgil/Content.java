@@ -88,7 +88,14 @@ public class Content implements Serializable {
         Log.d("Content", "Saving to internal storage");
         ContextWrapper cw = new ContextWrapper(context);
         // path to /data/data/yourapp/app_data/imageDir
-        File directory = cw.getDir("cachedImageDir", Context.MODE_PRIVATE);
+        File directory;
+        if (this.galleryId + this.exhibitId == 0) {
+            Log.d("Content", "saving thumbnail");
+            directory = cw.getDir("cachedThumbnailDir", Context.MODE_PRIVATE);
+        }
+        else {
+            directory = cw.getDir("cachedImageDir", Context.MODE_PRIVATE);
+        }
         // Create imageDir
         File mypath=new File(directory,this.cachedImageName);
 
@@ -111,10 +118,19 @@ public class Content implements Serializable {
         Bitmap museumImage = null;
 
         try {
-            ContextWrapper cw = new ContextWrapper(context);
-            File directory = cw.getDir("cachedImageDir", Context.MODE_PRIVATE);
-            File f=new File(directory, this.cachedImageName);
-            museumImage = BitmapFactory.decodeStream(new FileInputStream(f));
+            if (galleryId + exhibitId == 0) {
+                Log.d("Content", "trying thumbnail");
+                ContextWrapper cw = new ContextWrapper(context);
+                File directory = cw.getDir("cachedThumbnailDir", Context.MODE_PRIVATE);
+                File f=new File(directory, this.cachedImageName);
+                museumImage = BitmapFactory.decodeStream(new FileInputStream(f));
+            }
+            else {
+                ContextWrapper cw = new ContextWrapper(context);
+                File directory = cw.getDir("cachedImageDir", Context.MODE_PRIVATE);
+                File f=new File(directory, this.cachedImageName);
+                museumImage = BitmapFactory.decodeStream(new FileInputStream(f));
+            }
         }
         catch (Exception e)
         {

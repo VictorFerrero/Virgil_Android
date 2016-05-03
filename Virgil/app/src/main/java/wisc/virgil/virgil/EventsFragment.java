@@ -1,5 +1,7 @@
 package wisc.virgil.virgil;
 
+import android.content.Intent;
+import android.util.Log;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -66,7 +68,6 @@ public class EventsFragment extends Fragment {
     private List<String> createDescList() {
         List<String> descList = new ArrayList<>();
         for (Event event : api.getEventList()) {
-            descList.add("Description");
             if(event.getDescription() == null) {
                 descList.add("Description");
             } else {
@@ -79,7 +80,6 @@ public class EventsFragment extends Fragment {
     private List<Drawable> createImageList() {
         List<Drawable> imageList = new ArrayList<>();
         for (Event event : api.getEventList()) {
-            imageList.add(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
             if(event.getEventContent().isEmpty() || event.getEventContent().get(0).getImage(getContext()) == null) {
                 imageList.add(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
             } else {
@@ -114,7 +114,6 @@ public class EventsFragment extends Fragment {
     private List<String> createLocationList() {
         List<String> locationList = new ArrayList<>();
         for (Event event : api.eventList) {
-            locationList.add("Location");
             if(event.getExhibitId() > 0 && event.getGalleryId() > 0) {
                 locationList.add(api.getMuseum().getGalleries().get(event.getGalleryId()).getExhibits().get(event.getExhibitId()).getName());
             } else if(event.getGalleryId() > 0) {
@@ -130,12 +129,14 @@ public class EventsFragment extends Fragment {
         List<String> dateList = new ArrayList<>();
         for (Event event : api.getEventList()) {
             String string;
+            String startMonth = new DateFormatSymbols().getMonths()[event.getStartMonth()-1];
+            String endMonth = new DateFormatSymbols().getMonths()[event.getEndMonth()-1];
             if(event.getStartYear() != 0) {
-                string = new DateFormatSymbols().getMonths()[event.getStartMonth()-1] + " " + event.getStartDay() + ", " + event.getStartYear() + " to "
-                        + new DateFormatSymbols().getMonths()[event.getStartMonth()-1] + " " + event.getStartDay() + ", " + event.getStartYear();
+                string = startMonth + " " + event.getStartDay() + ", " + event.getStartYear() + " to "
+                        + endMonth + " " + event.getEndDay() + ", " + event.getEndYear();
             } else if(event.getStartMonth() != 0) {
-                string = new DateFormatSymbols().getMonths()[event.getStartMonth()-1] + " " + event.getStartDay() + " to "
-                        + new DateFormatSymbols().getMonths()[event.getStartMonth()-1] + " " + event.getStartDay();
+                string = startMonth + " " + event.getStartDay() + " to "
+                        + endMonth + " " + event.getStartDay();
             } else if(event.getStartDay() != 0){
                 string = "The " + event.getStartDay() + " to " + event.getEndDay() + " of this month";
             } else {

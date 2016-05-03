@@ -115,7 +115,7 @@ public class Event implements Serializable {
     }
 
     public String getDescription() {
-        return this.getDescription();
+        return this.description;
     }
 
     public String getStartTime() {

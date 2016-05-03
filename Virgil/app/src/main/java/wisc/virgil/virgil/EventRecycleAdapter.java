@@ -1,6 +1,8 @@
 package wisc.virgil.virgil;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.provider.CalendarContract;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +30,6 @@ public class EventRecycleAdapter extends RecyclerView.Adapter<EventRecycleAdapte
     private List<String> eventsHours;
     private List<String> eventsLocation;
     private List<String> eventsDate;
-    @Bind(R.id.btnAddEvent) Button addEvent;
 
     public EventRecycleAdapter(List<String> eventsTitle, List<String> eventsDesc,
                                List<Drawable> eventsImage, List<String> eventsHours,
@@ -56,6 +57,7 @@ public class EventRecycleAdapter extends RecyclerView.Adapter<EventRecycleAdapte
     }
 
     @Override
+    /*
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         if(this.eventsTitle.get(position) == "Event") {
             viewHolder.eventTitle.setVisibility(View.GONE);
@@ -88,6 +90,20 @@ public class EventRecycleAdapter extends RecyclerView.Adapter<EventRecycleAdapte
         } else {
             viewHolder.eventLocation.setText(this.eventsLocation.get(position));
         }
+        */
+    public void onBindViewHolder(final ViewHolder viewHolder, int position) {
+        viewHolder.eventTitle.setText(this.eventsTitle.get(position));
+        viewHolder.eventDescription.setText(this.eventsDesc.get(position));
+        viewHolder.eventImage.setImageDrawable(this.eventsImage.get(position));
+        //viewHolder.eventHeader.setText(this.eventsHeader.get(position));
+        viewHolder.eventDate.setText(this.eventsDate.get(position));
+        viewHolder.eventHour.setText(this.eventsHours.get(position));
+        viewHolder.eventLocation.setText(this.eventsLocation.get(position));
+        viewHolder.addEvent.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                addEvent(v, viewHolder);
+            }
+        });
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -98,6 +114,7 @@ public class EventRecycleAdapter extends RecyclerView.Adapter<EventRecycleAdapte
         @Bind(R.id.tv_event_title)          TextView eventTitle;
         @Bind(R.id.tv_event_date)          TextView eventDate;
         @Bind(R.id.tv_event_hours)         TextView eventHour;
+        @Bind(R.id.btnAddEvent)             Button addEvent;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
@@ -108,5 +125,16 @@ public class EventRecycleAdapter extends RecyclerView.Adapter<EventRecycleAdapte
     @Override
     public int getItemCount() {
         return eventsTitle.size();
+    }
+
+    private void addEvent(View v, ViewHolder viewHolder) {
+        Intent intent = new Intent(Intent.ACTION_INSERT);
+        intent.setType("vnd.android.cursor.item/event");
+        //intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, viewHolder.eventTitle.getText());
+        //intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, viewHolder.eventTitle.getText());
+        intent.putExtra(CalendarContract.Events.TITLE, viewHolder.eventTitle.getText());
+        intent.putExtra(CalendarContract.Events.DESCRIPTION, viewHolder.eventDescription.getText());
+        intent.putExtra(CalendarContract.Events.EVENT_LOCATION, viewHolder.eventLocation.getText());
+        v.getContext().startActivity(intent);
     }
 }

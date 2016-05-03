@@ -125,7 +125,7 @@ public class MuseumSelectActivity extends AppCompatActivity {
 
         api.fetchEvents(api.getMuseum().getId());
         while(api.eventListStatus() != api.FINISHED_STATUS) {
-            if (api.eventListStatus() == api.ERROR_STATUS) {
+            if (api.museumListStatus() == api.ERROR_STATUS) {
                 Log.d("API", "Fetched events with ERROR_STATUS");
                 successful = false;
                 break;
