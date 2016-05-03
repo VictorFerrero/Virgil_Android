@@ -60,7 +60,7 @@ public class EventsFragment extends Fragment {
     private List<String> createTitleList() {
         List<String> titleList = new ArrayList<>();
         for (Event event : api.getEventList()) {
-            titleList.add("Event");
+            titleList.add("Event Title");
         }
         return titleList;
     }
@@ -94,13 +94,38 @@ public class EventsFragment extends Fragment {
         for (Event event : api.getEventList()) {
             String startAMPM = "AM";
             String endAMPM = "AM";
+            String startHour;
+            String startMin;
+            String endHour;
+            String endMin;
             if(event.getStartHour() > 12) {
                 startAMPM = "PM";
             }
             if(event.getEndHour() > 12) {
                 endAMPM = "PM";
             }
-            hourList.add("From " + event.getStartHour() + ":" + event.getStartMin() + startAMPM + " to " + event.getEndHour() + ":" + event.getEndMin() + endAMPM);
+            if(event.getStartHour() == 0) {
+                startHour = "00";
+            } else {
+                startHour = "" + event.getStartHour();
+            }
+            if(event.getStartMin() == 0) {
+                startMin = "00";
+            } else {
+                startMin = "" + event.getStartMin();
+            }
+            if(event.getEndHour() == 0) {
+                endHour = "00";
+            } else {
+                endHour = "" + event.getEndHour();
+            }
+            if(event.getEndMin() == 0) {
+                endMin = "00";
+            } else {
+                endMin = "" + event.getEndMin();
+            }
+            hourList.add("From " + startHour + ":" + startMin + startAMPM +
+                    " to " + endHour + ":" + endMin + endAMPM);
         }
         return hourList;
     }
@@ -134,21 +159,10 @@ public class EventsFragment extends Fragment {
     private List<String> createDateList() {
         List<String> dateList = new ArrayList<>();
         for (Event event : api.getEventList()) {
-            String string;
             String startMonth = new DateFormatSymbols().getMonths()[event.getStartMonth()-1];
             String endMonth = new DateFormatSymbols().getMonths()[event.getEndMonth()-1];
-            if(event.getStartYear() != 0) {
-                string = startMonth + " " + event.getStartDay() + ", " + event.getStartYear() + " to "
-                        + endMonth + " " + event.getEndDay() + ", " + event.getEndYear();
-            } else if(event.getStartMonth() != 0) {
-                string = startMonth + " " + event.getStartDay() + " to "
-                        + endMonth + " " + event.getStartDay();
-            } else if(event.getStartDay() != 0){
-                string = "The " + event.getStartDay() + " to " + event.getEndDay() + " of this month";
-            } else {
-                string = "Date";
-            }
-            dateList.add(string);
+            dateList.add(startMonth + " " + event.getStartDay() + ", " + event.getStartYear() + " to "
+                    + endMonth + " " + event.getEndDay() + ", " + event.getEndYear());
         }
         return dateList;
     }

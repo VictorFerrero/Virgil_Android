@@ -195,7 +195,7 @@ public class GalleryActivity extends AppCompatActivity {
                                                   if (api.getMuseum().getGalleries().isEmpty() ||
                                                           api.getMuseum().getGalleries().get(position - 1).getContent().isEmpty() ||
                                                           api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage(getApplication()) == null) {
-                                                      imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
+                                                      imageView.setImageBitmap(api.getMuseum().getContent().get(0).getImage(context));
                                                   } else {
                                                       imageView.setImageBitmap(api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage(getApplication()));
                                                   }
