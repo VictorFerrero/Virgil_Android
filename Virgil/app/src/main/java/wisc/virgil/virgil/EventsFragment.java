@@ -100,13 +100,7 @@ public class EventsFragment extends Fragment {
             if(event.getEndHour() > 12) {
                 endAMPM = "PM";
             }
-            if(event.getStartHour() == 0 && event.getEndHour() == 0) {
-                hourList.add("Hours");
-            } else if(event.getEndHour() == 0) {
-                hourList.add("Opens at " + event.getStartHour() + ":" + event.getStartMin() + startAMPM);
-            } else {
-                hourList.add("From " + event.getStartHour() + ":" + event.getStartMin() + startAMPM + " to " + event.getEndHour() + ":" + event.getEndMin() + endAMPM);
-            }
+            hourList.add("From " + event.getStartHour() + ":" + event.getStartMin() + startAMPM + " to " + event.getEndHour() + ":" + event.getEndMin() + endAMPM);
         }
         return hourList;
     }
@@ -114,7 +108,25 @@ public class EventsFragment extends Fragment {
     private List<String> createLocationList() {
         List<String> locationList = new ArrayList<>();
         for (Event event : api.eventList) {
-            locationList.add("Location");
+            if(event.getExhibitId() != 0 && event.getGalleryId() != 0) {
+                for(int i = 0; i < api.getMuseum().getGalleries().size(); i++) {
+                    if(event.getGalleryId() == api.getMuseum().getGalleries().get(i).getId()) {
+                        for(int j = 0; j < api.getMuseum().getGalleries().get(i).getExhibits().size(); j++) {
+                            if(event.getExhibitId() == api.getMuseum().getGalleries().get(i).getExhibits().get(j).getId()) {
+                                locationList.add(api.getMuseum().getGalleries().get(i).getExhibits().get(j).getName());
+                            }
+                        }
+                    }
+                }
+            } else if (event.getGalleryId() != 0) {
+                for(int i = 0; i < api.getMuseum().getGalleries().size(); i++) {
+                    if(event.getGalleryId() == api.getMuseum().getGalleries().get(i).getId()) {
+                        locationList.add(api.getMuseum().getGalleries().get(i).getName());
+                    }
+                }
+            } else {
+                locationList.add(api.getMuseum().getName());
+            }
         }
         return locationList;
     }
