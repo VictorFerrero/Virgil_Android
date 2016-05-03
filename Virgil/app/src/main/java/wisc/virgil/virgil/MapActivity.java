@@ -2,6 +2,7 @@ package wisc.virgil.virgil;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -14,8 +15,12 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.ZoomControls;
 
 /**
  * Created by Ty Talafous on 3/28/2016.
