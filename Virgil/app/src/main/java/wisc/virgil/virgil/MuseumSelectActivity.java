@@ -183,8 +183,8 @@ public class MuseumSelectActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         MenuItem item = menu.findItem(R.id.main_search);
-        item.setVisible(true);
-        item.setShowAsAction(1);
+        item.setVisible(false);
+        //item.setShowAsAction(1);
         return true;
     }
 

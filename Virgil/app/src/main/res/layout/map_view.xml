@@ -34,14 +34,23 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ImageView
-        android:paddingTop="30dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/colorAccent">
+
+        <ImageView
+        android:paddingTop="60dp"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:scaleType="fitXY"
         android:id="@+id/map_item"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:contentDescription="map"/>
+    </LinearLayout>
 
-    </ImageView>
+
 
 </android.support.design.widget.CoordinatorLayout>
 

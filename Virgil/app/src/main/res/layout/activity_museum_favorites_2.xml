@@ -53,6 +53,7 @@
                 android:layout_height="85dp"
                 app:cb_color="@color/colorOrange"
                 app:cb_pressedRingWidth="9dp"
+                android:onClick="onClick"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"

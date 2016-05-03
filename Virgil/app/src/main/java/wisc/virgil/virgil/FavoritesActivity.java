@@ -14,10 +14,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
 
 import java.util.List;
+
+import at.markushi.ui.CircleButton;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 /**
  * Created by Ty Talafous on 4/3/2016.
@@ -46,6 +51,14 @@ public class FavoritesActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.dl_favorites_2);
+
+        CircleButton buttonOne = (CircleButton) findViewById(R.id.fab_favorites_2);
+        buttonOne.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                Toast.makeText(getBaseContext(), getResources().getString(R.string.not_implemented),
+                        LENGTH_SHORT).show();
+            }
+        });
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nv_favorites_2);
         if (navigationView != null) {
@@ -123,11 +136,11 @@ public class FavoritesActivity extends AppCompatActivity {
             finish();
         } else if (id == R.id.nav_home) {
             Toast.makeText(this, getResources().getString(R.string.not_implemented),
-                    Toast.LENGTH_SHORT).show();
+                    LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_maps) {
             Toast.makeText(this, getResources().getString(R.string.not_implemented),
-                    Toast.LENGTH_SHORT).show();
+                    LENGTH_SHORT).show();
         } else if (id == R.id.nav_favorites) {
             drawerLayout.closeDrawers();
         }
@@ -169,6 +182,7 @@ public class FavoritesActivity extends AppCompatActivity {
 
         MenuItem item = menu.findItem(R.id.main_favorites);
         item.setVisible(false);
+
         this.invalidateOptionsMenu();
         return true;
     }
