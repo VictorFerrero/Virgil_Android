@@ -49,7 +49,7 @@ Android application to serve as a personal museum tour guide.
 - Added Navigation Drawer navigation, fixed Favorites xml so it scales on different Android devices, added Beacon adapter and fragment java code skeleton. Changed Beacon functionality so beacon button changes color when fetching different content. -Summer
 
 ---
-> #####
+> 
 > ##Copyright 2016 Virgil Museum App
 >
 >Licensed under the Apache License, Version 2.0 (the "License"); </br>
@@ -65,8 +65,9 @@ Android application to serve as a personal museum tour guide.
 >limitations under the License.                                           </br>
 >
 ---
->##Modified Resources
->-https://github.com/chrisbanes/cheesesquare by chrisbanes
->-http://manishkpr.webheavens.com/android-material-design-tabs-collapsible-example/ by Munish Kapoor
----
+
+##Modified Resources
+-https://github.com/chrisbanes/cheesesquare by chrisbanes
+-http://manishkpr.webheavens.com/android-material-design-tabs-collapsible-example/ by Munish Kapoor
+
 
