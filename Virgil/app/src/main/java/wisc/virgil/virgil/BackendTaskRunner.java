@@ -260,8 +260,9 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
                 String exhibitId = exhibit.getString("id");
                 String galleryId = exhibit.getString("galleryId");
                 String exhibitName = exhibit.getString("exhibitName");
-
-                Exhibit newExhibit = new Exhibit(Integer.parseInt(exhibitId), Integer.parseInt(galleryId), this.myParent.museum.getId(), exhibitName);
+                String description = "Description...";
+                //TODO description
+                Exhibit newExhibit = new Exhibit(Integer.parseInt(exhibitId), Integer.parseInt(galleryId), this.myParent.museum.getId(), exhibitName, description);
                 sortExhibits(newExhibit);
 
                 Log.d("API", "Added exhibit: " + newExhibit.getName() + " to Gallery:" + newExhibit.getGallerytId());
@@ -327,6 +328,9 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
             for(int i = 0; i < jsonarray.length(); i++){
                 JSONObject obj = jsonarray.getJSONObject(i);
 
+                //TODO title
+                String title = "Temporary Title";
+
                 String id = obj.getString("id");
                 String galleryId = obj.getString("galleryId");
                 String exhibitId = obj.getString("exhibitId");
@@ -336,7 +340,7 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
                 String endTime = obj.getString("endTime");
 
                 Event newEvent = new Event(Integer.parseInt(id), Integer.parseInt(galleryId),
-                        Integer.parseInt(exhibitId), Integer.parseInt(museumId), description, startTime, endTime);
+                        Integer.parseInt(exhibitId), Integer.parseInt(museumId), description, startTime, endTime, title);
                 this.myParent.eventList.add(newEvent);
             }
 
