@@ -32,3 +32,38 @@ Android application to serve as a personal museum tour guide.
  - Started design of cms. Helped with NavigationDrawer. Current Layout.-Summer
 
 #####APR 3 - 9
+
+Pulled images from server asynchronously. Made adjustments and additions to the event object. Patched file naming bugs in the repo. - Tyler
+Added Navigation Drawer to layouts. Changed icon. Changed Gallery content view (added header, image view, and text view) and updated gallery content fragments and adapters with hard-coded values to demonstrate functionality. Did UI/UX cleanup. Current Layout -Summer
+ 
+#####10-16
+Serialized the API, model, and database. Patched database bugs in the ORM and API. Added additional database functionality. Added the current day’s hours to the MuseumSelect tiles. - Tyler
+Added navigation to toolbar menu, added favorites icons to museum gallery/exhibit view (using Tyler Phelps' code), and added events xml with fragment/adapter skeleton java code to museum gallery/exhibit view. - Summer
+ 
+#####17-23
+Displayed thumbnails for museums on museumSelect and favorites view. Created a 2 file caching system for temporarily saving images locally to keep the API serializable and the activity switching efficient. Set try/catch blocks in place to save the app in case of a back end malfunction. - Tyler
+Wrote CMS html, css, and angularjs for client-side validation -- added ng binding to html tags and started populating drop-downs and forms from code-behind with hard-coded values. -Summer
+ 
+#####24-30
+Made the thumbnail image fetching more efficient. Updated the cache to a 3 file system to make it more efficient and lighter on local storage usage. Implemented the museum map feature. Small UI fixes. Updated the API to pull and parse JSON event objects properly. - Tyler
+Added Navigation Drawer navigation, fixed Favorites xml so it scales on different Android devices, added Beacon adapter and fragment java code skeleton. Changed Beacon functionality so beacon button changes color when fetching different content. -Summer
+
+---
+> #####
+> #####Copyright 2016 Virgil Museum App
+>
+>Licensed under the Apache License, Version 2.0 (the "License"); </br>
+>you may not use this file except in compliance with the License. </br>
+>You may obtain a copy of the License at                          </br>
+>
+>    http://www.apache.org/licenses/LICENSE-2.0                   </br>
+>
+>Unless required by applicable law or agreed to in writing, software </br>
+>distributed under the License is distributed on an "AS IS" BASIS,   </br>
+>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. </br>
+>See the License for the specific language governing permissions and      </br>
+>limitations under the License.                                           </br>
+>
+---
+
+
