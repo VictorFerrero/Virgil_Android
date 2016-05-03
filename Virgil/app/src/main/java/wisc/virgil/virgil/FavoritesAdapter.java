@@ -54,10 +54,10 @@ public class FavoritesAdapter extends BaseAdapter {
         TextView textView;
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.gridview_favorite_item, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.gridview_favorite_item_2, null);
         }
-        imageView = (ImageView) convertView.findViewById(R.id.iv_museum_favorites);
-        textView = (TextView) convertView.findViewById(R.id.tv_museum_favorites);
+        imageView = (ImageView) convertView.findViewById(R.id.iv_museum_favorites_2);
+        textView = (TextView) convertView.findViewById(R.id.tv_museum_favorites_2);
 
         textView.setText(favList.get(position).getName());
 

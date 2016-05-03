@@ -121,11 +121,44 @@ public class GalleryActivity extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        int id = menuItem.getItemId();
                         menuItem.setChecked(true);
                         drawerLayout.closeDrawers();
+                        selectItem(id);
+
                         return true;
                     }
                 });
+    }
+
+    private void selectItem(int id) {
+
+        if (id == R.id.nav_beacon) {
+            Intent intent = new Intent(this, BeaconActivity.class);
+            intent.putExtra("API", api);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.nav_maps) {
+            Intent intent = new Intent(this, MapActivity.class);
+            intent.putExtra("API", api);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.nav_favorites) {
+            //api.addFavorite(this.museumId, this);
+            Intent intent = new Intent(this, FavoritesActivity.class);
+            intent.putExtra("API", api);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.nav_search) {
+            clearCache();
+            Intent intent = new Intent(this, MuseumSelectActivity.class);
+            intent.putExtra("API", api);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.nav_home) {
+            Toast.makeText(this, getResources().getString(R.string.not_implemented),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     void setUpTabs(){
@@ -223,6 +256,7 @@ public class GalleryActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        item.setChecked(true);
 
         if (id == R.id.action_beacon) {
             Intent intent = new Intent(this, BeaconActivity.class);

@@ -51,8 +51,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
                 tab2.setArguments(bundle);
                 return tab2;
             }
-
-
         }
 
         // This method return the titles for the Tabs in the Tab Strip

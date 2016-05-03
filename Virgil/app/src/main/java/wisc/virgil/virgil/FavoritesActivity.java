@@ -31,27 +31,27 @@ public class FavoritesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_museum_favorites);
+        setContentView(R.layout.activity_museum_favorites_2);
         setTitle("Favorites");
 
         Intent intent = getIntent();
         api = (VirgilAPI) intent.getSerializableExtra("API");
 
         //inflates toolbar
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.tb_favorites);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.tb_favorites_2);
         setSupportActionBar(myToolbar);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_36dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.dl_favorites);
+        drawerLayout = (DrawerLayout) findViewById(R.id.dl_favorites_2);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nv_favorites);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nv_favorites_2);
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
-        GridView gridView = (GridView) findViewById(R.id.gv_favorites);
+        GridView gridView = (GridView) findViewById(R.id.gv_favorite_2);
 
         for (FavoriteMuseum favMus : api.getFavorites(this)) {
             Log.d("FAV", favMus.getName() + " " + favMus.getMuseumID());
@@ -96,13 +96,42 @@ public class FavoritesActivity extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                        int id = menuItem.getItemId();
                         menuItem.setChecked(true);
+
+                        selectItem(id);
                         drawerLayout.closeDrawers();
+
+;
                         return true;
                     }
                 });
     }
 
+    private void selectItem(int id) {
+
+
+        if (id == R.id.nav_beacon) {
+            Intent intent = new Intent(this, BeaconActivity.class);
+            intent.putExtra("API", api);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.nav_search) {
+            Intent intent = new Intent(this, MuseumSelectActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.nav_home) {
+            Toast.makeText(this, getResources().getString(R.string.not_implemented),
+                    Toast.LENGTH_SHORT).show();
+
+        } else if (id == R.id.nav_maps) {
+            Toast.makeText(this, getResources().getString(R.string.not_implemented),
+                    Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_favorites) {
+            drawerLayout.closeDrawers();
+        }
+    }
     //*Temporary* Clear database so we don't keep creating more of the same museums
     @Override
     protected void onDestroy() {
@@ -150,6 +179,7 @@ public class FavoritesActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        item.setChecked(true);
 
         if (id == R.id.main_beacon) {
             Intent intent = new Intent(this, BeaconActivity.class);

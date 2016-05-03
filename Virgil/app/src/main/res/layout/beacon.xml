@@ -9,67 +9,64 @@
 
     <android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="wisc.virgil.virgil.BeaconActivity">
-
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/tb_beacon"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <RelativeLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:background="@drawable/beacon_button_background_only">
+        android:fitsSystemWindows="true"
+        tools:context="wisc.virgil.virgil.BeaconActivity">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:id="@+id/Beacon_Text"
-            android:textColor="@color/colorAccent"
-            android:text="@string/get_beacon_info"
-            android:fontFamily="sans-serif"
-            android:layout_marginTop="104dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-        <Button
-            android:layout_height="120dp"
-            android:layout_width="wrap_content"
-            android:id="@+id/btn_beacon"
-            android:background="@drawable/beacon"
-            android:stateListAnimator="@null"
-            android:onClick="onTouch"
-            android:scaleType="fitXY"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/Beacon_Text"
-            android:layout_marginTop="70dp"/>
-    </RelativeLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/tb_beacon"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/exhibit_content"
-        android:id="@+id/fgt_beacon">
-    </FrameLayout>
+        </android.support.design.widget.AppBarLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:background="@drawable/beacon_button_background_only">
+
+            <Button
+                android:id="@+id/btn_beacon"
+                app:layout_widthPercent="23%"
+                app:layout_heightPercent="23%"
+                android:background="@drawable/pink_beacon"
+                android:stateListAnimator="@null"
+                android:onClick="onTouch"
+                android:scaleType="fitXY"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_marginTopPercent="20%"
+                app:layout_marginLeftPercent="37%"
+                android:layout_marginBottom="5dp"/>
+
+            <FrameLayout
+                android:background="@color/colorScroll"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_widthPercent="100%"
+                app:layout_heightPercent="60%"
+                android:layout_below="@+id/btn_beacon"
+                android:contentDescription="@string/exhibit_content"
+                android:id="@+id/fgt_beacon"
+                android:layout_alignParentStart="true">
+            </FrameLayout>
+
+        </android.support.percent.PercentRelativeLayout>
+
+
+    </android.support.design.widget.CoordinatorLayout>
 
 
     <!-- NavigationView is the second child -->

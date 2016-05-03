@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -57,6 +58,30 @@ public class MuseumSelectActivity extends AppCompatActivity {
         }
     }
 
+    private void selectItem(int id) {
+        if (id == R.id.nav_beacon) {
+            Intent intent = new Intent(this, BeaconActivity.class);
+            intent.putExtra("API", api);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.nav_favorites) {
+            Intent intent = new Intent(this, FavoritesActivity.class);
+            intent.putExtra("API", api);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.nav_maps) {
+            Toast.makeText(this, getResources().getString(R.string.not_implemented),
+                    Toast.LENGTH_SHORT).show();
+
+        } else if (id == R.id.nav_home) {
+            Toast.makeText(this, getResources().getString(R.string.not_implemented),
+                    Toast.LENGTH_SHORT).show();
+
+        } else if (id == R.id.nav_search) {
+            drawerLayout.closeDrawers();
+        }
+    }
+
     private void showListView() {
         ArrayList<Museum> museums = new ArrayList<>();
 
@@ -94,8 +119,13 @@ public class MuseumSelectActivity extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                        int id = menuItem.getItemId();
                         menuItem.setChecked(true);
                         drawerLayout.closeDrawers();
+
+                        selectItem(id);
+
                         return true;
                     }
                 });

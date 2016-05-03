@@ -15,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 /**
  * Created by Ty Talafous on 3/28/2016.
@@ -105,8 +106,11 @@ public class MapActivity extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        int id = menuItem.getItemId();
                         menuItem.setChecked(true);
                         drawerLayout.closeDrawers();
+                        selectItem(id);
+
                         return true;
                     }
                 });
@@ -126,7 +130,7 @@ public class MapActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        item.setChecked(true);
 
          if (id == R.id.main_beacon) {
             Intent intent = new Intent(this, BeaconActivity.class);
@@ -148,5 +152,29 @@ public class MapActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void selectItem(int id) {
+        if (id == R.id.nav_beacon) {
+            Intent intent = new Intent(this, BeaconActivity.class);
+            intent.putExtra("API", api);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.nav_favorites) {
+            Intent intent = new Intent(this, FavoritesActivity.class);
+            intent.putExtra("API", api);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.nav_search) {
+            Intent intent = new Intent(this, MuseumSelectActivity.class);
+            intent.putExtra("API", api);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.nav_maps) {
+            drawerLayout.closeDrawers();
+        } else if (id == R.id.nav_home) {
+            Toast.makeText(this, getResources().getString(R.string.not_implemented),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 }
