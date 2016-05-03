@@ -48,7 +48,7 @@ public class EventsFragment extends Fragment {
         api = (VirgilAPI) getArguments().getSerializable("API");
         position = getArguments().getInt("POS");
 
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.event_content, null);
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.gallery_content, null);
         ButterKnife.bind(this, root);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         EventRecycleAdapter adapter = new EventRecycleAdapter(createTitleList(), createDescList(),
@@ -81,7 +81,7 @@ public class EventsFragment extends Fragment {
         List<Drawable> imageList = new ArrayList<>();
         for (Event event : api.getEventList()) {
             if(event.getEventContent().isEmpty() || event.getEventContent().get(0).getImage(getContext()) == null) {
-                imageList.add(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
+                imageList.add(null);
             } else {
                 imageList.add(new BitmapDrawable(getResources(), event.getEventContent().get(0).getImage(getContext())));
             }
@@ -114,13 +114,7 @@ public class EventsFragment extends Fragment {
     private List<String> createLocationList() {
         List<String> locationList = new ArrayList<>();
         for (Event event : api.eventList) {
-            if(event.getExhibitId() > 0 && event.getGalleryId() > 0) {
-                locationList.add(api.getMuseum().getGalleries().get(event.getGalleryId()).getExhibits().get(event.getExhibitId()).getName());
-            } else if(event.getGalleryId() > 0) {
-                locationList.add(api.getMuseum().getGalleries().get(event.getGalleryId()).getName());
-            } else {
-                locationList.add("Location");
-            }
+            locationList.add("Location");
         }
         return locationList;
     }

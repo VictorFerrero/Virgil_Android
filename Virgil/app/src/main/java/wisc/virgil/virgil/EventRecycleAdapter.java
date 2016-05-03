@@ -57,8 +57,7 @@ public class EventRecycleAdapter extends RecyclerView.Adapter<EventRecycleAdapte
     }
 
     @Override
-    /*
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final ViewHolder viewHolder, int position) {
         if(this.eventsTitle.get(position) == "Event") {
             viewHolder.eventTitle.setVisibility(View.GONE);
         } else {
@@ -90,15 +89,6 @@ public class EventRecycleAdapter extends RecyclerView.Adapter<EventRecycleAdapte
         } else {
             viewHolder.eventLocation.setText(this.eventsLocation.get(position));
         }
-        */
-    public void onBindViewHolder(final ViewHolder viewHolder, int position) {
-        viewHolder.eventTitle.setText(this.eventsTitle.get(position));
-        viewHolder.eventDescription.setText(this.eventsDesc.get(position));
-        viewHolder.eventImage.setImageDrawable(this.eventsImage.get(position));
-        //viewHolder.eventHeader.setText(this.eventsHeader.get(position));
-        viewHolder.eventDate.setText(this.eventsDate.get(position));
-        viewHolder.eventHour.setText(this.eventsHours.get(position));
-        viewHolder.eventLocation.setText(this.eventsLocation.get(position));
         viewHolder.addEvent.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 addEvent(v, viewHolder);
