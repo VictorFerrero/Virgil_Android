@@ -60,7 +60,11 @@ public class EventsFragment extends Fragment {
     private List<String> createTitleList() {
         List<String> titleList = new ArrayList<>();
         for (Event event : api.getEventList()) {
-            titleList.add("Event Title");
+            if(event.getTitle() == null) {
+                titleList.add("Event");
+            } else {
+                titleList.add(event.getTitle());
+            }
         }
         return titleList;
     }

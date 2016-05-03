@@ -120,6 +120,8 @@ public class EventRecycleAdapter extends RecyclerView.Adapter<EventRecycleAdapte
     private void addEvent(View v, ViewHolder viewHolder) {
         Intent intent = new Intent(Intent.ACTION_INSERT);
         intent.setType("vnd.android.cursor.item/event");
+        String beginTime;
+        String endTime;
         //intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, viewHolder.eventTitle.getText());
         //intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, viewHolder.eventTitle.getText());
         intent.putExtra(CalendarContract.Events.TITLE, viewHolder.eventTitle.getText());
