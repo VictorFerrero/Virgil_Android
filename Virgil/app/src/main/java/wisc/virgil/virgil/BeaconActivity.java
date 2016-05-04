@@ -2,6 +2,7 @@ package wisc.virgil.virgil;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -28,6 +29,15 @@ import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
 import com.estimote.sdk.SystemRequirementsChecker;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -39,13 +49,7 @@ import java.util.UUID;
  */
 public class BeaconActivity extends AppCompatActivity {
 
-    //Beacon Ranging
-    private BeaconManager beaconManager;
-    private Region region;
-
-    //TODO:
-    // Async API call to get Json string
-    // Send to fragment handle filling data using adapter at fragment
+    // Control
     private Button buttonBeacon;
     VirgilAPI api;
     private DrawerLayout drawerLayout;
@@ -53,8 +57,113 @@ public class BeaconActivity extends AppCompatActivity {
     private ArrayList<Integer> beaconList;
 
     // Beacon Ranging
+    private BeaconManager beaconManager;
+    private Region region;
+
+    //@param: currMajor, currMinor:
+    //  Represent most recently detected Beacon which is still the closest one in range.
+    //  Compared with incoming major and minor values to detect a new nearestBeacon when in range.
     public static String currMajor = "-1";
     public static String currMinor = "-1";
+    public static String jsonAPIRetun = "-1";
+
+
+    // Beacon Async task (API call)
+    private class BeaconsAsyncTask extends AsyncTask<String, String, String> {
+
+        private final String PATH_OF_API = "http://52.24.10.104/Virgil_Backend/index.php/";
+        private final String GET_MUSEUM_PATH = "getEntireMuseum/";
+        private final String GET_ALL_MUSEUMS_PATH = "getAllMuseums/";
+        private final String GET_EVENTS_PATH = "events/getEventsForMuseum/";
+        private final String GET_MUSEUM = "getMuseum";
+        private final String GET_ALL_MUSEUMS = "getAllMuseums";
+        private final String GET_EVENTS = "getEventsForMuseum";
+        private final String DEFAULT_VAL = "-1";
+
+        public BeaconsAsyncTask(){
+            super();
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+        /*
+         *    updating data
+         *    such a Dialog or ProgressBar
+        */
+
+        }
+
+        @Override
+        // Beacon:
+        // params[0] = major
+        // params[1] = minor
+        protected String doInBackground(String... params) {
+            Log.d("START", "start of call");
+            String major = params[0];
+            String minor = params[1];
+            String subPath = "beacons/getContentForBeacon/" + major + "/" + minor;
+            String jsonTemp = this.getJSONString(subPath);
+            Log.d("END", "end of call");
+            return jsonTemp;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.d("START POST", "starting transfer json String => Beacon Fragment");
+            jsonAPIRetun = result;
+            //TODO: pass to fragment
+
+            Log.d("done", "finished transfer ");
+
+
+            // check needed every time or debugging remains?
+            /*
+            try {
+                JSONObject response = new JSONObject(result);
+                JSONArray arrOfBeaconContent = response.getJSONArray("beaconContent");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            */
+
+            //TODO: at frag
+            //JSONObject JSONObject = new JSONObject(result);
+        }
+
+        // Beacon subpath syntax:
+        // beacons/getContentForBeacon/<String major>/<String minor>"
+        private String getJSONString(String subPath) {
+            String returnString = "";
+
+            try {
+                URL url = new URL(PATH_OF_API+subPath);
+
+                // read text returned by server
+                BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+
+                String line;
+                while ((line = in.readLine()) != null) {
+                    returnString += line;
+                }
+                in.close();
+
+            }
+            catch (MalformedURLException e) {
+                System.out.println("Malformed URL: " + e.getMessage());
+            }
+            catch (IOException e) {
+                System.out.println("I/O Error: " + e.getMessage());
+            }
+
+            return returnString;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +191,7 @@ public class BeaconActivity extends AppCompatActivity {
         buttonBeacon = (Button) findViewById(R.id.btn_beacon);
         buttonBeacon.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                /*
+
                 int action = MotionEventCompat.getActionMasked(motionEvent);
                 buttonBeacon.setBackgroundResource(R.drawable.beacon_dark);
                 int random = 0;
@@ -101,8 +210,6 @@ public class BeaconActivity extends AppCompatActivity {
                     default:
                         return true;
                 }
-                */
-                return true;
             }
         });
 
@@ -117,10 +224,6 @@ public class BeaconActivity extends AppCompatActivity {
                     String majorTemp;
                     String minorTemp;
 
-                    //TODO: Test IDs
-
-
-
                     Beacon nearestBeacon = list.get(0);
                     majorTemp = Integer.toString(nearestBeacon.getMajor());
                     minorTemp = Integer.toString(nearestBeacon.getMinor());
@@ -128,13 +231,14 @@ public class BeaconActivity extends AppCompatActivity {
                     if(currMajor.equals("-1")  && currMinor.equals("-1")) {
                         currMajor = majorTemp;
                         currMinor = minorTemp;
-                        //new BeaconsAsyncTask().execute(major, minor);
+                        //new BeaconsAsyncTask().execute(majorTemp, minorTemp);
                     } else if(!currMajor.equals(majorTemp) || !currMinor.equals(minorTemp)) {
                         currMajor = majorTemp;
                         currMinor = minorTemp;
-                        //new BeaconsAsyncTask().execute(major, minor);
+                        //new BeaconsAsyncTask().execute(majorTemp, minorTemp);
                     }
 
+                    // Quick sanity Test:
                     // String toasty = "major: " + majorTemp + " minor: " + minorTemp;
                     // Toast.makeText(getApplicationContext(), toasty,
                     //       Toast.LENGTH_SHORT).show();
@@ -144,8 +248,8 @@ public class BeaconActivity extends AppCompatActivity {
         });
 
         // Beacon Major ID: Museum ID
-        // Beacon Minor ID: Exhibit ID not specified for ranging ( want to pick up
-        //                          than one exhibit at a time).
+        // Beacon Minor ID: Exhibit ID -not specified for ranging ( want to pick up
+        //                          more than one exhibit at a time).
         region = new Region("Beacon Region",
                 UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), 1, null);
     }
@@ -270,6 +374,8 @@ public class BeaconActivity extends AppCompatActivity {
 
 
     private Fragment setupFragment() {
+        //TODO: tweak fragment new instance func
+        //TODO: build frag using instances and bundles
         BeaconFragment beaconContent = new BeaconFragment();
 
         return beaconContent;

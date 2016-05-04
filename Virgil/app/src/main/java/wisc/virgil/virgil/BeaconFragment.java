@@ -28,8 +28,8 @@ public class BeaconFragment extends Fragment {
         int position;
 
     public static Fragment newInstance(Context context) {
-        PostsFragment f = new PostsFragment();
-        return f;
+        PostsFragment fragment = new PostsFragment();
+        return fragment;
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
