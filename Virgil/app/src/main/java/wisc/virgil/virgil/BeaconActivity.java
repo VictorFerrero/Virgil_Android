@@ -20,24 +20,42 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.estimote.sdk.Beacon;
+import com.estimote.sdk.BeaconManager;
+import com.estimote.sdk.Region;
 import com.estimote.sdk.SystemRequirementsChecker;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * Created by Summer on 3/28/2016.
  */
 public class BeaconActivity extends AppCompatActivity {
 
+    //Beacon Ranging
+    private BeaconManager beaconManager;
+    private Region region;
+
+    //TODO:
+    // Async API call to get Json string
+    // Send to fragment handle filling data using adapter at fragment
     private Button buttonBeacon;
     VirgilAPI api;
     private DrawerLayout drawerLayout;
     private FrameLayout frame;
     private ArrayList<Integer> beaconList;
+
+    // Beacon Ranging
+    public static String currMajor = "-1";
+    public static String currMinor = "-1";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +82,7 @@ public class BeaconActivity extends AppCompatActivity {
         buttonBeacon = (Button) findViewById(R.id.btn_beacon);
         buttonBeacon.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View view, MotionEvent motionEvent) {
-
+                /*
                 int action = MotionEventCompat.getActionMasked(motionEvent);
                 buttonBeacon.setBackgroundResource(R.drawable.beacon_dark);
                 int random = 0;
@@ -83,8 +101,53 @@ public class BeaconActivity extends AppCompatActivity {
                     default:
                         return true;
                 }
+                */
+                return true;
             }
         });
+
+        // Beacon Ranging
+        beaconManager = new BeaconManager(this);
+
+        // Ranging Listener
+        beaconManager.setRangingListener(new BeaconManager.RangingListener() {
+            @Override
+            public void onBeaconsDiscovered(Region region, List<Beacon> list) {
+                if(!list.isEmpty()){
+                    String majorTemp;
+                    String minorTemp;
+
+                    //TODO: Test IDs
+
+
+
+                    Beacon nearestBeacon = list.get(0);
+                    majorTemp = Integer.toString(nearestBeacon.getMajor());
+                    minorTemp = Integer.toString(nearestBeacon.getMinor());
+
+                    if(currMajor.equals("-1")  && currMinor.equals("-1")) {
+                        currMajor = majorTemp;
+                        currMinor = minorTemp;
+                        //new BeaconsAsyncTask().execute(major, minor);
+                    } else if(!currMajor.equals(majorTemp) || !currMinor.equals(minorTemp)) {
+                        currMajor = majorTemp;
+                        currMinor = minorTemp;
+                        //new BeaconsAsyncTask().execute(major, minor);
+                    }
+
+                    // String toasty = "major: " + majorTemp + " minor: " + minorTemp;
+                    // Toast.makeText(getApplicationContext(), toasty,
+                    //       Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+
+        // Beacon Major ID: Museum ID
+        // Beacon Minor ID: Exhibit ID not specified for ranging ( want to pick up
+        //                          than one exhibit at a time).
+        region = new Region("Beacon Region",
+                UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), 1, null);
     }
 
     private ArrayList<Integer> addDrawable() {
@@ -217,7 +280,19 @@ public class BeaconActivity extends AppCompatActivity {
 
         // Beacon runtime permissions checker
         SystemRequirementsChecker.checkWithDefaultDialogs(this);
+        // Ranging
+        beaconManager.connect(new BeaconManager.ServiceReadyCallback(){
+            @Override
+            public void onServiceReady() {
+                beaconManager.startRanging(region);
+            }
+        });
     }
 
+    protected void onPause() {
+        beaconManager.stopRanging(region);
+
+        super.onPause();
+    }
 }
 
