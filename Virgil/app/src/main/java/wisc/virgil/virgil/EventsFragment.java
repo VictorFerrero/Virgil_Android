@@ -137,25 +137,7 @@ public class EventsFragment extends Fragment {
     private List<String> createLocationList() {
         List<String> locationList = new ArrayList<>();
         for (Event event : api.eventList) {
-            if(event.getExhibitId() != 0 && event.getGalleryId() != 0) {
-                for(int i = 0; i < api.getMuseum().getGalleries().size(); i++) {
-                    if(event.getGalleryId() == api.getMuseum().getGalleries().get(i).getId()) {
-                        for(int j = 0; j < api.getMuseum().getGalleries().get(i).getExhibits().size(); j++) {
-                            if(event.getExhibitId() == api.getMuseum().getGalleries().get(i).getExhibits().get(j).getId()) {
-                                locationList.add(api.getMuseum().getGalleries().get(i).getExhibits().get(j).getName());
-                            }
-                        }
-                    }
-                }
-            } else if (event.getGalleryId() != 0) {
-                for(int i = 0; i < api.getMuseum().getGalleries().size(); i++) {
-                    if(event.getGalleryId() == api.getMuseum().getGalleries().get(i).getId()) {
-                        locationList.add(api.getMuseum().getGalleries().get(i).getName());
-                    }
-                }
-            } else {
-                locationList.add(api.getMuseum().getName());
-            }
+            locationList.add(api.getMuseum().getAddress());
         }
         return locationList;
     }

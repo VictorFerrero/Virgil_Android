@@ -84,11 +84,8 @@ public class EventRecycleAdapter extends RecyclerView.Adapter<EventRecycleAdapte
         } else {
             viewHolder.eventHour.setText(this.eventsHours.get(position));
         }
-        if(this.eventsLocation.get(position) == "Location") {
-            viewHolder.eventLocation.setVisibility(View.GONE);
-        } else {
-            viewHolder.eventLocation.setText(this.eventsLocation.get(position));
-        }
+        viewHolder.eventLocation.setText(this.eventsLocation.get(position));
+        viewHolder.eventLocation.setVisibility(View.GONE);
         viewHolder.addEvent.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 addEvent(v, viewHolder);
