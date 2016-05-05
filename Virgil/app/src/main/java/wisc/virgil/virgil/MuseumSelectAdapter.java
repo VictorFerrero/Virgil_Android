@@ -78,7 +78,7 @@ public class MuseumSelectAdapter extends ArrayAdapter<Museum> {
 
             if (museumImage == null) {
                 Log.d("API", "HERE 4");
-                viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
+                viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.museum_list_image));
             }
             else {
                 Log.d("API", "HERE 5");

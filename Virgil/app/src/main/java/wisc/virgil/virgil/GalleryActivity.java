@@ -98,7 +98,7 @@ public class GalleryActivity extends AppCompatActivity {
 
         ImageView imageView = (ImageView) findViewById(R.id.iv_gallery);
         if(api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage(this.context) == null) {
-            imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
+            imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.museum_list_image));
         } else {
             Bitmap tabImage = null;
             for (Content museumContent : api.getMuseum().getContent()) {
