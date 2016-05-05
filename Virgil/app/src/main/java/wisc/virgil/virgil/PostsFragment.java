@@ -55,7 +55,7 @@ public class PostsFragment extends Fragment {
         for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
             for(int i = 0; i < exhibit.getContent().size(); i++) {
                 if(exhibit.getContent().isEmpty() || exhibit.getContent().get(i).getImage(getContext()) == null) {
-                    imageList.add(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
+                    imageList.add(ContextCompat.getDrawable(getContext(), R.drawable.bucky_museum));
                 } else {
                     imageList.add(new BitmapDrawable(getResources(), exhibit.getContent().get(i).getImage(getContext())));
                 }
