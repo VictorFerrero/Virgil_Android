@@ -1,6 +1,7 @@
 package wisc.virgil.virgil;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -118,22 +119,38 @@ public class BeaconFragment extends Fragment {
     }
 
     private List<Drawable> createImageList() {
-        List<Drawable> imageList = new ArrayList<>();
+        List<Drawable> images = new ArrayList<>();
+        JSONObject json;
+        Content content;
 
-        /*for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
-            for(int i = 0; i < exhibit.getContent().size(); i++) {
-                if(exhibit.getContent().isEmpty() || exhibit.getContent().get(i).getImage(getContext()) == null) {
-                    imageList.add(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
-                } else {
-                    imageList.add(new BitmapDrawable(getResources(), exhibit.getContent().get(i).getImage(getContext())));
-                }
+        int contentId;
+        int galleryId = 0; // shouldn't matter for what were trying to do here
+        int minorId;    // minor id = exhibit id
+        int majorId;    // major id = museum id
+        String description;
+        String pathToContent;
+        boolean isMap = false;
+
+
+        for(int i = 0; i < jsonArray.length(); i++){
+            try{
+                json = jsonArray.getJSONObject(i);
+                contentId = Integer.parseInt(json.getString("id"));
+                minorId = Integer.parseInt(json.getString("minor"));
+                majorId = Integer.parseInt(json.getString("major"));
+                description = json.getString("description");
+                pathToContent = json.getString("pathToContent");
+
+                content = new Content(contentId, galleryId, minorId, majorId, description, pathToContent, isMap);
+                Bitmap bitmap = content.getImage(getActivity());
+                BitmapDrawable drawable = new BitmapDrawable(getResources(),bitmap);
+                images.add(drawable);
+
+            } catch(org.json.JSONException e){
+                System.err.println(e.getMessage());
             }
-        }*/
-
-        for (int i = 0; i < 30; i++) {
-            imageList.add(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
         }
-        return imageList;
+        return images;
     }
 
     private List<String> createTitleList() {
@@ -147,7 +164,7 @@ public class BeaconFragment extends Fragment {
                 //TODO: remove "title1: " after testing
                 title = "title" + i + ": " + json.getString("title");
                 titles.add(title);
-            } catch(org.json.JSONException e){
+            } catch(org.json.JSONException e) {
                 System.err.println(e.getMessage());
             }
         }

@@ -1,6 +1,10 @@
 package wisc.virgil.virgil;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,8 +38,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -74,7 +82,6 @@ public class BeaconActivity extends AppCompatActivity {
     public static String currMajor = "-1";
     public static String currMinor = "-1";
     public String jsonAPIReturn    = "-1";  // DO NOT CHANGE DEFAULT VALUE
-
 
 
     // Beacon Async task (API call)
