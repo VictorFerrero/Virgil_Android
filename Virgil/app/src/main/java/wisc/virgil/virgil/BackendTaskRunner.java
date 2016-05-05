@@ -264,7 +264,7 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
                 Exhibit newExhibit = new Exhibit(Integer.parseInt(exhibitId), Integer.parseInt(galleryId), this.myParent.museum.getId(), exhibitName);
                 sortExhibits(newExhibit);
 
-                Log.d("API", "Added exhibit: " + newExhibit.getName() + " to Gallery:" + newExhibit.getGallerytId());
+                Log.d("API", "Added exhibit: " + newExhibit.getName() + " to Gallery:" + newExhibit.getGalleryId());
             }
 
             JSONArray contents = (JSONArray) jsonObject.get("content");
@@ -382,7 +382,7 @@ public class BackendTaskRunner extends AsyncTask<String, String, Museum> {
 
     private void sortExhibits(Exhibit exhibit) {
         for (Gallery gallery : this.myParent.museum.getGalleries()) {
-            if (gallery.getId() == exhibit.getGallerytId()) {
+            if (gallery.getId() == exhibit.getGalleryId()) {
                 Log.d("Sort Exhibit", "SORTED!");
                 gallery.addExhibit(exhibit);
             }

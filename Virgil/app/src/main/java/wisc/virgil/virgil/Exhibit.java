@@ -21,7 +21,7 @@ public class Exhibit implements Serializable {
 
     public int getId() { return this.id; }
 
-    public int getGallerytId() { return this.galleryId; }
+    public int getGalleryId() { return this.galleryId; }
 
     public int getMuseumId() { return this.museumId; }
 

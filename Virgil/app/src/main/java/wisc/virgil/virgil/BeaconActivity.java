@@ -68,17 +68,6 @@ public class BeaconActivity extends AppCompatActivity {
     private BeaconManager beaconManager;
     private Region region;
 
-    //@param: currMajor, currMinor:
-    //  Represent most recently detected Beacon which is still the closest one in range.
-    //  Compared with incoming major and minor values to detect a new nearestBeacon when in range.
-    //@param: jsonAPIReturn:
-    // Testing at Fragment implies varying delay in Fragment json string instantiation
-    // depending on signal strength. ( NULL -> JSON but now "-1" -> JSON (in actual
-    // implementation not allowing it to be nullable )
-    //
-    // reset to -1 before each new API call
-    // used at Beacon Fragment to stall UI implementation at
-    // Fragment until JSON properly instantiated.
     public static String currMajor = "-1";
     public static String currMinor = "-1";
     public String jsonAPIReturn    = "-1";  // DO NOT CHANGE DEFAULT VALUE
@@ -138,24 +127,7 @@ public class BeaconActivity extends AppCompatActivity {
             // Toast.makeText(getApplicationContext(), toasty,
             //       Toast.LENGTH_SHORT).show();
 
-            //TODO: pass to fragment
-
             Log.d("done", "finished transfer ");
-
-
-            // check needed every time or debugging remains?
-            /*
-            try {
-                JSONObject response = new JSONObject(result);
-                JSONArray arrOfBeaconContent = response.getJSONArray("beaconContent");
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            */
-
-            //TODO: at frag
-            //JSONObject JSONObject = new JSONObject(result);
         }
 
         // Beacon subpath syntax:
@@ -258,7 +230,7 @@ public class BeaconActivity extends AppCompatActivity {
                     } else if(!currMajor.equals(majorTemp) || !currMinor.equals(minorTemp)) {
                         currMajor = majorTemp;
                         currMinor = minorTemp;
-                        jsonAPIReturn = "-1"; //See comment at declaration
+                        jsonAPIReturn = "-1"; //Resetting default value before new frag
                         new BeaconsAsyncTask().execute(majorTemp, minorTemp);
                     }
 
@@ -398,7 +370,7 @@ public class BeaconActivity extends AppCompatActivity {
 
 
     private Fragment setupFragment() {
-        //TODO: build frag using instances and bundles
+        //TODO: fix null pointer at frag
         BeaconFragment fragment = (BeaconFragment) BeaconFragment.newInstance(jsonAPIReturn);
         return fragment;
     }

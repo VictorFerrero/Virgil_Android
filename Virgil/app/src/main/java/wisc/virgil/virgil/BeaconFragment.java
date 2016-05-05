@@ -70,9 +70,7 @@ import butterknife.ButterKnife;
 public class BeaconFragment extends Fragment {
                 @Bind(R.id.recyclerView) RecyclerView recyclerView;
 
-    //VirgilAPI api;
-    //int position;
-    private String jsonAPIReturn;
+    private String json;
     private JSONObject jsonObject;
     private JSONArray jsonArray;
 
@@ -81,29 +79,23 @@ public class BeaconFragment extends Fragment {
     public static Fragment newInstance(@NonNull final String jsonAPIReturn) {
         final BeaconFragment fragment = new BeaconFragment();
         final Bundle args = new Bundle();
-
         args.putString("jsonAPIReturn", jsonAPIReturn);
         fragment.setArguments(args);
         return fragment;
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //TODO: make sure dont need to do this later then delete
-        //api = (VirgilAPI) getArguments().getSerializable("API");
-        //position = getArguments().getInt("POS");
 
         Bundle args = getArguments();
         if(args != null ) {
-
-
-            while(jsonAPIReturn.equals("-1")) {
-                // Stalling until default value ("-1") -> JSON string
-                // see @param: jsonAPIReturn
-            }
-            //TODO: populate lists with JSON array
+            json = args.getString("jsonAPIReturn");
+            // Quick sanity Test:
+            // String toasty = "json @ frag: " + json;
+            // Toast.makeText(getActivity(), toasty,
+            //       Toast.LENGTH_SHORT).show();
 
             try{
-                jsonObject = new JSONObject(jsonAPIReturn);
+                jsonObject = new JSONObject(json);
                 jsonArray = jsonObject.getJSONArray("beaconContent");
             } catch(org.json.JSONException e){
                 System.err.println(e.getMessage());
@@ -124,10 +116,10 @@ public class BeaconFragment extends Fragment {
         Content content;
 
         int contentId;
-        int galleryId = 0; // shouldn't matter for what were trying to do here
-        int minorId;    // minor id = exhibit id
-        int majorId;    // major id = museum id
-        String description;
+        int galleryId = 0;   // shouldn't matter for what were trying to do here
+        int minorId;         // minor id = exhibit id
+        int majorId;         // major id = museum id
+        String description;  //TODO: if supposed to show fix needed here
         String pathToContent;
         boolean isMap = false;
 
