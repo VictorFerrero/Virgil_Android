@@ -60,12 +60,14 @@ public class BeaconActivity extends AppCompatActivity {
     private BeaconManager beaconManager;
     private Region region;
 
+    public String jsonAPIReturn;
+
     //@param: currMajor, currMinor:
     //  Represent most recently detected Beacon which is still the closest one in range.
     //  Compared with incoming major and minor values to detect a new nearestBeacon when in range.
     public static String currMajor = "-1";
     public static String currMinor = "-1";
-    public static String jsonAPIRetun = "-1";
+
 
 
     // Beacon Async task (API call)
@@ -115,7 +117,13 @@ public class BeaconActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             Log.d("START POST", "starting transfer json String => Beacon Fragment");
-            jsonAPIRetun = result;
+            jsonAPIReturn = result;
+
+            // Quick sanity Test:
+            // String toasty = "jsonAPIReturn: " + jsonAPIReturn;
+            // Toast.makeText(getApplicationContext(), toasty,
+            //       Toast.LENGTH_SHORT).show();
+
             //TODO: pass to fragment
 
             Log.d("done", "finished transfer ");
@@ -231,16 +239,16 @@ public class BeaconActivity extends AppCompatActivity {
                     if(currMajor.equals("-1")  && currMinor.equals("-1")) {
                         currMajor = majorTemp;
                         currMinor = minorTemp;
-                        //new BeaconsAsyncTask().execute(majorTemp, minorTemp);
+                        new BeaconsAsyncTask().execute(majorTemp, minorTemp);
                     } else if(!currMajor.equals(majorTemp) || !currMinor.equals(minorTemp)) {
                         currMajor = majorTemp;
                         currMinor = minorTemp;
-                        //new BeaconsAsyncTask().execute(majorTemp, minorTemp);
+                        new BeaconsAsyncTask().execute(majorTemp, minorTemp);
                     }
 
                     // Quick sanity Test:
-                    // String toasty = "major: " + majorTemp + " minor: " + minorTemp;
-                    // Toast.makeText(getApplicationContext(), toasty,
+                    //String toasty = "major: " + majorTemp + " minor: " + minorTemp;
+                    //Toast.makeText(getApplicationContext(), toasty,
                     //       Toast.LENGTH_SHORT).show();
 
                 }
@@ -374,11 +382,9 @@ public class BeaconActivity extends AppCompatActivity {
 
 
     private Fragment setupFragment() {
-        //TODO: tweak fragment new instance func
         //TODO: build frag using instances and bundles
-        BeaconFragment beaconContent = new BeaconFragment();
-
-        return beaconContent;
+        BeaconFragment fragment = (BeaconFragment) BeaconFragment.newInstance(jsonAPIReturn);
+        return fragment;
     }
 
     protected void onResume() {

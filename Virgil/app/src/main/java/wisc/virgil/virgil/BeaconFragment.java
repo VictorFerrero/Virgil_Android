@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,19 +24,36 @@ import butterknife.ButterKnife;
  * Created by Summer on 4/29/2016.
  */
 public class BeaconFragment extends Fragment {
-        @Bind(R.id.recyclerView) RecyclerView recyclerView;
+                @Bind(R.id.recyclerView) RecyclerView recyclerView;
 
-        VirgilAPI api;
-        int position;
+    //VirgilAPI api;
+    //int position;
+    String jsonAPIReturn;
 
-    public static Fragment newInstance(Context context) {
-        PostsFragment fragment = new PostsFragment();
+
+    public static Fragment newInstance(@NonNull final String jsonAPIReturn) {
+        final BeaconFragment fragment = new BeaconFragment();
+        final Bundle args = new Bundle();
+
+        args.putString("jsonAPIReturn", jsonAPIReturn);
+        fragment.setArguments(args);
         return fragment;
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //TODO: make sure dont need to do this later then delete
         //api = (VirgilAPI) getArguments().getSerializable("API");
         //position = getArguments().getInt("POS");
+
+        Bundle args = getArguments();
+        if(args != null ) {
+            jsonAPIReturn = args.getString("jsonAPIReturn");
+
+            // Quick sanity Test:
+            // String toasty = "jsonAPIReturn: " + jsonAPIReturn;
+            //  Toast.makeText(getActivity(), toasty,
+            //  Toast.LENGTH_SHORT).show();
+        }
 
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.gallery_content, null);
         ButterKnife.bind(this, root);
