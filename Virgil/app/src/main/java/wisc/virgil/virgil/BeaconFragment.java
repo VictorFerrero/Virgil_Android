@@ -14,9 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.estimote.sdk.repackaged.gson_v2_3_1.com.google.gson.JsonParser;
-
 import org.json.JSONObject;
+import org.json.JSONArray;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +27,45 @@ import butterknife.ButterKnife;
 /**
  * Created by Summer on 4/29/2016.
  */
+
+//**** JSON Cheat Sheet ****//
+// => Example ( one piece of content )
+//    {
+//        "beaconContent":
+//        [
+//        {
+//                "id":"2",
+//                "major":"1",
+//                "minor":"2",
+//                "title":"this is a title for content for a beacon",
+//                "description":"this is a beacon description for content. it is the 2nd beacon being added",
+//                "pathToContent":"1\/vintageFootball.jpg",
+//                "beaconContentProfileJSON":"{}"
+//        }
+//        ],"success":true}
+
+
+// => Example (Two pieces of content)
+//    {
+//        "beaconContent":
+//        [
+//        {
+//            "id":"3",
+//            "major":"1",
+//            "minor":"3","title":"this is a title for content for a beacon",
+//            "description":"and the 3rd beacon to make it to the database is ......",
+//            "pathToContent":"1\/sharperTo.jpg",
+//            "beaconContentProfileJSON":"{}"
+//        },
+//        {
+//            "id":"7","major":"1","minor":"3",
+//            "title":"Just a second piece of content",
+//            "description":"just adding some more content to this beacon",
+//            "pathToContent":"no Image",
+//            "beaconContentProfileJSON":"{}"
+//        }
+//        ],"success":true}
+
 public class BeaconFragment extends Fragment {
                 @Bind(R.id.recyclerView) RecyclerView recyclerView;
 
@@ -34,7 +73,7 @@ public class BeaconFragment extends Fragment {
     //int position;
     private String jsonAPIReturn;
     private JSONObject jsonObject;
-    private JsonParser jsonParser;
+    private JSONArray jsonArray;
 
 
 
@@ -55,15 +94,19 @@ public class BeaconFragment extends Fragment {
         Bundle args = getArguments();
         if(args != null ) {
 
-            // Stalling until deafult value ("-1") -> JSON string
-            // see @param: jsonAPIReturn
+
             while(jsonAPIReturn.equals("-1")) {
-                //STALL
+                // Stalling until default value ("-1") -> JSON string
+                // see @param: jsonAPIReturn
             }
+            //TODO: populate lists with JSON array
 
-
-
-
+            try{
+                jsonObject = new JSONObject(jsonAPIReturn);
+                jsonArray = jsonObject.getJSONArray("beaconContent");
+            } catch(org.json.JSONException e){
+                System.err.println(e.getMessage());
+            }
         }
 
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.gallery_content, null);
@@ -94,46 +137,39 @@ public class BeaconFragment extends Fragment {
     }
 
     private List<String> createTitleList() {
-        List<String> titleList = new ArrayList<>();
+        List<String> titles = new ArrayList<String>();
+        JSONObject json;
+        String title;
 
-        /**
-        for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
-            for(int i = 0; i < exhibit.getContent().size(); i++) {
-                if(exhibit.getName() == null) {
-                    titleList.add("Exhibit");
-                } else if (i == 0) {
-                    titleList.add(exhibit.getName());
-                } else {
-                    titleList.add("Exhibit");
-                }
+        for(int i = 0; i < jsonArray.length(); i++){
+            try{
+                json = jsonArray.getJSONObject(i);
+                //TODO: remove "title1: " after testing
+                title = "title" + i + ": " + json.getString("title");
+                titles.add(title);
+            } catch(org.json.JSONException e){
+                System.err.println(e.getMessage());
             }
-        }**/
-
-        for (int i = 0; i < 30; i++) {
-            titleList.add("Title " + i);
         }
-        return titleList;
+        return titles;
     }
 
     private List<String> createDescList() {
-        List<String> descList = new ArrayList<>();
+        List<String> descriptions = new ArrayList<>();
+        JSONObject json;
+        String description;
 
-        /**
-        for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
-            for(int i = 0; i < exhibit.getContent().size(); i++) {
-                if(exhibit.getContent().isEmpty() || exhibit.getContent().get(i).getDescription() == null) {
-                    descList.add("Description");
-                } else {
-                    descList.add(exhibit.getContent().get(i).getDescription());
-                }
+        for(int i = 0; i < jsonArray.length(); i++){
+            try{
+                json = jsonArray.getJSONObject(i);
+                //TODO: remove "description1: " after testing
+                description = "title" + i + ": " + json.getString("description");
+                descriptions.add(description);
+            } catch(org.json.JSONException e){
+                System.err.println(e.getMessage());
             }
-        }**/
-
-        for (int i = 0; i < 30; i++) {
-
-            descList.add("Description" + i);
         }
-        return descList;
+        return descriptions;
     }
 }
 
