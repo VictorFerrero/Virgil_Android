@@ -60,13 +60,20 @@ public class BeaconActivity extends AppCompatActivity {
     private BeaconManager beaconManager;
     private Region region;
 
-    public String jsonAPIReturn;
-
     //@param: currMajor, currMinor:
     //  Represent most recently detected Beacon which is still the closest one in range.
     //  Compared with incoming major and minor values to detect a new nearestBeacon when in range.
+    //@param: jsonAPIReturn:
+    // Testing at Fragment implies varying delay in Fragment json string instantiation
+    // depending on signal strength. ( NULL -> JSON but now "-1" -> JSON (in actual
+    // implementation not allowing it to be nullable )
+    //
+    // reset to -1 before each new API call
+    // used at Beacon Fragment to stall UI implementation at
+    // Fragment until JSON properly instantiated.
     public static String currMajor = "-1";
     public static String currMinor = "-1";
+    public String jsonAPIReturn    = "-1";  // DO NOT CHANGE DEFAULT VALUE
 
 
 
@@ -239,10 +246,12 @@ public class BeaconActivity extends AppCompatActivity {
                     if(currMajor.equals("-1")  && currMinor.equals("-1")) {
                         currMajor = majorTemp;
                         currMinor = minorTemp;
+                        jsonAPIReturn = "-1"; //See comment at declaration
                         new BeaconsAsyncTask().execute(majorTemp, minorTemp);
                     } else if(!currMajor.equals(majorTemp) || !currMinor.equals(minorTemp)) {
                         currMajor = majorTemp;
                         currMinor = minorTemp;
+                        jsonAPIReturn = "-1"; //See comment at declaration
                         new BeaconsAsyncTask().execute(majorTemp, minorTemp);
                     }
 

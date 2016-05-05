@@ -14,6 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.estimote.sdk.repackaged.gson_v2_3_1.com.google.gson.JsonParser;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +32,10 @@ public class BeaconFragment extends Fragment {
 
     //VirgilAPI api;
     //int position;
-    String jsonAPIReturn;
+    private String jsonAPIReturn;
+    private JSONObject jsonObject;
+    private JsonParser jsonParser;
+
 
 
     public static Fragment newInstance(@NonNull final String jsonAPIReturn) {
@@ -47,12 +54,16 @@ public class BeaconFragment extends Fragment {
 
         Bundle args = getArguments();
         if(args != null ) {
-            jsonAPIReturn = args.getString("jsonAPIReturn");
 
-            // Quick sanity Test:
-            // String toasty = "jsonAPIReturn: " + jsonAPIReturn;
-            //  Toast.makeText(getActivity(), toasty,
-            //  Toast.LENGTH_SHORT).show();
+            // Stalling until deafult value ("-1") -> JSON string
+            // see @param: jsonAPIReturn
+            while(jsonAPIReturn.equals("-1")) {
+                //STALL
+            }
+
+
+
+
         }
 
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.gallery_content, null);
