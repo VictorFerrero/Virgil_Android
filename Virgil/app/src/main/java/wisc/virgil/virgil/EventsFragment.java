@@ -52,9 +52,17 @@ public class EventsFragment extends Fragment {
         ButterKnife.bind(this, root);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         EventRecycleAdapter adapter = new EventRecycleAdapter(createTitleList(), createDescList(),
-                createImageList(), createHourList(), createLocationList(), createDateList());
+                createImageList(), createHourList(), createLocationList(), createDateList(), createEventList());
         recyclerView.setAdapter(adapter);
         return root;
+    }
+
+    private List<Event> createEventList() {
+        List<Event> eventList = new ArrayList<>();
+        for(Event event : api.getEventList()) {
+            eventList.add(event);
+        }
+        return eventList;
     }
 
     private List<String> createTitleList() {

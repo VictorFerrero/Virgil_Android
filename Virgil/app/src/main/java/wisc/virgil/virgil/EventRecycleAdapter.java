@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.Bind;
@@ -30,10 +31,12 @@ public class EventRecycleAdapter extends RecyclerView.Adapter<EventRecycleAdapte
     private List<String> eventsHours;
     private List<String> eventsLocation;
     private List<String> eventsDate;
+    private List<Event> events;
+    private int pos;
 
     public EventRecycleAdapter(List<String> eventsTitle, List<String> eventsDesc,
                                List<Drawable> eventsImage, List<String> eventsHours,
-                               List<String> eventsLocation, List<String> eventsDate) {
+                               List<String> eventsLocation, List<String> eventsDate, List<Event> events) {
 
         this.eventsDesc  = eventsDesc;
         this.eventsTitle = eventsTitle;
@@ -41,6 +44,7 @@ public class EventRecycleAdapter extends RecyclerView.Adapter<EventRecycleAdapte
         this.eventsDate = eventsDate;
         this.eventsHours = eventsHours;
         this.eventsLocation = eventsLocation;
+        this.events = events;
         //this.eventsHeader   = eventsHeader;
     }
 
@@ -86,6 +90,7 @@ public class EventRecycleAdapter extends RecyclerView.Adapter<EventRecycleAdapte
         }
         viewHolder.eventLocation.setText(this.eventsLocation.get(position));
         viewHolder.eventLocation.setVisibility(View.GONE);
+        viewHolder.event = this.events.get(position);
         viewHolder.addEvent.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 addEvent(v, viewHolder);
@@ -102,6 +107,7 @@ public class EventRecycleAdapter extends RecyclerView.Adapter<EventRecycleAdapte
         @Bind(R.id.tv_event_date)          TextView eventDate;
         @Bind(R.id.tv_event_hours)         TextView eventHour;
         @Bind(R.id.btnAddEvent)             Button addEvent;
+        public Event event;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
@@ -117,10 +123,13 @@ public class EventRecycleAdapter extends RecyclerView.Adapter<EventRecycleAdapte
     private void addEvent(View v, ViewHolder viewHolder) {
         Intent intent = new Intent(Intent.ACTION_INSERT);
         intent.setType("vnd.android.cursor.item/event");
-        String beginTime;
-        String endTime;
-        //intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, viewHolder.eventTitle.getText());
-        //intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, viewHolder.eventTitle.getText());
+        Calendar beginTime = Calendar.getInstance();
+        beginTime.set(viewHolder.event.getStartYear(), viewHolder.event.getStartMonth(), viewHolder.event.getStartDay(), viewHolder.event.getStartHour(), viewHolder.event.getStartMin());
+        Calendar endTime = Calendar.getInstance();
+        endTime.set(viewHolder.event.getEndYear(), viewHolder.event.getEndMonth(), viewHolder.event.getEndDay(), viewHolder.event.getEndHour(), viewHolder.event.getEndMin());
+        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis());
+        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis());
+        intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, false);
         intent.putExtra(CalendarContract.Events.TITLE, viewHolder.eventTitle.getText());
         intent.putExtra(CalendarContract.Events.DESCRIPTION, viewHolder.eventDescription.getText());
         intent.putExtra(CalendarContract.Events.EVENT_LOCATION, viewHolder.eventLocation.getText());
