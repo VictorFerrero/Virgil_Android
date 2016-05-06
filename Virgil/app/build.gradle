@@ -32,4 +32,9 @@ dependencies {
     compile 'org.freemarker:freemarker:2.3.23'
     compile 'com.github.markushi:circlebutton:1.1'
     compile 'com.android.support:percent:23.2.0'
+
+    // Please Keep Up To Date: replace "x.x.x" with the latest version
+    // of Estimote Android SDK; you'll find the latest version number on:
+    //   https://github.com/Estimote/Android-SDK/releases
+    compile 'com.estimote:sdk:0.10.2@aar'
 }

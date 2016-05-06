@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Summer on 4/29/2016.
  */
-public class BeaconRecycleAdapter extends RecyclerView.Adapter<BeaconRecycleAdapter.ViewHolder> {
+public class   BeaconRecycleAdapter extends RecyclerView.Adapter<BeaconRecycleAdapter.ViewHolder> {
 
     private List<String> itemsData;
     private List<String> itemsTitle;
@@ -45,17 +45,17 @@ public class BeaconRecycleAdapter extends RecyclerView.Adapter<BeaconRecycleAdap
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        if(this.itemsTitle.get(position) == "Exhibit") {
+        if(this.itemsTitle.get(position).equals("Exhibit") ) {
             viewHolder.exhibitTitle.setVisibility(View.GONE);
         } else {
             viewHolder.exhibitTitle.setText(this.itemsTitle.get(position));
         }
-        if(this.itemsData.get(position) == "Description") {
+        if(this.itemsData.get(position).equals("Description") ) {
             viewHolder.exhibitDescription.setVisibility(View.GONE);
         } else {
             viewHolder.exhibitDescription.setText(this.itemsData.get(position));
         }
-        if(this.itemsTitle.get(position) == "Exhibit" && this.itemsData.get(position) == "Description") {
+        if(this.itemsTitle.get(position).equals("Exhibit") && this.itemsData.get(position).equals("Description")) {
             itemLayoutView.findViewById(R.id.cv_exhibit_text_content).setVisibility(View.GONE);
         }
         if(this.itemsImage.get(position) == null) {
@@ -64,13 +64,14 @@ public class BeaconRecycleAdapter extends RecyclerView.Adapter<BeaconRecycleAdap
         } else {
             viewHolder.exhibitImage.setImageDrawable(this.itemsImage.get(position));
         }
-        if(this.itemsHeader.get(position) == "Exhibit") {
+        if(this.itemsHeader.get(position).equals("Exhibit") ) {
             viewHolder.exhibitHeader.setVisibility(View.GONE);
             itemLayoutView.findViewById(R.id.exhibit_header).setVisibility(View.GONE);
         } else {
             viewHolder.exhibitHeader.setText(this.itemsHeader.get(position));
         }
     }
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
