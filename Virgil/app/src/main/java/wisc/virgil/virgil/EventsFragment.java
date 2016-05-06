@@ -110,16 +110,20 @@ public class EventsFragment extends Fragment {
             String startMin;
             String endHour;
             String endMin;
-            if(event.getStartHour() > 12) {
+            if(event.getStartHour() >= 12) {
                 startAMPM = "PM";
             }
-            if(event.getEndHour() > 12) {
+            if(event.getEndHour() >= 12) {
                 endAMPM = "PM";
             }
             if(event.getStartHour() == 0) {
-                startHour = "00";
+                startHour = "12";
             } else {
-                startHour = "" + event.getStartHour();
+                if(event.getStartHour() > 12) {
+                    startHour = "" + (event.getStartHour() - 12);
+                } else {
+                    startHour = "" + event.getStartHour();
+                }
             }
             if(event.getStartMin() == 0) {
                 startMin = "00";
@@ -127,9 +131,13 @@ public class EventsFragment extends Fragment {
                 startMin = "" + event.getStartMin();
             }
             if(event.getEndHour() == 0) {
-                endHour = "00";
+                endHour = "12";
             } else {
-                endHour = "" + event.getEndHour();
+                if(event.getEndHour() > 12) {
+                    endHour = "" + (event.getEndHour() - 12);
+                } else {
+                    endHour = "" + event.getEndHour();
+                }
             }
             if(event.getEndMin() == 0) {
                 endMin = "00";
@@ -155,8 +163,13 @@ public class EventsFragment extends Fragment {
         for (Event event : api.getEventList()) {
             String startMonth = new DateFormatSymbols().getMonths()[event.getStartMonth()-1];
             String endMonth = new DateFormatSymbols().getMonths()[event.getEndMonth()-1];
-            dateList.add(startMonth + " " + event.getStartDay() + ", " + event.getStartYear() + " to "
-                    + endMonth + " " + event.getEndDay() + ", " + event.getEndYear());
+            if(event.getStartMonth() == event.getEndMonth() && event.getStartDay() == event.getEndDay()
+                    && event.getStartYear() == event.getEndYear()) {
+                dateList.add(startMonth + " " + event.getStartDay() + ", " + event.getStartYear());
+            } else {
+                dateList.add(startMonth + " " + event.getStartDay() + ", " + event.getStartYear() + " to "
+                        + endMonth + " " + event.getEndDay() + ", " + event.getEndYear());
+            }
         }
         return dateList;
     }
