@@ -1,6 +1,8 @@
 package wisc.virgil.virgil;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.provider.CalendarContract;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.Bind;
@@ -28,11 +31,12 @@ public class EventRecycleAdapter extends RecyclerView.Adapter<EventRecycleAdapte
     private List<String> eventsHours;
     private List<String> eventsLocation;
     private List<String> eventsDate;
-    @Bind(R.id.btnAddEvent) Button addEvent;
+    private List<Event> events;
+    private int pos;
 
     public EventRecycleAdapter(List<String> eventsTitle, List<String> eventsDesc,
                                List<Drawable> eventsImage, List<String> eventsHours,
-                               List<String> eventsLocation, List<String> eventsDate) {
+                               List<String> eventsLocation, List<String> eventsDate, List<Event> events) {
 
         this.eventsDesc  = eventsDesc;
         this.eventsTitle = eventsTitle;
@@ -40,6 +44,7 @@ public class EventRecycleAdapter extends RecyclerView.Adapter<EventRecycleAdapte
         this.eventsDate = eventsDate;
         this.eventsHours = eventsHours;
         this.eventsLocation = eventsLocation;
+        this.events = events;
         //this.eventsHeader   = eventsHeader;
     }
 
@@ -56,14 +61,41 @@ public class EventRecycleAdapter extends RecyclerView.Adapter<EventRecycleAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        viewHolder.eventTitle.setText(this.eventsTitle.get(position));
-        viewHolder.eventDescription.setText(this.eventsDesc.get(position));
-        viewHolder.eventImage.setImageDrawable(this.eventsImage.get(position));
+    public void onBindViewHolder(final ViewHolder viewHolder, int position) {
+        if(this.eventsTitle.get(position) == "Event") {
+            viewHolder.eventTitle.setVisibility(View.GONE);
+        } else {
+            viewHolder.eventTitle.setText(this.eventsTitle.get(position));
+        }
+        if(this.eventsDesc.get(position) == "Description") {
+            viewHolder.eventDescription.setVisibility(View.GONE);
+        } else {
+            viewHolder.eventDescription.setText(this.eventsDesc.get(position));
+        }
+        if(this.eventsImage.get(position) == null) {
+            viewHolder.eventImage.setVisibility(View.GONE);
+        } else {
+            viewHolder.eventImage.setImageDrawable(this.eventsImage.get(position));
+        }
         //viewHolder.eventHeader.setText(this.eventsHeader.get(position));
-        viewHolder.eventDate.setText(this.eventsDate.get(position));
-        viewHolder.eventHour.setText(this.eventsHours.get(position));
+        if(this.eventsDate.get(position) == "Date") {
+            viewHolder.eventDate.setVisibility(View.GONE);
+        } else {
+            viewHolder.eventDate.setText(this.eventsDate.get(position));
+        }
+        if(this.eventsHours.get(position) == "Hours") {
+            viewHolder.eventHour.setVisibility(View.GONE);
+        } else {
+            viewHolder.eventHour.setText(this.eventsHours.get(position));
+        }
         viewHolder.eventLocation.setText(this.eventsLocation.get(position));
+        viewHolder.eventLocation.setVisibility(View.GONE);
+        viewHolder.event = this.events.get(position);
+        viewHolder.addEvent.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                addEvent(v, viewHolder);
+            }
+        });
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -74,6 +106,8 @@ public class EventRecycleAdapter extends RecyclerView.Adapter<EventRecycleAdapte
         @Bind(R.id.tv_event_title)          TextView eventTitle;
         @Bind(R.id.tv_event_date)          TextView eventDate;
         @Bind(R.id.tv_event_hours)         TextView eventHour;
+        @Bind(R.id.btnAddEvent)             Button addEvent;
+        public Event event;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
@@ -84,5 +118,21 @@ public class EventRecycleAdapter extends RecyclerView.Adapter<EventRecycleAdapte
     @Override
     public int getItemCount() {
         return eventsTitle.size();
+    }
+
+    private void addEvent(View v, ViewHolder viewHolder) {
+        Intent intent = new Intent(Intent.ACTION_INSERT);
+        intent.setType("vnd.android.cursor.item/event");
+        Calendar beginTime = Calendar.getInstance();
+        beginTime.set(viewHolder.event.getStartYear(), viewHolder.event.getStartMonth(), viewHolder.event.getStartDay(), viewHolder.event.getStartHour(), viewHolder.event.getStartMin());
+        Calendar endTime = Calendar.getInstance();
+        endTime.set(viewHolder.event.getEndYear(), viewHolder.event.getEndMonth(), viewHolder.event.getEndDay(), viewHolder.event.getEndHour(), viewHolder.event.getEndMin());
+        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis());
+        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis());
+        intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, false);
+        intent.putExtra(CalendarContract.Events.TITLE, viewHolder.eventTitle.getText());
+        intent.putExtra(CalendarContract.Events.DESCRIPTION, viewHolder.eventDescription.getText());
+        intent.putExtra(CalendarContract.Events.EVENT_LOCATION, viewHolder.eventLocation.getText());
+        v.getContext().startActivity(intent);
     }
 }

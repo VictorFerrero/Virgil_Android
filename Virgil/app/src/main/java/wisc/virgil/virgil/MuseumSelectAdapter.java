@@ -61,11 +61,28 @@ public class MuseumSelectAdapter extends ArrayAdapter<Museum> {
         } else {
             viewHolder.name.setText(museum.getName());
             viewHolder.address.setText(museum.getAddress());
-
             Bitmap museumImage = null;
 
-            //TODO fetch museum image here
-            viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
+            Log.d("API", "HERE");
+            if (museum.getContent().size() > 0) {
+                Log.d("API", "HERE 2");
+                for (Content museumContent: museum.getContent()) {
+                    if (!museumContent.isMap()) {
+                        Log.d("API", "HERE 3");
+                        museumImage = museumContent.getImage(this.getContext());
+                        break;
+                    }
+                }
+            }
+
+            if (museumImage == null) {
+                Log.d("API", "HERE 4");
+                viewHolder.image.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.museum_list_image));
+            }
+            else {
+                Log.d("API", "HERE 5");
+                viewHolder.image.setImageBitmap(museumImage);
+            }
 
             String weekdays[] = new      DateFormatSymbols(Locale.ENGLISH).getWeekdays();
             Calendar c = Calendar.getInstance();

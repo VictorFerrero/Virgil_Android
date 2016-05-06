@@ -14,10 +14,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
 
 import java.util.List;
+
+import at.markushi.ui.CircleButton;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 /**
  * Created by Ty Talafous on 4/3/2016.
@@ -31,27 +36,35 @@ public class FavoritesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_museum_favorites);
+        setContentView(R.layout.activity_museum_favorites_2);
         setTitle("Favorites");
 
         Intent intent = getIntent();
         api = (VirgilAPI) intent.getSerializableExtra("API");
 
         //inflates toolbar
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.tb_favorites);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.tb_favorites_2);
         setSupportActionBar(myToolbar);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_36dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.dl_favorites);
+        drawerLayout = (DrawerLayout) findViewById(R.id.dl_favorites_2);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nv_favorites);
+        CircleButton buttonOne = (CircleButton) findViewById(R.id.fab_favorites_2);
+        buttonOne.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                Toast.makeText(getBaseContext(), getResources().getString(R.string.not_implemented),
+                        LENGTH_SHORT).show();
+            }
+        });
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nv_favorites_2);
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
-        GridView gridView = (GridView) findViewById(R.id.gv_favorites);
+        GridView gridView = (GridView) findViewById(R.id.gv_favorite_2);
 
         for (FavoriteMuseum favMus : api.getFavorites(this)) {
             Log.d("FAV", favMus.getName() + " " + favMus.getMuseumID());
@@ -75,12 +88,20 @@ public class FavoritesActivity extends AppCompatActivity {
 
     public void switchToGallery(int position) {
         Log.d("API", "" + api.getFavorites(this).get(position).getMuseumID());
-       api.fetchMuseum(api.getFavorites(this).get(position).getMuseumID());
+        api.fetchMuseum(api.getFavorites(this).get(position).getMuseumID());
 
         //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
         while(api.museumStatus() != api.FINISHED_STATUS) {
             if (api.museumStatus() == api.ERROR_STATUS) {
                 Log.d("API", "Fetched museum with ERROR_STATUS");
+                break;
+            }
+        }
+
+        api.fetchEvents(api.getFavorites(this).get(position).getMuseumID());
+        while(api.eventListStatus() != api.FINISHED_STATUS) {
+            if (api.museumListStatus() == api.ERROR_STATUS) {
+                Log.d("API", "Fetched events with ERROR_STATUS");
                 break;
             }
         }
@@ -96,13 +117,42 @@ public class FavoritesActivity extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                        int id = menuItem.getItemId();
                         menuItem.setChecked(true);
+
+                        selectItem(id);
                         drawerLayout.closeDrawers();
+
+;
                         return true;
                     }
                 });
     }
 
+    private void selectItem(int id) {
+
+
+        if (id == R.id.nav_beacon) {
+            Intent intent = new Intent(this, BeaconActivity.class);
+            intent.putExtra("API", api);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.nav_search) {
+            Intent intent = new Intent(this, MuseumSelectActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.nav_home) {
+            Toast.makeText(this, getResources().getString(R.string.not_implemented),
+                    LENGTH_SHORT).show();
+
+        } else if (id == R.id.nav_maps) {
+            Toast.makeText(this, getResources().getString(R.string.not_implemented),
+                    LENGTH_SHORT).show();
+        } else if (id == R.id.nav_favorites) {
+            drawerLayout.closeDrawers();
+        }
+    }
     //*Temporary* Clear database so we don't keep creating more of the same museums
     @Override
     protected void onDestroy() {
@@ -140,6 +190,7 @@ public class FavoritesActivity extends AppCompatActivity {
 
         MenuItem item = menu.findItem(R.id.main_favorites);
         item.setVisible(false);
+
         this.invalidateOptionsMenu();
         return true;
     }
@@ -150,6 +201,7 @@ public class FavoritesActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        item.setChecked(true);
 
         if (id == R.id.main_beacon) {
             Intent intent = new Intent(this, BeaconActivity.class);

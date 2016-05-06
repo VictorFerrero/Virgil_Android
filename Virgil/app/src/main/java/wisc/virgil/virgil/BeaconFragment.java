@@ -11,25 +11,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import android.graphics.drawable.BitmapDrawable;
 
 /**
- *  Written by   : Munish Kapoor
- *  Original Code:
- *  http://manishkpr.webheavens.com/android-material-design-tabs-collapsible-example/
- **/
+ * Created by Summer on 4/29/2016.
+ */
+public class BeaconFragment extends Fragment {
+        @Bind(R.id.recyclerView) RecyclerView recyclerView;
 
-public class PostsFragment extends Fragment {
-
-    @Bind(R.id.recyclerView) RecyclerView recyclerView;
-
-    VirgilAPI api;
-    int position;
+        VirgilAPI api;
+        int position;
 
     public static Fragment newInstance(Context context) {
         PostsFragment f = new PostsFragment();
@@ -37,33 +33,40 @@ public class PostsFragment extends Fragment {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        api = (VirgilAPI) getArguments().getSerializable("API");
-        position = getArguments().getInt("POS");
+        //api = (VirgilAPI) getArguments().getSerializable("API");
+        //position = getArguments().getInt("POS");
 
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.gallery_content, null);
         ButterKnife.bind(this, root);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        CommonRecycleAdapter adapter = new CommonRecycleAdapter(createTitleList(), createDescList(), createImageList());
+        BeaconRecycleAdapter adapter = new BeaconRecycleAdapter(createTitleList(), createDescList(), createImageList());
         recyclerView.setAdapter(adapter);
         return root;
     }
 
     private List<Drawable> createImageList() {
         List<Drawable> imageList = new ArrayList<>();
-        for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
+
+        /*for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
             for(int i = 0; i < exhibit.getContent().size(); i++) {
                 if(exhibit.getContent().isEmpty() || exhibit.getContent().get(i).getImage(getContext()) == null) {
-                    imageList.add(ContextCompat.getDrawable(getContext(), R.drawable.bucky_museum));
+                    imageList.add(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
                 } else {
                     imageList.add(new BitmapDrawable(getResources(), exhibit.getContent().get(i).getImage(getContext())));
                 }
             }
+        }*/
+
+        for (int i = 0; i < 30; i++) {
+            imageList.add(ContextCompat.getDrawable(getContext(), R.mipmap.virgil_white_ic));
         }
         return imageList;
     }
 
     private List<String> createTitleList() {
         List<String> titleList = new ArrayList<>();
+
+        /**
         for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
             for(int i = 0; i < exhibit.getContent().size(); i++) {
                 if(exhibit.getName() == null) {
@@ -74,12 +77,18 @@ public class PostsFragment extends Fragment {
                     titleList.add("Exhibit");
                 }
             }
+        }**/
+
+        for (int i = 0; i < 30; i++) {
+            titleList.add("Title " + i);
         }
         return titleList;
     }
 
     private List<String> createDescList() {
         List<String> descList = new ArrayList<>();
+
+        /**
         for (Exhibit exhibit : api.getMuseum().getGalleries().get(position).getExhibits()) {
             for(int i = 0; i < exhibit.getContent().size(); i++) {
                 if(exhibit.getContent().isEmpty() || exhibit.getContent().get(i).getDescription() == null) {
@@ -88,7 +97,13 @@ public class PostsFragment extends Fragment {
                     descList.add(exhibit.getContent().get(i).getDescription());
                 }
             }
+        }**/
+
+        for (int i = 0; i < 30; i++) {
+
+            descList.add("Description" + i);
         }
         return descList;
     }
 }
+

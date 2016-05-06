@@ -40,13 +40,4 @@
             android:icon="@drawable/ic_search_white_48dp"
             android:title="@string/action_search" />
     </group>
-
-    <item android:title="Sub items">
-        <menu>
-            <item
-                android:icon="@mipmap/virgil_white_ic"
-                android:title="Sub item 1" />
-        </menu>
-    </item>
-
 </menu>

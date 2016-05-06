@@ -10,15 +10,16 @@ public class Event implements Serializable {
     private int id, galleryId, exhibitId, museumId;
     private int startDay, startMonth, startYear, startHour, startMin, startSec;
     private int endDay, endMonth, endYear, endHour, endMin, endSec;
-    private String description, startTime, endTime;
+    private String description, startTime, endTime, title;
     private ArrayList<Content> eventContent;
 
-    public Event(int id, int galleryId, int exhibitId, int museumId, String description, String startTime, String endTime) {
+    public Event(int id, int galleryId, int exhibitId, int museumId, String description, String startTime, String endTime, String title) {
         this.id = id;
         this.galleryId = galleryId;
         this.exhibitId = exhibitId;
         this.museumId = museumId;
         this.description = description;
+        this.title = title;
 
         this.startTime = startTime;
         String dateStrings[] = this.startTime.split("\\s+");
@@ -115,7 +116,7 @@ public class Event implements Serializable {
     }
 
     public String getDescription() {
-        return this.getDescription();
+        return this.description;
     }
 
     public String getStartTime() {
@@ -182,4 +183,5 @@ public class Event implements Serializable {
         return this.endSec;
     }
 
+    public String getTitle() { return this.title; }
 }

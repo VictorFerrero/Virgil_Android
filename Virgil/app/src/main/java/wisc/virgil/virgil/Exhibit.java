@@ -8,10 +8,10 @@ import java.util.ArrayList;
  */
 public class Exhibit implements Serializable {
     private int id, galleryId, museumId;
-    private String name;
+    private String name, description;
     private ArrayList<Content> content;
 
-    public Exhibit(int id, int galleryId, int museumId, String name) {
+    public Exhibit(int id, int galleryId, int museumId, String name, String description) {
         this.id = id;
         this.galleryId = galleryId;
         this.museumId = museumId;
@@ -24,6 +24,8 @@ public class Exhibit implements Serializable {
     public int getGallerytId() { return this.galleryId; }
 
     public int getMuseumId() { return this.museumId; }
+
+    public String getDescription() { return this.description; }
 
     public String getName() {
         return this.name;

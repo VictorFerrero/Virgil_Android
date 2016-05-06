@@ -98,12 +98,12 @@ public class DatabaseTaskRunner implements Serializable {
         Random rand = new Random();
 
         String imageName = "museum_"+museum.getId()+".png";
-        Bitmap museumImage;
-        if (museum.getContent().size() > 0) {
-            museumImage = (Bitmap) museum.getContent().get(0).getImage(this.context);
-        }
-        else {
-            museumImage = null;
+        Bitmap museumImage = null;
+
+        for (Content museumContent : museum.getContent()) {
+            if (!museumContent.isMap()) {
+                museumImage = (Bitmap) museumContent.getImage(this.context);
+            }
         }
 
         FavoriteMuseum newFav = new FavoriteMuseum(rand.nextLong(), id, museum.getName(),

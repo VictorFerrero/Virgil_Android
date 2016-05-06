@@ -25,6 +25,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import android.content.Context;
+import android.graphics.Bitmap;
 
 /**
  *  Written by   : Munish Kapoor
@@ -97,9 +98,21 @@ public class GalleryActivity extends AppCompatActivity {
 
         ImageView imageView = (ImageView) findViewById(R.id.iv_gallery);
         if(api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage(this.context) == null) {
-            imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
+            imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.museum_list_image));
         } else {
-            imageView.setImageBitmap(api.getMuseum().getContent().get(0).getImage(this.context));
+            Bitmap tabImage = null;
+            for (Content museumContent : api.getMuseum().getContent()) {
+                if (!museumContent.isMap()) {
+                    tabImage = museumContent.getImage(getApplicationContext());
+                }
+            }
+
+            if (tabImage != null) {
+                imageView.setImageBitmap(tabImage);
+            }
+            else {
+                imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
+            }
         }
     }
 
@@ -108,11 +121,44 @@ public class GalleryActivity extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        int id = menuItem.getItemId();
                         menuItem.setChecked(true);
                         drawerLayout.closeDrawers();
+                        selectItem(id);
+
                         return true;
                     }
                 });
+    }
+
+    private void selectItem(int id) {
+
+        if (id == R.id.nav_beacon) {
+            Intent intent = new Intent(this, BeaconActivity.class);
+            intent.putExtra("API", api);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.nav_maps) {
+            Intent intent = new Intent(this, MapActivity.class);
+            intent.putExtra("API", api);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.nav_favorites) {
+            //api.addFavorite(this.museumId, this);
+            Intent intent = new Intent(this, FavoritesActivity.class);
+            intent.putExtra("API", api);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.nav_search) {
+            clearCache();
+            Intent intent = new Intent(this, MuseumSelectActivity.class);
+            intent.putExtra("API", api);
+            startActivity(intent);
+            finish();
+        } else if (id == R.id.nav_home) {
+            Toast.makeText(this, getResources().getString(R.string.not_implemented),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     void setUpTabs(){
@@ -131,13 +177,25 @@ public class GalleryActivity extends AppCompatActivity {
                                                   if(api.getMuseum().getContent().isEmpty() || api.getMuseum().getContent().get(0).getImage(getApplication()) == null) {
                                                       imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
                                                   } else {
-                                                      imageView.setImageBitmap(api.getMuseum().getContent().get(0).getImage(getApplication()));
+                                                      Bitmap tabImage = null;
+                                                      for (Content museumContent : api.getMuseum().getContent()) {
+                                                          if (!museumContent.isMap()) {
+                                                              tabImage = museumContent.getImage(getApplicationContext());
+                                                          }
+                                                      }
+
+                                                      if (tabImage != null) {
+                                                          imageView.setImageBitmap(tabImage);
+                                                      }
+                                                      else {
+                                                          imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
+                                                      }
                                                   }
                                               } else {
                                                   if (api.getMuseum().getGalleries().isEmpty() ||
                                                           api.getMuseum().getGalleries().get(position - 1).getContent().isEmpty() ||
                                                           api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage(getApplication()) == null) {
-                                                      imageView.setImageDrawable(ContextCompat.getDrawable(getApplication(), R.drawable.ic_virgil));
+                                                          imageView.setImageBitmap(api.getMuseum().getContent().get(0).getImage(context));
                                                   } else {
                                                       imageView.setImageBitmap(api.getMuseum().getGalleries().get(position - 1).getContent().get(0).getImage(getApplication()));
                                                   }
@@ -198,6 +256,7 @@ public class GalleryActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        item.setChecked(true);
 
         if (id == R.id.action_beacon) {
             Intent intent = new Intent(this, BeaconActivity.class);
