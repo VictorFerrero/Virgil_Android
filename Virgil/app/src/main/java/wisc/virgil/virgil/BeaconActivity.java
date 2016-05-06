@@ -68,9 +68,10 @@ public class BeaconActivity extends AppCompatActivity {
     private BeaconManager beaconManager;
     private Region region;
 
+    public boolean beaconInRange = false; // to avoid inflating fragment without Beacon in range
     public static String currMajor = "-1";
     public static String currMinor = "-1";
-    public String jsonAPIReturn    = "-1";  // DO NOT CHANGE DEFAULT VALUE
+    public String jsonAPIReturn    = "-1";  // DO NOT CHANGE DEFAULT VALUES
 
 
     // Beacon Async task (API call)
@@ -185,25 +186,28 @@ public class BeaconActivity extends AppCompatActivity {
         buttonBeacon = (Button) findViewById(R.id.btn_beacon);
         buttonBeacon.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                int action = MotionEventCompat.getActionMasked(motionEvent);
-                buttonBeacon.setBackgroundResource(R.drawable.beacon_dark);
-                int random = 0;
-                Random rand = new Random();
+                if (beaconInRange){
+                    int action = MotionEventCompat.getActionMasked(motionEvent);
+                    buttonBeacon.setBackgroundResource(R.drawable.beacon_dark);
+                    int random = 0;
+                    Random rand = new Random();
 
                 //if there is content then load in the fragment
-                switch (action) {
-                    case (MotionEvent.ACTION_UP):
+                    switch (action) {
+                        case (MotionEvent.ACTION_UP):
 
-                        random = rand.nextInt(5) + 0;
-                        buttonBeacon.setBackgroundResource(beaconList.get(random));
+                            random = rand.nextInt(5) + 0;
+                            buttonBeacon.setBackgroundResource(beaconList.get(random));
 
-                        frame.setVisibility(View.VISIBLE);
-                        populateFragment();
-                        return true;
-                    default:
-                        return true;
+                            frame.setVisibility(View.VISIBLE);
+                            populateFragment();
+                            return true;
+                        default:
+                            return true;
+
+                    }
                 }
+                return true;
             }
         });
 
@@ -219,20 +223,26 @@ public class BeaconActivity extends AppCompatActivity {
                     String minorTemp;
 
                     Beacon nearestBeacon = list.get(0);
-                    majorTemp = Integer.toString(nearestBeacon.getMajor());
-                    minorTemp = Integer.toString(nearestBeacon.getMinor());
+                    if(nearestBeacon == null ) {
+                        beaconInRange = false;
+                    } else {
+                        beaconInRange = true;
+                        majorTemp = Integer.toString(nearestBeacon.getMajor());
+                        minorTemp = Integer.toString(nearestBeacon.getMinor());
 
-                    if(currMajor.equals("-1")  && currMinor.equals("-1")) {
-                        currMajor = majorTemp;
-                        currMinor = minorTemp;
-                        jsonAPIReturn = "-1"; //See comment at declaration
-                        new BeaconsAsyncTask().execute(majorTemp, minorTemp);
-                    } else if(!currMajor.equals(majorTemp) || !currMinor.equals(minorTemp)) {
-                        currMajor = majorTemp;
-                        currMinor = minorTemp;
-                        jsonAPIReturn = "-1"; //Resetting default value before new frag
-                        new BeaconsAsyncTask().execute(majorTemp, minorTemp);
+                        if(currMajor.equals("-1")  && currMinor.equals("-1")) {
+                            currMajor = majorTemp;
+                            currMinor = minorTemp;
+                            jsonAPIReturn = "-1"; //See comment at declaration
+                            new BeaconsAsyncTask().execute(majorTemp, minorTemp);
+                        } else if(!currMajor.equals(majorTemp) || !currMinor.equals(minorTemp)) {
+                            currMajor = majorTemp;
+                            currMinor = minorTemp;
+                            jsonAPIReturn = "-1"; //Resetting default value before new frag
+                            new BeaconsAsyncTask().execute(majorTemp, minorTemp);
+                        }
                     }
+
 
                     // Quick sanity Test:
                     //String toasty = "major: " + majorTemp + " minor: " + minorTemp;
