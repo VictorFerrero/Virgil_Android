@@ -154,7 +154,7 @@ public class BeaconFragment extends Fragment {
             try{
                 json = jsonArray.getJSONObject(i);
                 //TODO: remove "title1: " after testing
-                title = "title" + i + ": " + json.getString("title");
+                title =  json.getString("title");
                 titles.add(title);
             } catch(org.json.JSONException e) {
                 System.err.println(e.getMessage());
@@ -172,7 +172,7 @@ public class BeaconFragment extends Fragment {
             try{
                 json = jsonArray.getJSONObject(i);
                 //TODO: remove "description1: " after testing
-                description = "title" + i + ": " + json.getString("description");
+                description = json.getString("description");
                 descriptions.add(description);
             } catch(org.json.JSONException e){
                 System.err.println(e.getMessage());
