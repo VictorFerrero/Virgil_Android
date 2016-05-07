@@ -150,7 +150,7 @@ public class BeaconFragment extends Fragment {
             try{
                 json = jsonArray.getJSONObject(i);
                 //TODO: remove "title1: " after testing
-                title = json.getString("title");
+                title =  json.getString("title");
                 titles.add(title);
             } catch(org.json.JSONException e) {
                 System.err.println(e.getMessage());
