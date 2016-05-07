@@ -1,23 +1,19 @@
 package wisc.virgil.virgil;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import org.json.JSONObject;
 import org.json.JSONArray;
-
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,7 +150,7 @@ public class BeaconFragment extends Fragment {
             try{
                 json = jsonArray.getJSONObject(i);
                 //TODO: remove "title1: " after testing
-                title = "title" + i + ": " + json.getString("title");
+                title = json.getString("title");
                 titles.add(title);
             } catch(org.json.JSONException e) {
                 System.err.println(e.getMessage());
@@ -172,7 +168,7 @@ public class BeaconFragment extends Fragment {
             try{
                 json = jsonArray.getJSONObject(i);
                 //TODO: remove "description1: " after testing
-                description = "title" + i + ": " + json.getString("description");
+                description = json.getString("description");
                 descriptions.add(description);
             } catch(org.json.JSONException e){
                 System.err.println(e.getMessage());
