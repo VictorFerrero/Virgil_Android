@@ -1,15 +1,18 @@
 # Virgil
-Android application to serve as a personal museum tour guide.
-Demo: https://www.youtube.com/watch?v=gzlrWr_RUoE&feature=youtu.be
----
-> #####Contributors:<br/>
-> Amr Hassaballah - hassaballah@wisc.edu <br/>
+Virgil is an Android application and web CMS to serve as a personal museum tour guide.
+
+Using low energy Bluetooth beacons, exhibit information and content is automatically delivered to users when they approach an exhibit. Users can also browse museums and galleries from home, find local museum events, save museum data for off-line viewing, and access museum maps.<br/>
+[Demo Video](https://youtu.be/gzlrWr_RUoE)
+
+>---
+> #####Developers:
+> Tyler Phelps - Phelps3@wisc.edu <br/>
+> Victor Ferrero - vferrero@wisc.edu<br/>
 > Summer Wilken - wilken@wisc.edu <br/>
 > Ty Talafous - talafous@wisc.edu <br/>
-> Tyler Phelps - Phelps3@wisc.edu <br/>
-> Victor Ferrero - vferrero@wisc.edu
+> Amr Hassaballah - hassaballah@wisc.edu <br/>
 
----
+>---
 
 ##Updates:
 #####MAR 6-12
@@ -26,12 +29,12 @@ Demo: https://www.youtube.com/watch?v=gzlrWr_RUoE&feature=youtu.be
  - Started working on app icon. Added more detail to xml layers. Added some menu navigation. - Summer
  - Wrote all server routes for the mobile app and cms version 1. This does not include beacon support yet. - Victor
 
-#####27- APR 2
+#####27-APR 2
  - Wrote asynchronous functions to run database processes through the API. Added API support for fetching event data from the backend. Adjusted code to pull and temporarily save content images from the backend to the native storage. - Tyler
  - Tested the entire backend again to ensure it is ready for cms to be built. All routes work as expected, file uplaods are handled properly. - Victor
  - Started design of cms. Helped with NavigationDrawer. Current Layout.-Summer
 
-#####APR 3 - 9
+#####3-9
 
 - Pulled images from server asynchronously. Made adjustments and additions to the event object. Patched file naming bugs in the repo. - Tyler
 - Added Navigation Drawer to layouts. Changed icon. Changed Gallery content view (added header, image view, and text view) and updated gallery content fragments and adapters with hard-coded values to demonstrate functionality. Did UI/UX cleanup. Current Layout -Summer
@@ -48,23 +51,22 @@ Demo: https://www.youtube.com/watch?v=gzlrWr_RUoE&feature=youtu.be
 - Made the thumbnail image fetching more efficient. Updated the cache to a 3 file system to make it more efficient and lighter on local storage usage. Implemented the museum map feature. Small UI fixes. Updated the API to pull and parse JSON event objects properly. - Tyler
 - Added Navigation Drawer navigation, fixed Favorites xml so it scales on different Android devices, added Beacon adapter and fragment java code skeleton. Changed Beacon functionality so beacon button changes color when fetching different content. -Summer
 
+#####31-MAY 6
+- Parsed JsonProfile objects to create event titles and exhibit descriptions fields. Made small bug fixes and added try/catch blocks to avoid crashing due to network errors or backend problems. Adjusted the beacon UI. Made the demo video and loaded the backend database with sample museum content for testing and presenting. - Tyler
+
 ---
-> 
-> ##Copyright 2016 Virgil Museum App
->
->Licensed under the Apache License, Version 2.0 (the "License"); </br>
->you may not use this file except in compliance with the License. </br>
->You may obtain a copy of the License at                          </br>
->
->    http://www.apache.org/licenses/LICENSE-2.0                   </br>
->
->Unless required by applicable law or agreed to in writing, software </br>
->distributed under the License is distributed on an "AS IS" BASIS,   </br>
->WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. </br>
->See the License for the specific language governing permissions and      </br>
->limitations under the License.                                           </br>
->
----
+##Copyright 2016 Virgil Museum App
+Licensed under the Apache License, Version 2.0 (the "License"); </br>
+you may not use this file except in compliance with the License. </br>
+You may obtain a copy of the License at                          </br>
+
+    http://www.apache.org/licenses/LICENSE-2.0                  
+
+Unless required by applicable law or agreed to in writing, software </br>
+distributed under the License is distributed on an "AS IS" BASIS,   </br>
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. </br>
+See the License for the specific language governing permissions and      </br>
+limitations under the License.                                           </br>
 
 ##Modified Resources
 -https://github.com/chrisbanes/cheesesquare by chrisbanes </br>
