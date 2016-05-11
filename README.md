@@ -13,6 +13,7 @@ Using low energy Bluetooth beacons, exhibit information and content is automatic
 > Amr Hassaballah - hassaballah@wisc.edu <br/>
 
 >---
+
 ##Weekly Updates:
 #####MAR 6-12
 - Project planning and group delegating. Started a Slack to help organize group communication. Set personal milestones for model and API development.-Tyler </br>
