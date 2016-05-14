@@ -1,7 +1,12 @@
 package wisc.virgil.virgil;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -20,22 +25,141 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.estimote.sdk.Beacon;
+import com.estimote.sdk.BeaconManager;
+import com.estimote.sdk.Region;
+import com.estimote.sdk.SystemRequirementsChecker;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * Created by Summer on 3/28/2016.
  */
 public class BeaconActivity extends AppCompatActivity {
 
+    // Control
     private Button buttonBeacon;
     VirgilAPI api;
     private DrawerLayout drawerLayout;
     private FrameLayout frame;
     private ArrayList<Integer> beaconList;
+
+    // Beacon Ranging
+    private BeaconManager beaconManager;
+    private Region region;
+
+    public boolean beaconInRange = false; // to avoid inflating fragment without Beacon in range
+    public static String currMajor = "-1";
+    public static String currMinor = "-1";
+    public String jsonAPIReturn    = "-1";  // DO NOT CHANGE DEFAULT VALUES
+
+
+    // Beacon Async task (API call)
+    private class BeaconsAsyncTask extends AsyncTask<String, String, String> {
+
+        private final String PATH_OF_API = "http://52.24.10.104/Virgil_Backend/index.php/";
+        private final String GET_MUSEUM_PATH = "getEntireMuseum/";
+        private final String GET_ALL_MUSEUMS_PATH = "getAllMuseums/";
+        private final String GET_EVENTS_PATH = "events/getEventsForMuseum/";
+        private final String GET_MUSEUM = "getMuseum";
+        private final String GET_ALL_MUSEUMS = "getAllMuseums";
+        private final String GET_EVENTS = "getEventsForMuseum";
+        private final String DEFAULT_VAL = "-1";
+
+        public BeaconsAsyncTask(){
+            super();
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+        /*
+         *    updating data
+         *    such a Dialog or ProgressBar
+        */
+
+        }
+
+        @Override
+        // Beacon:
+        // params[0] = major
+        // params[1] = minor
+        protected String doInBackground(String... params) {
+            Log.d("START", "start of call");
+            String major = params[0];
+            String minor = params[1];
+            String subPath = "beacons/getContentForBeacon/" + major + "/" + minor;
+            String jsonTemp = this.getJSONString(subPath);
+            Log.d("END", "end of call");
+            return jsonTemp;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.d("START POST", "starting transfer json String => Beacon Fragment");
+            jsonAPIReturn = result;
+
+            // Quick sanity Test:
+            // String toasty = "jsonAPIReturn: " + jsonAPIReturn;
+            // Toast.makeText(getApplicationContext(), toasty,
+            //       Toast.LENGTH_SHORT).show();
+
+            Log.d("done", "finished transfer ");
+        }
+
+        // Beacon subpath syntax:
+        // beacons/getContentForBeacon/<String major>/<String minor>"
+        private String getJSONString(String subPath) {
+            String returnString = "";
+
+            try {
+                URL url = new URL(PATH_OF_API+subPath);
+
+                // read text returned by server
+                BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+
+                String line;
+                while ((line = in.readLine()) != null) {
+                    returnString += line;
+                }
+                in.close();
+
+            }
+            catch (MalformedURLException e) {
+                System.out.println("Malformed URL: " + e.getMessage());
+            }
+            catch (IOException e) {
+                System.out.println("I/O Error: " + e.getMessage());
+            }
+
+            return returnString;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,27 +186,78 @@ public class BeaconActivity extends AppCompatActivity {
         buttonBeacon = (Button) findViewById(R.id.btn_beacon);
         buttonBeacon.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                int action = MotionEventCompat.getActionMasked(motionEvent);
-                buttonBeacon.setBackgroundResource(R.drawable.beacon_dark);
-                int random = 0;
-                Random rand = new Random();
+                if (beaconInRange){
+                    int action = MotionEventCompat.getActionMasked(motionEvent);
+                    buttonBeacon.setBackgroundResource(R.drawable.beacon_dark);
+                    int random = 0;
+                    Random rand = new Random();
 
                 //if there is content then load in the fragment
-                switch (action) {
-                    case (MotionEvent.ACTION_UP):
+                    switch (action) {
+                        case (MotionEvent.ACTION_UP):
 
-                        random = rand.nextInt(5) + 0;
-                        buttonBeacon.setBackgroundResource(beaconList.get(random));
+                            random = rand.nextInt(5) + 0;
+                            buttonBeacon.setBackgroundResource(beaconList.get(random));
 
-                        frame.setVisibility(View.VISIBLE);
-                        populateFragment();
-                        return true;
-                    default:
-                        return true;
+                            frame.setVisibility(View.VISIBLE);
+                            populateFragment();
+                            return true;
+                        default:
+                            return true;
+
+                    }
+                }
+                return true;
+            }
+        });
+
+        // Beacon Ranging
+        beaconManager = new BeaconManager(this);
+
+        // Ranging Listener
+        beaconManager.setRangingListener(new BeaconManager.RangingListener() {
+            @Override
+            public void onBeaconsDiscovered(Region region, List<Beacon> list) {
+                if(!list.isEmpty()){
+                    String majorTemp;
+                    String minorTemp;
+
+                    Beacon nearestBeacon = list.get(0);
+                    if(nearestBeacon == null ) {
+                        beaconInRange = false;
+                    } else {
+                        beaconInRange = true;
+                        majorTemp = Integer.toString(nearestBeacon.getMajor());
+                        minorTemp = Integer.toString(nearestBeacon.getMinor());
+
+                        if(currMajor.equals("-1")  && currMinor.equals("-1")) {
+                            currMajor = majorTemp;
+                            currMinor = minorTemp;
+                            jsonAPIReturn = "-1"; //See comment at declaration
+                            new BeaconsAsyncTask().execute(majorTemp, minorTemp);
+                        } else if(!currMajor.equals(majorTemp) || !currMinor.equals(minorTemp)) {
+                            currMajor = majorTemp;
+                            currMinor = minorTemp;
+                            jsonAPIReturn = "-1"; //Resetting default value before new frag
+                            new BeaconsAsyncTask().execute(majorTemp, minorTemp);
+                        }
+                    }
+
+
+                    // Quick sanity Test:
+                    //String toasty = "major: " + majorTemp + " minor: " + minorTemp;
+                    //Toast.makeText(getApplicationContext(), toasty,
+                    //       Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
+
+        // Beacon Major ID: Museum ID
+        // Beacon Minor ID: Exhibit ID -not specified for ranging ( want to pick up
+        //                          more than one exhibit at a time).
+        region = new Region("Beacon Region",
+                UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), 1, null);
     }
 
     private ArrayList<Integer> addDrawable() {
@@ -205,10 +380,29 @@ public class BeaconActivity extends AppCompatActivity {
 
 
     private Fragment setupFragment() {
-        BeaconFragment beaconContent = new BeaconFragment();
-
-        return beaconContent;
+        //TODO: fix null pointer at frag
+        BeaconFragment fragment = (BeaconFragment) BeaconFragment.newInstance(jsonAPIReturn);
+        return fragment;
     }
 
+    protected void onResume() {
+        super.onResume();
+
+        // Beacon runtime permissions checker
+        SystemRequirementsChecker.checkWithDefaultDialogs(this);
+        // Ranging
+        beaconManager.connect(new BeaconManager.ServiceReadyCallback(){
+            @Override
+            public void onServiceReady() {
+                beaconManager.startRanging(region);
+            }
+        });
+    }
+
+    protected void onPause() {
+        beaconManager.stopRanging(region);
+
+        super.onPause();
+    }
 }
 
