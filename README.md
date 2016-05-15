@@ -8,11 +8,11 @@ Using low energy Bluetooth beacons, exhibit information and content is automatic
 
 >---
 > #####Developers:
-> Tyler Phelps (Model Layer/Project Manager) - Phelps3@wisc.edu <br/>    
-> Victor Ferrero (Backend/Project Manager) - vferrero@wisc.edu<br/>
-> Summer Wilken (UI/UX) - wilken@wisc.edu <br/>
-> Ty Talafous (Controller) - talafous@wisc.edu <br/>
-> Amr Hassaballah (Beacon) - hassaballah@wisc.edu <br/>
+> Tyler Phelps    (Model Layer / Project Manager) - Phelps3@wisc.edu<br/>
+> Victor Ferrero  (Backend / Project Manager) - vferrero@wisc.edu<br/>
+> Summer Wilken   (UI/UX) - wilken@wisc.edu<br/>
+> Ty Talafous     (Controller) - talafous@wisc.edu<br/>
+> Amr Hassaballah (Beacon) - hassaballah@wisc.edu<br/>
 
 >---
 
