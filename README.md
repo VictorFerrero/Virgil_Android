@@ -4,6 +4,8 @@ Virgil is an Android application and web CMS to serve as a personal museum tour 
 Using low energy Bluetooth beacons, exhibit information and content is automatically delivered to users when they approach an exhibit. Users can also browse museums and galleries from home, find local museum events, save museum data for off-line viewing, and access museum maps.<br/>
 [Demo Video](https://youtu.be/gzlrWr_RUoE)
 
+![alt tag](https://github.com/VictorFerrero/Virgil_Android/blob/master/2016-05-15_15_51_57.gif)
+
 >---
 > #####Developers:
 > Tyler Phelps - Phelps3@wisc.edu <br/>
