@@ -26,6 +26,7 @@ import static android.widget.Toast.LENGTH_SHORT;
 
 /**
  * Created by Ty Talafous on 4/3/2016.
+ * Title: FavoritesActivity
  */
 public class FavoritesActivity extends AppCompatActivity {
 
@@ -87,21 +88,22 @@ public class FavoritesActivity extends AppCompatActivity {
     }
 
     public void switchToGallery(int position) {
-        Log.d("API", "" + api.getFavorites(this).get(position).getMuseumID());
-        api.fetchMuseum(api.getFavorites(this).get(position).getMuseumID());
-
-        //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
-        while(api.museumStatus() != api.FINISHED_STATUS) {
-            if (api.museumStatus() == api.ERROR_STATUS) {
-                Log.d("API", "Fetched museum with ERROR_STATUS");
-                break;
-            }
-        }
+        int museumID = api.getFavorites(this).get(position).getMuseumID();
+        Log.d("API", "" + museumID);
 
         api.fetchEvents(api.getFavorites(this).get(position).getMuseumID());
         while(api.eventListStatus() != api.FINISHED_STATUS) {
             if (api.museumListStatus() == api.ERROR_STATUS) {
                 Log.d("API", "Fetched events with ERROR_STATUS");
+                break;
+            }
+        }
+
+        api.fetchMuseum(museumID);
+        //Wait for fetch to finish (WILL STALL IF FETCH NEVER FINISHES)
+        while(api.museumStatus() != api.FINISHED_STATUS) {
+            if (api.museumStatus() == api.ERROR_STATUS) {
+                Log.d("API", "Fetched museum with ERROR_STATUS");
                 break;
             }
         }
@@ -123,8 +125,6 @@ public class FavoritesActivity extends AppCompatActivity {
 
                         selectItem(id);
                         drawerLayout.closeDrawers();
-
-;
                         return true;
                     }
                 });
